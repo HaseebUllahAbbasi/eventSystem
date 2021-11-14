@@ -2,9 +2,10 @@ const PersonSchema = require('../model/Person')
 const EventSchema = require('../model/Event')
 const GuestSchema = require('../model/Guest')
 const NotesSchema = require('../model/Notes')
-
+const TaskSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
+const { truncate } = require('fs')
 exports.createEvent = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventName, eventStatus } = req.body;
     const eventCreated = await EventSchema.create({
@@ -19,6 +20,24 @@ exports.createEvent = catchAsyncErrors(async (req, res, next) => {
         }
     )
 })
+exports.getTasksByEventId =catchAsyncErrors(async (req, res, next) => 
+{
+    const {eventId} = req.params;
+    const events = await TaskSchema.find();
+    events.map(item=> {
+        if(eventId ==item.eventId)
+        {
+            return item;
+        }
+        else return null;
+    }) 
+    res.status(200).json(
+        {
+            success:true
+        }
+    )
+
+}) 
 exports.getAllEvents = catchAsyncErrors(async (req, res, next) => {
     const events = await EventSchema.find();
     if (events) {
@@ -75,6 +94,27 @@ exports.sendRequest = catchAsyncErrors(async (req, res, next) => {
         res.status(402).json({
             success: false
         })
+})
+exports.assignTask =  catchAsyncErrors(async (req, res, next) => {
+    const {plannerId,eventId, taskAssignedTo, taskText } = req.body;
+    const taskCreated =  await TaskSchema.create({
+        eventId: eventId,
+        taskText:taskText,
+        assignTo:taskAssignedTo
+    })
+    const eventById =  await EventSchema.findById(eventId);
+    const personById =  await PersonSchema.findById(taskAssignedTo)
+    eventById.tasks.push(taskCreated._id);
+    personById.tasks.push(taskCreated._id)
+    const UpdatedEvent = await EventSchema.updateOne(eventById);
+    const updatedPerson = await PersonSchema.updateOne(personById);
+            
+    res.status(200).json({
+        success:true,
+        taskCreated,
+    })
+
+
 })
 exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
     const { eventId } = req.body;

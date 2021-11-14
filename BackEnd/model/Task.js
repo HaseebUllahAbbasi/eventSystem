@@ -17,10 +17,9 @@ const TaskSchema = new mongoose.Schema(
             required:[true,"Please Enter the Person Id "],
             maxlength:[25,"Id invalid"]
         },
-        password:
+        taskStatus:
         {
-            type: Boolean,
-            default:false,
+            type: Boolean        
         }
     }
 )

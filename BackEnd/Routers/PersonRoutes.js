@@ -1,5 +1,5 @@
 const express = require('express');
-const { addPerson, updatePerson,findByName,requestsById,acceptRequest,login,deletePerson,getAllpersons, getPersonByID } = require('../controllers/PersonController');
+const { addPerson, updatePerson,completeTasks,getTasksByUser,findByName,requestsById,acceptRequest,login,deletePerson,getAllpersons, getPersonByID, getCompletedTasksByUser, getUnCompletedTasksByUser } = require('../controllers/PersonController');
 const router = express.Router();
 router.route('/persons').get(getAllpersons);
 router.route('/person').put(updatePerson);
@@ -10,5 +10,10 @@ router.route('/login').get(login)
 router.route('/personByName/:name').get(findByName)
 router.route('/acceptRequest').post(acceptRequest)
 router.route('/requests/:userId').get(requestsById)
+router.route('/tasksByID/:userId').get(getTasksByUser)
+router.route('/completedTasks/:userId').get(getCompletedTasksByUser)
+router.route('/unCompletedTasks/:userId').get(getUnCompletedTasksByUser)
+router.route('/completeTask').post(completeTasks);
+
 
 module.exports = router;
