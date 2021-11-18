@@ -4,6 +4,51 @@ const TasksSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
 
+exports.myEvents = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.body;
+    const events = await EventSchema.find();
+    const updateList = [];
+    const eventsByUserId = events.filter(item => {
+        if (item.userId == id) {
+            updateList.push(item)
+            return item;
+        }
+    });
+    if (eventsByUserId.length != 0) {
+
+        res.status(200).json({
+            success: true,
+            list: eventsByUserId
+        })
+    }
+    else
+        res.status(404).json({
+            success: false,
+            message: "Not Found Admin of Any Event"
+        })
+})
+exports.getEventByUserId = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.body;
+    const events = await EventSchema.find();
+    const teamsLists = events.filter(event => {
+        const listofOneTeam = event.team;
+        const result = listofOneTeam.find(item => item == id)
+        if (result != undefined) {
+            return event;
+        }
+    });
+    if (teamsLists.length == 0)
+        res.status(404).json({
+            success: false,
+            message: "not found the user in any team"
+        })
+    else
+        res.status(200).json({
+            success: true,
+            teamsLists
+        })
+})
+
 exports.deletePerson = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.body;
     const deletedPerson = await PersonSchema.findByIdAndDelete(id)
@@ -116,85 +161,63 @@ exports.addPerson = catchAsyncErrors(async (req, res, next) => {
         personCreated
     })
 })
-exports.getTasksByUser = catchAsyncErrors(async (req, res, next) => 
-{
-    const {userId} = req.params;
+exports.getTasksByUser = catchAsyncErrors(async (req, res, next) => {
+    const { userId } = req.params;
     const allTasks = await TasksSchema.find();
-    const filteredById = allTasks.map((item)=>
-    {
-        console.log(item)
-        console.log(userId)
-        
-        if(item.assignTo == userId)
-        {
+    const filteredById = allTasks.filter((item) => {
+
+        if (item.assignTo == userId) {
             return item;
         }
-         else return null;
 
-    } 
-     ); 
+    }
+    );
     res.status(200).json({
-        success:true,
+        success: true,
         filteredById,
 
     })
 })
 
 
-exports.getUnCompletedTasksByUser = catchAsyncErrors(async (req, res, next) => 
-{
-    const {userId} = req.params;
+exports.getUnCompletedTasksByUser = catchAsyncErrors(async (req, res, next) => {
+    const { userId } = req.params;
     const allTasks = await TasksSchema.find();
-    const filteredById = allTasks.map((item)=>
-    {
-        console.log(item)
-        console.log(userId)
-        
-        if(item.assignTo == userId)
-        {
-            if(!item.taskStatus)
-            return item;
-            else return null;
+    const filteredById = allTasks.fliter((item) => {
+        if (item.assignTo == userId) {
+            if (!item.taskStatus)
+                return item;
         }
-         else return null;
 
-    } 
-     ); 
+    }
+    );
     res.status(200).json({
-        success:true,
+        success: true,
         filteredById,
-
     })
 })
-exports.getCompletedTasksByUser = catchAsyncErrors(async (req, res, next) => 
-{
-    const {userId} = req.params;
+exports.getCompletedTasksByUser = catchAsyncErrors(async (req, res, next) => {
+    const { userId } = req.params;
     const allTasks = await TasksSchema.find();
-    const filteredById = allTasks.map((item)=>
-    {
-        console.log(item)
-        console.log(userId)
-        
-        if(item.assignTo == userId)
-        {
-            if(item.taskStatus)
-            return item;
-            else return null;
-        }
-         else return null;
+    const filteredById = allTasks.filter((item) => {
 
-    } 
-     ); 
+
+        if (item.assignTo == userId) {
+            if (item.taskStatus)
+                return item;
+        }
+
+    }
+    );
     res.status(200).json({
-        success:true,
+        success: true,
         filteredById,
 
     })
 })
 
-exports.completeTasks = catchAsyncErrors(async (req, res, next) => 
-{
-    const {taskId,userId} = req.body;
+exports.completeTasks = catchAsyncErrors(async (req, res, next) => {
+    const { taskId, userId } = req.body;
     const foundPerson = await PersonSchema.findById(userId);
     const foundTask = await TasksSchema.findById(taskId);
     foundTask.taskStatus = true;
@@ -203,25 +226,23 @@ exports.completeTasks = catchAsyncErrors(async (req, res, next) =>
     await TasksSchema.updateOne(foundTask);
 
     res.status(200).json({
-        success:true,
+        success: true,
         foundTask
 
     })
 })
-exports.requestsById = catchAsyncErrors(async (req, res, next) => 
-{
+exports.requestsById = catchAsyncErrors(async (req, res, next) => {
     const { userId } = req.params;
     const foundPerson = await PersonSchema.findById(userId);
     if (foundPerson) {
-        const requestList =  foundPerson.requests;
+        const requestList = foundPerson.requests;
 
         res.status(200).json({
             success: true,
             requestList
         })
     }
-    else 
-    {
+    else {
         res.status(402).json({
             success: false
 
@@ -232,19 +253,17 @@ exports.requestsById = catchAsyncErrors(async (req, res, next) =>
 })
 exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
 
-    const { userId,eventId } = req.body;
+    const { userId, eventId } = req.body;
     const foundPerson = await PersonSchema.findById(userId);
-    if (foundPerson) 
-    {
-        const requestList =  foundPerson.requests;
-        const index =  requestList.indexOf(eventId);
-        if(index!=-1)
-        {
-            const addingToEvent = foundPerson.requests.splice(index,1);
+    if (foundPerson) {
+        const requestList = foundPerson.requests;
+        const index = requestList.indexOf(eventId);
+        if (index != -1) {
+            const addingToEvent = foundPerson.requests.splice(index, 1);
             foundPerson.member.push(addingToEvent.toString())
             const eventByID = await EventSchema.findById(addingToEvent);
             eventByID.team.push(userId)
-            requestList.splice(index,1);
+            requestList.splice(index, 1);
 
             const UpdatedEvent = await EventSchema.updateOne(eventByID);
             const updatedPerson = await PersonSchema.updateOne(foundPerson);
@@ -254,20 +273,18 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
                 eventByID
             })
         }
-        else
-        {
-            
-        res.status(402).json({
-            success: false,
-            msg:"Not Found The Event"
-        })
+        else {
+
+            res.status(402).json({
+                success: false,
+                msg: "Not Found The Event"
+            })
         }
     }
-    else 
-    {
+    else {
         res.status(402).json({
             success: false,
-            msg:"User  Not Found"
+            msg: "User  Not Found"
 
         })
     }

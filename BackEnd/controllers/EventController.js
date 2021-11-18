@@ -5,13 +5,13 @@ const NotesSchema = require('../model/Notes')
 const TaskSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
-const { truncate } = require('fs')
 exports.createEvent = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventName, eventStatus } = req.body;
     const eventCreated = await EventSchema.create({
         userId: plannerId,
         eventName: eventName,
         eventStatus: eventStatus,
+        team : []
     })
     res.status(200).json(
         {
@@ -24,16 +24,16 @@ exports.getTasksByEventId =catchAsyncErrors(async (req, res, next) =>
 {
     const {eventId} = req.params;
     const events = await TaskSchema.find();
-    events.map(item=> {
+    const taskByEventId =  events.filter(item=> {
         if(eventId ==item.eventId)
         {
             return item;
         }
-        else return null;
     }) 
     res.status(200).json(
         {
-            success:true
+            success:true,
+            tasks:taskByEventId
         }
     )
 
@@ -119,11 +119,10 @@ exports.assignTask =  catchAsyncErrors(async (req, res, next) => {
 exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
     const { eventId } = req.body;
     const notesList = await NotesSchema.find();
-    const noteListsFound = notesList.map((note) => {
+    const noteListsFound = notesList.filter((note) => {
         if (note.eventId == eventId) {
             return note;
         }
-        else return null;
     });
 
     res.status(200).json(
