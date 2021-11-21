@@ -11,6 +11,20 @@ import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import LoginScreen from "./screens/Login";
 import SignScreen from "./screens/Sign";
+import NewAccount from "./screens/NewAccount";
+// import DrawerComponent from "./screens/DrawerHome";
+
+
+
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+
+import {createDrawerNavigator} from '@react-navigation/drawer'
+import MainTabScreen from "./screens/MainTabScreen";
+
+
+const Drawer = createDrawerNavigator();
+
 const styles = StyleSheet.create({
   container:{
     flex:1,
@@ -38,10 +52,28 @@ export default function App() {
 
   
   return (
-    <View>
-    <SignScreen/>
-      {/* <LoginScreen></LoginScreen> */}
-    </View>
+    
+    <NavigationContainer>
+    <Drawer.Navigator >
+        <Drawer.Screen name="Home" component={MainTabScreen}/>
+        <Drawer.Screen name="Events" component={MainTabScreen}/>
+        <Drawer.Screen name="Tasks" component={MainTabScreen}/>
+        <Drawer.Screen name="My Events" component={MainTabScreen}/>
+        <Drawer.Screen name="My Tasks" component={MainTabScreen}/>
+        <Drawer.Screen name="Logout" component={MainTabScreen}/>
+        
+        
+
+    </Drawer.Navigator>     
+</NavigationContainer>
+
+
+    // <View>
+    // {/* <SignScreen/> */}
+    //   {/* <LoginScreen></LoginScreen> */}
+    //   {/* <NewAccount/> */}
+    // </View>
+
     
   )
 

@@ -183,7 +183,7 @@ exports.getTasksByUser = catchAsyncErrors(async (req, res, next) => {
 exports.getUnCompletedTasksByUser = catchAsyncErrors(async (req, res, next) => {
     const { userId } = req.params;
     const allTasks = await TasksSchema.find();
-    const filteredById = allTasks.fliter((item) => {
+    const filteredById = allTasks.filter((item) => {
         if (item.assignTo == userId) {
             if (!item.taskStatus)
                 return item;
