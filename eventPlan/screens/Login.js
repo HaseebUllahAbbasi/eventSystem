@@ -30,6 +30,7 @@ const LoginScreen = () => {
             <Animatable.View 
             style={[styles.footer, {
                 backgroundColor: colors.background
+                
             }]}
             animation="fadeInUpBig"
         >

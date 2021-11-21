@@ -21,6 +21,10 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import MainTabScreen from "./screens/MainTabScreen";
+import MyEvents from "./screens/MyEvents";
+import DisplayAllEvents from "./screens/DisplayAllEvents";
+import MyRequests from "./screens/MyRequests";
+import Tasks from "./screens/Tasks";
 
 
 const Drawer = createDrawerNavigator();
@@ -55,15 +59,12 @@ export default function App() {
     
     <NavigationContainer>
     <Drawer.Navigator >
-        <Drawer.Screen name="Home" component={MainTabScreen}/>
-        <Drawer.Screen name="Events" component={MainTabScreen}/>
-        <Drawer.Screen name="Tasks" component={MainTabScreen}/>
-        <Drawer.Screen name="My Events" component={MainTabScreen}/>
-        <Drawer.Screen name="My Tasks" component={MainTabScreen}/>
-        <Drawer.Screen name="Logout" component={MainTabScreen}/>
-        
-        
-
+        <Drawer.Screen name="Home" component={MyEvents}/>
+        <Drawer.Screen name="Requests" component={MyRequests}/>
+        <Drawer.Screen name="Events" component={DisplayAllEvents}/>
+        <Drawer.Screen name="My Events" component={MyEvents}/>
+        <Drawer.Screen name="My Tasks" component={Tasks}/>
+        <Drawer.Screen name="Logout" component={LoginScreen}/>
     </Drawer.Navigator>     
 </NavigationContainer>
 

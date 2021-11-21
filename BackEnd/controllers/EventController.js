@@ -6,12 +6,13 @@ const TaskSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
 exports.createEvent = catchAsyncErrors(async (req, res, next) => {
-    const { plannerId, eventName, eventStatus } = req.body;
+    const { plannerId, eventName, eventStatus, eventDesc } = req.body;
     const eventCreated = await EventSchema.create({
         userId: plannerId,
         eventName: eventName,
         eventStatus: eventStatus,
-        team : []
+        eventDesc: eventDesc
+        // team : []
     })
     res.status(200).json(
         {
@@ -20,24 +21,22 @@ exports.createEvent = catchAsyncErrors(async (req, res, next) => {
         }
     )
 })
-exports.getTasksByEventId =catchAsyncErrors(async (req, res, next) => 
-{
-    const {eventId} = req.params;
+exports.getTasksByEventId = catchAsyncErrors(async (req, res, next) => {
+    const { eventId } = req.params;
     const events = await TaskSchema.find();
-    const taskByEventId =  events.filter(item=> {
-        if(eventId ==item.eventId)
-        {
+    const taskByEventId = events.filter(item => {
+        if (eventId == item.eventId) {
             return item;
         }
-    }) 
+    })
     res.status(200).json(
         {
-            success:true,
-            tasks:taskByEventId
+            success: true,
+            tasks: taskByEventId
         }
     )
 
-}) 
+})
 exports.getAllEvents = catchAsyncErrors(async (req, res, next) => {
     const events = await EventSchema.find();
     if (events) {
@@ -78,12 +77,12 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
 
 })
 exports.sendRequest = catchAsyncErrors(async (req, res, next) => {
-    const { plannerId, eventId,recipientId } = req.body;
+    const { plannerId, eventId, recipientId } = req.body;
     const foundUser = await PersonSchema.findById(recipientId);
     if (foundUser) {
 
         foundUser.requests.push(eventId);
-        const updated =  await  PersonSchema.updateOne(foundUser)
+        const updated = await PersonSchema.updateOne(foundUser)
         res.status(200).json({
             success: true,
             foundUser
@@ -95,22 +94,87 @@ exports.sendRequest = catchAsyncErrors(async (req, res, next) => {
             success: false
         })
 })
-exports.assignTask =  catchAsyncErrors(async (req, res, next) => {
-    const {plannerId,eventId, taskAssignedTo, taskText } = req.body;
-    const taskCreated =  await TaskSchema.create({
+exports.changeStatus = catchAsyncErrors(async (req, res, next) => {
+    const { plannerId, eventId, eventStatus } = req.body;
+    const eventById = await EventSchema.findById(eventId);
+
+    if (eventById.userId) {
+        if (eventById.userId == plannerId) {
+            eventById.status = eventStatus;
+            const updated = await EventSchema.updateOne(eventById);
+            res.status(200).json(
+                {
+                    success: true,
+                    event: eventById
+                }
+            )
+        }
+        else
+            res.status(401).json({
+                success: false,
+                message: "Not Authorized"
+            })
+
+
+    }
+    else
+    {
+        res.status(404).json({
+            success:false,
+            message:"Not Found the Event"
+        })
+    }
+
+})
+
+exports.changeDesc = catchAsyncErrors(async (req, res, next) => {
+    const { plannerId, eventId, eventDesc } = req.body;
+    const eventById = await EventSchema.findById(eventId);
+
+    if (eventById.userId) {
+        if (eventById.userId == plannerId) {
+            eventById.eventDesc = eventDesc;
+            const updated = await EventSchema.updateOne(eventById);
+            res.status(200).json(
+                {
+                    success: true,
+                    event: eventById
+                }
+            )
+        }
+        else
+            res.status(401).json({
+                success: false,
+                message: "Not Authorized"
+            })
+
+
+    }
+    else
+    {
+        res.status(404).json({
+            success:false,
+            message:"Not Found the Event"
+        })
+    }
+
+})
+exports.assignTask = catchAsyncErrors(async (req, res, next) => {
+    const { plannerId, eventId, taskAssignedTo, taskText } = req.body;
+    const taskCreated = await TaskSchema.create({
         eventId: eventId,
-        taskText:taskText,
-        assignTo:taskAssignedTo
+        taskText: taskText,
+        assignTo: taskAssignedTo
     })
-    const eventById =  await EventSchema.findById(eventId);
-    const personById =  await PersonSchema.findById(taskAssignedTo)
+    const eventById = await EventSchema.findById(eventId);
+    const personById = await PersonSchema.findById(taskAssignedTo)
     eventById.tasks.push(taskCreated._id);
     personById.tasks.push(taskCreated._id)
     const UpdatedEvent = await EventSchema.updateOne(eventById);
     const updatedPerson = await PersonSchema.updateOne(personById);
-            
+
     res.status(200).json({
-        success:true,
+        success: true,
         taskCreated,
     })
 
