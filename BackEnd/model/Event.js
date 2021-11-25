@@ -19,7 +19,12 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please Enter Event Description"],
         maxlength: [40, "Event Description cannot exceed 40 charachters"],
-    },    
+    },
+    userName: {
+        type: String,
+        required: [true, "Please Admin User Name of Event"],
+        maxlength: [30, "Your Name cannot exceed 30 charachters"],
+    },
     team: [String],
     tasks: [String],
     guestList: [String],

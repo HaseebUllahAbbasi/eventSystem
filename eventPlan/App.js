@@ -65,6 +65,8 @@ export default function App() {
         <Drawer.Screen name="My Events" component={MyEvents}/>
         <Drawer.Screen name="My Tasks" component={Tasks}/>
         <Drawer.Screen name="Logout" component={LoginScreen}/>
+        
+        
     </Drawer.Navigator>     
 </NavigationContainer>
 

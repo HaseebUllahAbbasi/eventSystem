@@ -6,12 +6,13 @@ const TaskSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
 exports.createEvent = catchAsyncErrors(async (req, res, next) => {
-    const { plannerId, eventName, eventStatus, eventDesc } = req.body;
+    const { userName,plannerId, eventName, eventStatus, eventDesc } = req.body;
     const eventCreated = await EventSchema.create({
         userId: plannerId,
         eventName: eventName,
         eventStatus: eventStatus,
-        eventDesc: eventDesc
+        eventDesc: eventDesc,
+        userName:userName
         // team : []
     })
     res.status(200).json(
@@ -79,10 +80,17 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
 exports.sendRequest = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventId, recipientId } = req.body;
     const foundUser = await PersonSchema.findById(recipientId);
-    if (foundUser) {
 
-        foundUser.requests.push(eventId);
+    if (foundUser) 
+    {
+
+        // foundUser.requests.push(eventId);
+        // const request_list =  foundUser.requests;
+        // request_list.push(eventId);
+        // foundUser.requests = [...request_list];
+
         const updated = await PersonSchema.updateOne(foundUser)
+        
         res.status(200).json({
             success: true,
             foundUser
