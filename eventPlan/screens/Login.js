@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
 const LoginScreen = () => {
     const { colors } = useTheme();
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
@@ -31,9 +32,9 @@ const LoginScreen = () => {
             style={[styles.footer, {
                 backgroundColor: colors.background
                 
-            }]}
-            animation="fadeInUpBig"
-        >
+            }]}animation="fadeInUpBig">
+            
+            
             <Text style={[styles.title, {
                 color: colors.text
             }]}>Make Your Events Happen</Text>
