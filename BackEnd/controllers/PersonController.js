@@ -4,6 +4,47 @@ const TasksSchema = require('../model/Task')
 
 const catchAsyncErrors = require('../middlewares/catchAsyncError');
 
+exports.requestsDetailsById = catchAsyncErrors(async (req, res, next) => {
+    const { userId } = req.params;
+    const foundPerson = await PersonSchema.findById(userId);
+    if (foundPerson) {
+        const requestDetailedData = [];
+        const requestList = foundPerson.requests;
+        if (requestList.length == 0) 
+        {
+            res.status(401).json({
+                success: false,
+                msg: "has no requests"
+
+            })
+        }
+        else 
+        {
+            const allEvents = await EventSchema.find();
+            for (let i = 0; i < allEvents.length; i++) {
+                for (let j = 0; j < requestList.length; j++) {
+                    if (allEvents[i]._id == requestList[j])
+                        requestDetailedData.push({ ...allEvents })
+                }
+            }
+            res.status(200).json({
+                success: true,
+                requestList,
+                requestDetailedData
+            })
+
+        }
+
+    }
+    else {
+        res.status(402).json({
+            success: false
+
+        })
+    }
+
+
+})
 exports.myEvents = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.body;
     const events = await EventSchema.find();
@@ -223,7 +264,7 @@ exports.completeTasks = catchAsyncErrors(async (req, res, next) => {
     foundTask.taskStatus = true;
     console.log(foundTask);
     console.log("after the update")
-    await TasksSchema.updateOne(foundTask);
+    await TasksSchema.updateOne({ _id: foundTask._id }, { foundTask });
 
     res.status(200).json({
         success: true,
@@ -252,7 +293,6 @@ exports.requestsById = catchAsyncErrors(async (req, res, next) => {
 
 })
 exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
-
     const { userId, eventId } = req.body;
     const foundPerson = await PersonSchema.findById(userId);
     if (foundPerson) {
@@ -265,12 +305,15 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
             eventByID.team.push(userId)
             requestList.splice(index, 1);
 
-            const UpdatedEvent = await EventSchema.updateOne(eventByID);
-            const updatedPerson = await PersonSchema.updateOne(foundPerson);
+            // const UpdatedEvent = await EventSchema.updateOne(eventByID);
+            // const updatedPerson = await PersonSchema.updateOne(foundPerson);
+
+            const UpdatedEvent = await EventSchema.updateOne({ _id: eventByID._id }, { team: [...eventByID.team] });
+            const updatedPerson = await PersonSchema.updateOne({ _id: foundPerson._id }, { member: [...foundPerson.member], requests: [...requestList] });
             res.status(200).json({
                 success: true,
-                foundPerson,
-                eventByID
+                updatedPerson,
+                UpdatedEvent
             })
         }
         else {
@@ -285,11 +328,8 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
         res.status(402).json({
             success: false,
             msg: "User  Not Found"
-
         })
     }
-
-
 })
 
 

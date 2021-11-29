@@ -58,7 +58,7 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
             NotesText: noteText
         })
         event.notes.push(noteCreated._id);
-        const updatedEvent = await EventSchema.updateOne(event);
+        const updatedEvent = await EventSchema.updateOne({_id:event._id},{notes:[...event.notes]});
 
         res.status(200).json(
             {
@@ -84,12 +84,12 @@ exports.sendRequest = catchAsyncErrors(async (req, res, next) => {
     if (foundUser) 
     {
 
-        // foundUser.requests.push(eventId);
+        foundUser.requests.push(eventId);
         // const request_list =  foundUser.requests;
         // request_list.push(eventId);
         // foundUser.requests = [...request_list];
 
-        const updated = await PersonSchema.updateOne(foundUser)
+        const updated = await PersonSchema.updateOne({_id:foundUser._id }, {requests:[...foundUser.requests]}  )
         
         res.status(200).json({
             success: true,
@@ -109,7 +109,7 @@ exports.changeStatus = catchAsyncErrors(async (req, res, next) => {
     if (eventById.userId) {
         if (eventById.userId == plannerId) {
             eventById.status = eventStatus;
-            const updated = await EventSchema.updateOne(eventById);
+            const updated = await EventSchema.updateOne({_id:eventById._id},{eventStatus:eventStatus});
             res.status(200).json(
                 {
                     success: true,
@@ -142,7 +142,7 @@ exports.changeDesc = catchAsyncErrors(async (req, res, next) => {
     if (eventById.userId) {
         if (eventById.userId == plannerId) {
             eventById.eventDesc = eventDesc;
-            const updated = await EventSchema.updateOne(eventById);
+            const updated = await EventSchema.updateOne({_id:eventById._id},{eventById});
             res.status(200).json(
                 {
                     success: true,
@@ -178,8 +178,8 @@ exports.assignTask = catchAsyncErrors(async (req, res, next) => {
     const personById = await PersonSchema.findById(taskAssignedTo)
     eventById.tasks.push(taskCreated._id);
     personById.tasks.push(taskCreated._id)
-    const UpdatedEvent = await EventSchema.updateOne(eventById);
-    const updatedPerson = await PersonSchema.updateOne(personById);
+    const UpdatedEvent = await EventSchema.updateOne({_id:eventById._id},{eventById});
+    const updatedPerson = await PersonSchema.updateOne({_id:personById._id},{personById});
 
     res.status(200).json({
         success: true,
@@ -215,7 +215,7 @@ exports.addGuest = catchAsyncErrors(async (req, res, next) => {
 
         const eventList = event.guestList;
         event.guestList.push(guestCreated._id)
-        const updatedEvent = await EventSchema.updateOne(event);
+        const updatedEvent = await EventSchema.updateOne({_id:event._id},{event});
         res.status(200).json(
             {
                 success: true,

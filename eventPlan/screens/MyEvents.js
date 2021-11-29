@@ -61,11 +61,13 @@ const MyEvents = () => {
                                 <Text style={[ styles.section, {color:colors.text, paddingLeft:"5px" }]}> {eventItem.eventDesc} </Text>
                                 
                                 </View>
+                               
                                 <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
-
+                                
                                 <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
                                         Planner 
                                 </Text>
+                               
                                 <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
                                         {eventItem.userId}
                                 </Text>

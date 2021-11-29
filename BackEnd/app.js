@@ -13,5 +13,4 @@ app.use(personRoutes)
 app.use(taskRoutes)
 app.use(noteRoutes)
 
-
 module.exports = app;
