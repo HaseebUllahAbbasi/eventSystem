@@ -26,6 +26,10 @@ import DisplayAllEvents from "./screens/DisplayAllEvents";
 import MyRequests from "./screens/MyRequests";
 import Tasks from "./screens/Tasks";
 import CreateEvent from "./screens/CreateEvents";
+import SignInScreen from "./screens/Sign";
+import CreateNote from "./screens/createNote";
+import CreateTask from "./screens/createTasks";
+import NotFoundScreen from "./screens/NotFoundScreen";
 
 
 const Drawer = createDrawerNavigator();
@@ -67,8 +71,13 @@ export default function App() {
         <Drawer.Screen name="My Events" component={MyEvents}/>
         <Drawer.Screen name="My Tasks" component={Tasks}/>
         <Drawer.Screen name="Logout" component={LoginScreen}/>
-        <Drawer.Screen name="Sign In" component={LoginScreen}/>
-        <Drawer.Screen name="Sign Up" component={NewAccount}/>
+        <Drawer.Screen name="Sign In" component={SignInScreen}/>
+        <Drawer.Screen name="Create New Note" component={CreateNote}/>
+        <Drawer.Screen name="Create New Task" component={CreateTask}/>
+        <Drawer.Screen name="Notes Of Event" component={NotFoundScreen}/>
+        <Drawer.Screen name="Send Request" component={NotFoundScreen}/>
+        <Drawer.Screen name="All Members of Event" component={NotFoundScreen}/>
+        
         
         
         

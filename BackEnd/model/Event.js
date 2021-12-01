@@ -14,6 +14,7 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please Enter Event Name"],
         maxlength: [20, "Your Name cannot exceed 20 charachters"],
+        unique:[true,"Event Already Exists with Name"]
     },
     eventDesc: {
         type: String,
