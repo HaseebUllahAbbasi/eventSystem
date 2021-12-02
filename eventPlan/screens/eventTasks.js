@@ -4,7 +4,7 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import { CheckBox } from 'react-native';
 
-const Tasks = () => {
+const EventTasks = () => {
     const colors = useTheme();
 
     const [data, setData] = useState([
@@ -76,4 +76,4 @@ const Tasks = () => {
     )
 
 }
-export default Tasks;
+export default EventTasks;

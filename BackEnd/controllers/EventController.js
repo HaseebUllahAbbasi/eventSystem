@@ -57,8 +57,10 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
             eventId: eventId,
             NotesText: noteText
         })
+        
         event.notes.push(noteCreated._id);
         const updatedEvent = await EventSchema.updateOne({_id:event._id},{notes:[...event.notes]});
+
 
         res.status(200).json(
             {
