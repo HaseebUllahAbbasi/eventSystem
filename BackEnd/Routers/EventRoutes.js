@@ -1,5 +1,5 @@
 const express = require('express');
-const { createEvent,assignTask,changeDesc,changeStatus,getTasksByEventId,getEventByID,addGuest,sendRequest,addNotes,getAllEvents,getNotesOfEvent } = require('../controllers/EventController');
+const { createEvent,assignTask,changeDesc,sendRequestByName,changeStatus,getTasksByEventId,getEventByID,addGuest,sendRequest,addNotes,getAllEvents,getNotesOfEvent } = require('../controllers/EventController');
 const router = express.Router();
 router.route('/event/:eventId').get(getEventByID);
 router.route('/addGuest').post(addGuest)
@@ -12,6 +12,7 @@ router.route('/assignTask').post(assignTask);
 router.route('/assignTask/:eventId').post(getTasksByEventId);
 router.route('/changeStatus').post(changeStatus);
 router.route('/changeDesc').post(changeDesc);
+router.route('/sendReqByName').post(sendRequestByName);
 
 
 

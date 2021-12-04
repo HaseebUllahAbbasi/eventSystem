@@ -292,19 +292,26 @@ exports.requestsById = catchAsyncErrors(async (req, res, next) => {
 
 
 })
-exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
-    const { userId, eventId } = req.body;
+exports.acceptRequest = catchAsyncErrors(async (req, res, next) => 
+{
+    const { userId, eventId, eventName } = req.body;
     const foundPerson = await PersonSchema.findById(userId);
-    if (foundPerson) {
+    if (foundPerson) 
+    {
         const requestList = foundPerson.requests;
-        const index = requestList.indexOf(eventId);
-        if (index != -1) {
+        const index = requestList.indexOf((element) => {
+                console.log(element)    
+            return element.id == eventId;
+        } );
+        
+        if (index != -1) 
+        {
             const addingToEvent = foundPerson.requests.splice(index, 1);
-            foundPerson.member.push(addingToEvent.toString())
+            foundPerson.member.push(addingToEvent)
             const eventByID = await EventSchema.findById(addingToEvent);
-            eventByID.team.push(userId)
+            eventByID.team.push({id: foundPerson._id , name :  foundPerson.name})
             requestList.splice(index, 1);
-
+            
             // const UpdatedEvent = await EventSchema.updateOne(eventByID);
             // const updatedPerson = await PersonSchema.updateOne(foundPerson);
 
@@ -320,7 +327,9 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
 
             res.status(402).json({
                 success: false,
-                msg: "Not Found The Event"
+                msg: "Not Found The Event",
+                requestList,
+                index
             })
         }
     }

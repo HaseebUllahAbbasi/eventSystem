@@ -1,36 +1,34 @@
-import React , {useState}from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
-const MyRequests = ()=>
-{
+const MyRequests = () => {
     const { colors } = useTheme();
-    const [requests,setRequests] = useState([
-        {id :"id_1",  eventName : "Name of Event" ,  Desc :"Lorem IPSUM , This is Descrption" },
-        {id :"id_1",  eventName : "Name of Event" ,Desc :"Lorem IPSUM , This is Descrption" }  ,
-        {id :"id_1",  eventName : "Name of Event"  ,Desc :"Lorem IPSUM , This is Descrption"},
-        {id :"id_1",  eventName : "Name of Event" ,Desc :"Lorem IPSUM , This is Descrption"}
-    ]);    
+    const [requests, setRequests] = useState([
+        { id: "id_1", eventName: "Name of Event", Desc: "Lorem IPSUM , This is Descrption" },
+        { id: "id_1", eventName: "Name of Event", Desc: "Lorem IPSUM , This is Descrption" },
+        { id: "id_1", eventName: "Name of Event", Desc: "Lorem IPSUM , This is Descrption" },
+        { id: "id_1", eventName: "Name of Event", Desc: "Lorem IPSUM , This is Descrption" }
+    ]);
     return (
         <View>
             <Card.Title> My Requests</Card.Title>
             {
-                requests.length != 0 &&  requests.map(item=> <Card>
-                <Card.Title>
-                    {item.eventName}
-                </Card.Title>
-                 <Card.Divider/>
-                 <View>
-                 <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        {item.Desc}
-                                    </Text>
-                 <Button style={[{marginTop:"30px" , marginBottom:"5px", marginLeft:"40px", marginRight:"40px"  }]} type="outline" size={5} title={"Accept Request"}>
-                 
-                 </Button>   
+                requests.length != 0 && requests.map(item => <Card>
+                    <Card.Title>
+                        {item.eventName}
+                    </Card.Title>
+                    <Card.Divider />
+                    <View>
+                        <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                            {item.Desc}
+                        </Text>
+                        <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Accept Request"}>
+                        </Button>
 
-                 </View>
-                 </Card>)
+                    </View>
+                </Card>)
             }
         </View>
     )
@@ -82,5 +80,5 @@ const styles = StyleSheet.create({
     },
     blackColor: {
         color: "black",
-      }
+    }
 });

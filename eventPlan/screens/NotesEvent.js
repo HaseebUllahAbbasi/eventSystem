@@ -1,11 +1,9 @@
-import React, { useState } from "react"
-import { View, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
 
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
-
-import { Text } from "../components/Themed"
 const NotesEvent = () => {
     const { colors } = useTheme();
     const [data, setData] = useState({
@@ -14,19 +12,19 @@ const NotesEvent = () => {
             {
                 "_id": "61a902652c03ace148847b40",
                 "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "This is Note Text 2",
+                "NotesText": "Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also ...",
                 "__v": 0
             },
             {
                 "_id": "61a902762c03ace148847b44",
                 "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "This is Note Text 3",
+                "NotesText": "The Lorem ipum filling text is used by graphic designers, programmers and printers with the aim of occupying the spaces of a website, an advertising product or ..",
                 "__v": 0
             },
             {
                 "_id": "61a9027a2c03ace148847b48",
                 "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "This is Note Text 4",
+                "NotesText": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is",
                 "__v": 0
             }
         ]
@@ -35,27 +33,25 @@ const NotesEvent = () => {
     );
     return (
         <View>
-            <Text >
+                <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Add New Note"}></Button>
                 {
-                    data.success == true && data.tasks.map((note, i) => <View key={i} style={[styles.row, {width:"100%"}]}>
-                        {/* {eventItem.eventStatus} */}
-                        <Card >
-                            <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
-                            <Card.Divider />
-                            <View style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
-                                <View>
-                                    <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                        {note.NotesText}
-                                    </Text>
-                                    
-                                </View>
+                    data.success == true && data.tasks.map((note, i) => <Card key={i} >
+                        <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
+                        <Card.Divider />
+                        <View style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
+                            <View>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {note.NotesText}
+                                </Text>
+                                <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Remove Note"}>
+                                </Button>
                             </View>
-                        </Card>
-                    </View>)
+                        </View>
+                    </Card>
+                    )
 
                 }
 
-            </Text>
 
         </View>
     )
