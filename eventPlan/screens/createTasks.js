@@ -21,42 +21,102 @@ const height_logo = height * 0.25;
 const CreateTask = () => {
     const { colors } = useTheme();
 
+    const handleEventId = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                eventID: value,
+                isValidEventId : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                eventID: value,
+                isValidEventId : false
+            })
+        }
+    }
 
+
+    const handlePlannerId = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                plannerId: value,
+                isValidPlanner : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                plannerId: value,
+                isValidPlanner : false
+            })
+        }
+    }
+
+
+    const handleDesc = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                eventDesc: value,
+                isValidDesc : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                eventDesc: value,
+                isValidDesc : false
+            })
+        }
+    }
+    const handleValidUser = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                assignTo: value,
+                isValidPerson : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                assignTo: value,
+                isValidPerson : false
+            })
+        }
+    }
+
+    
     const [data, setData] = useState({
-        eventId: "Party_1",
-        plannerId: "61a4e0045f599ed12becaaee",
-        Note: "This is Note"
+        isValidEventId: false,
+        isValidPlanner: false,
+        isValidPerson : false,
+        isValidTask : false,
+        eventID: "",
+        assignTo: "",
+        plannerId: "",
+        task: "",
     });
-    const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
 
     return (
         <View style={styles.container}>
@@ -89,10 +149,9 @@ const CreateTask = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handleEventId(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidEventId ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -105,7 +164,7 @@ const CreateTask = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidEventId ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Event ID Should be Valid.</Text>
@@ -133,10 +192,9 @@ const CreateTask = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handlePlannerId(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidPlanner ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -149,7 +207,7 @@ const CreateTask = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidPlanner ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
                             <Text style={styles.errorMsg}>Your Id Must be Valid.</Text>
                         </Animatable.View>
@@ -174,10 +232,9 @@ const CreateTask = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handleValidUser(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidPerson ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -190,7 +247,7 @@ const CreateTask = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidPerson ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Id Must be Valid.</Text>
@@ -216,9 +273,8 @@ const CreateTask = () => {
                             }]}
                             autoCapitalize="none"
                             onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidTask ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -231,7 +287,7 @@ const CreateTask = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidTask ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Task Should Be Valid.</Text>

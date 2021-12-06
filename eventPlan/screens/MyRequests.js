@@ -15,7 +15,7 @@ const MyRequests = () => {
         <View>
             <Card.Title> My Requests</Card.Title>
             {
-                requests.length != 0 && requests.map((item,i) => <Card key={i}>
+                requests.length != 0 && requests.map((item, i) => <Card key={i}>
                     <Card.Title>
                         {item.eventName}
                     </Card.Title>
@@ -24,8 +24,17 @@ const MyRequests = () => {
                         <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
                             {item.Desc}
                         </Text>
-                        <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Accept Request"}>
-                        </Button>
+                        <View style={[styles.row, { justifyContent: "space-evenly" }]}>
+
+
+                            <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "80px", color: "red" }]} title={"Accept"}>
+                            </Button>
+
+                            <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "80px" }]} type="outline" size={3} title={"Cancel"}>
+                            </Button>
+
+                        </View>
+
 
                     </View>
                 </Card>)
