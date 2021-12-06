@@ -48,12 +48,11 @@ const DisplayAllEvents = () => {
         <View>
             <Text >
                 {
-                    data.success == true && data.events.map((eventItem, i) => <Text>
-                        {/* {eventItem.eventStatus} */}
-                        <Card>
+                    data.success == true && data.events.map((eventItem, i) => 
+                        <Card key={i}>
                             <Card.Title style={[{backgroundColor:colors.card}]}>{eventItem.eventName}</Card.Title>
                             <Card.Divider />
-                            <View key={i} style={[{backgroundColor:colors.border , borderRadius:"5px", padding:"5px",color: colors.text}]}>
+                            <View style={[{backgroundColor:colors.border , borderRadius:"5px", padding:"5px",color: colors.text}]}>
                                 <View>
                                 <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
                                         Description
@@ -99,12 +98,15 @@ const DisplayAllEvents = () => {
                                         {eventItem.notes.length}
                                 </Text>
                                 </View>
+                                    
+                                    <Button style={[{ marginTop: "20px", marginBottom: "5px" }]} type="outline" size={3} title={"View"}>
+                                </Button>
                                 
                             </View>
                             
 
                         </Card>
-                    </Text>)
+                    )
 
                 }
 

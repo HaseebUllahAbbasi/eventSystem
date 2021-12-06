@@ -22,41 +22,84 @@ const CreateNote = () => {
     const { colors } = useTheme();
 
 
+    // const [data, setData] = useState({
+    //     eventId: "Party_1",
+    //     plannerId: "61a4e0045f599ed12becaaee",
+    //     Note: "This is Note"
+    // });
+    const handleEventId = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                eventID: value,
+                isValidEventId : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                eventID: value,
+                isValidEventId : false
+            })
+        }
+    }
+
+
+    const handlePlannerId = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                plannerId: value,
+                isValidPlanner : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                plannerId: value,
+                isValidPlanner : false
+            })
+        }
+    }
+
+    const handleDesc = (value)=>
+    {
+        if(value.trim().length>4)
+        {
+            setData({
+                ...data,
+                eventDesc: value,
+                isValidDesc : true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                eventDesc: value,
+                isValidDesc : false
+            })
+        }
+    }
+    
     const [data, setData] = useState({
-        eventId: "Party_1",
-        plannerId: "61a4e0045f599ed12becaaee",
-        Note: "This is Note"
+        isValidEventId: false,
+        isValidPlanner: false,
+        isValidDesc : false,
+        eventID: "",
+        plannerId: "",
+        eventDesc: "",
     });
-    const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
+    
 
     return (
         <View style={styles.container}>
@@ -89,10 +132,9 @@ const CreateNote = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handleEventId(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidEventId ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -105,7 +147,7 @@ const CreateNote = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidEventId ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Event ID Should be Valid.</Text>
@@ -133,10 +175,9 @@ const CreateNote = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handlePlannerId(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidPlanner ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -149,7 +190,7 @@ const CreateNote = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidPlanner ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Your Id Must be Valid.</Text>
@@ -176,10 +217,9 @@ const CreateNote = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => handleDesc(val)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidDesc ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -192,7 +232,7 @@ const CreateNote = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidDesc ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Description Should Be Valid.</Text>
@@ -265,6 +305,9 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
+        marginLeft:"8px",
+        border:"1px solid #D3D3D3	",
+        borderRadius:"10px",
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

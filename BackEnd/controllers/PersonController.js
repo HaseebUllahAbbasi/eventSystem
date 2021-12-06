@@ -299,17 +299,24 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) =>
     if (foundPerson) 
     {
         const requestList = foundPerson.requests;
-        const index = requestList.indexOf((element) => {
-                console.log(element)    
-            return element.id == eventId;
-        } );
+        
+        const index =  searchIndex(requestList,eventId);
         
         if (index != -1) 
         {
+
             const addingToEvent = foundPerson.requests.splice(index, 1);
+            
             foundPerson.member.push(addingToEvent)
-            const eventByID = await EventSchema.findById(addingToEvent);
+            console.log(foundPerson)
+            console.log(addingToEvent)
+
+
+            const eventByID = await EventSchema.findById(eventId);
+            console.log(eventByID)
+
             eventByID.team.push({id: foundPerson._id , name :  foundPerson.name})
+
             requestList.splice(index, 1);
             
             // const UpdatedEvent = await EventSchema.updateOne(eventByID);
@@ -319,8 +326,6 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) =>
             const updatedPerson = await PersonSchema.updateOne({ _id: foundPerson._id }, { member: [...foundPerson.member], requests: [...requestList] });
             res.status(200).json({
                 success: true,
-                updatedPerson,
-                UpdatedEvent
             })
         }
         else {
@@ -340,5 +345,19 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) =>
         })
     }
 })
-
-
+const searchIndex = (list,id)=>
+{
+    let boolean = false; 
+    list.forEach((element,i) => {
+        console.log(element.id == id)
+        if(element.id == id)
+        {
+            boolean = true;
+            return i;
+        }
+    });
+    if(!boolean)
+    {
+        return -1;
+    }
+}

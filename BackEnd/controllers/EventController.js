@@ -41,8 +41,7 @@ exports.getMembersByEvent = catchAsyncErrors(async (req, res, next) => {
 exports.removeMember = catchAsyncErrors(async (req, res, next) => {
     const { eventId, plannerId, memberId, memberName } = req.body;
     const event = await EventSchema.findById(eventId);
-    if (event) 
-    {
+    if (event) {
         if (event.userId == plannerId) {
             if (event.team.length == 0) {
                 res.status(401).json(
@@ -52,12 +51,10 @@ exports.removeMember = catchAsyncErrors(async (req, res, next) => {
                     }
                 )
             }
-            else 
-            {
+            else {
                 const team = event.team;
                 const index = team.indexOf({ id: memberId, name: memberName });
-                if (index == -1) 
-                {
+                if (index == -1) {
                     res.status(404).json(
                         {
                             success: false,
@@ -68,14 +65,14 @@ exports.removeMember = catchAsyncErrors(async (req, res, next) => {
                 else {
                     team.splice(index, 1);
                     personFound = await PersonSchema.findById(memberId);
-                    
-                    const memberList =  personFound.member;
+
+                    const memberList = personFound.member;
                     const indexPerson = team.indexOf({ id: memberId, name: memberName });
                     memberList.splice(indexPerson, 1);
                     const UpdatedEvent = await EventSchema.updateOne({ _id: eventByID._id }, { team: [...team] });
                     const updatedPerson = await PersonSchema.updateOne({ _id: foundPerson._id }, { member: [...memberList] });
 
-                    
+
 
                 }
 
@@ -180,10 +177,9 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
 exports.sendRequestByName = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventId, eventName, recipientName } = req.body;
     const foundUsers = await PersonSchema.find();
-    foundUser = foundUsers.filter(user=> user.name == recipientName);
+    foundUser = foundUsers.filter(user => user.name == recipientName);
 
-    if (foundUser[0]) 
-    {
+    if (foundUser[0]) {
         foundUser[0].requests.push({ id: eventId, name: eventName });
         const updated = await PersonSchema.updateOne({ _id: foundUser[0]._id }, { requests: [...foundUser[0].requests] })
 
@@ -282,6 +278,7 @@ exports.changeDesc = catchAsyncErrors(async (req, res, next) => {
     }
 
 })
+
 exports.assignTask = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventId, taskAssignedTo, taskText } = req.body;
     const taskCreated = await TaskSchema.create({
@@ -300,9 +297,41 @@ exports.assignTask = catchAsyncErrors(async (req, res, next) => {
         success: true,
         taskCreated,
     })
+})
+exports.assignTaskByName = catchAsyncErrors(async (req, res, next) => {
+    const { plannerId, eventId, taskAssignedTo, taskText } = req.body;
+    const taskCreated = await TaskSchema.create({
+        eventId: eventId,
+        taskText: taskText,
+        assignTo: taskAssignedTo
+    })
+    const eventById = await EventSchema.findById(eventId);
+    const personsById = await PersonSchema.find();
+    personById = personsById.filter(person => person.name == taskAssignedTo);
+    if (personsById) 
+    {
+        eventById.tasks.push(taskCreated._id);
+        personById.tasks.push(taskCreated._id)
+        const UpdatedEvent = await EventSchema.updateOne({ _id: eventById._id }, { eventById });
+        const updatedPerson = await PersonSchema.updateOne({ _id: personById._id }, { personById });
 
+        res.status(200).json({
+            success: true,
+            taskCreated,
+        })
+    }
+    else
+    {
+        res.status(404).json({
+            success: false,
+            message: "Person Not Found",
+        })
+    
+    }
 
 })
+
+
 exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
     const { eventId } = req.body;
     const notesList = await NotesSchema.find();

@@ -305,6 +305,9 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
+        marginLeft:"8px",
+        border:"1px solid #D3D3D3	",
+        borderRadius:"10px",
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

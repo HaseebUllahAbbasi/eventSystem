@@ -22,55 +22,102 @@ const CreateEvent = () => {
     const { colors } = useTheme();
 
     const [data, setData] = useState({
-        eventName: "Party_1",
+        isValidEventName: false,
+        isValidPId : false,
+        isValidDesc:false,
+        isValidPlanner: false,
+        eventName: "",
         plannerId: "61a4e0045f599ed12becaaee",
         eventStatus: false,
         eventDesc: "This is Desc",
-        userName: "Shaikh"
+        PlannerName: "Shaikh"
     });
-    const handleValidUser = (val) => {
+    
+    const handleValidPlannerId = (val) => {
         if (val.trim().length >= 4) {
             setData({
                 ...data,
-                isValidUser: true
+                isValidPId: true
             });
         } else {
             setData({
                 ...data,
-                isValidUser: false
+                isValidPId: false
             });
         }
     }
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
+
+    
+    const  eventNameChange = (value)=>
+    {
+        if(value.trim().length>4)
+        setData({
+            ...data,
+            eventName: value,
+            isValidEventName: true
+        })
+        else
+        setData({
+            ...data,
+            eventName: value,
+            isValidEventName: false
+            
+        })
+    }
+    const  eventPlannerId = (value)=>
+    {
+        if(value.trim().length>4)
+        setData({
+            ...data,
+            isValidPId: value,
+            isValidPId: true
+        })
+        else
+        setData({
+            ...data,
+            isValidPId: value,
+            isValidPId: false
+        })
+    }
+
+    const  eventPlannerName = (value)=>
+    {
+        if(value.trim().length>4)
+        setData({
+            ...data,
+            
+            PlannerName: value,
+            isValidPlanner: true
+        })
+        else
+        setData({
+            ...data,
+            PlannerName: value,
+            isValidPlanner: false
+        })
+    }
+    
+
+    const  eventDesc = (value)=>
+    {
+        if(value.trim().length>4)
+        setData({
+            ...data,
+            eventDesc: value,
+            isValidDesc: true
+        })
+        else
+        setData({
+            ...data,
+            eventDesc: value,
+            isValidDesc: false
+        })
     }
 
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
-            {/* <View style={styles.header}>
-                <Animatable.Image
-                    animation="bounceIn"
-                    duraton="1500"
-                    source={require('../assets/logo.png')}
-                    style={styles.logo}
-                    resizeMode="stretch"
-                />
-            </View> */}
+            
             <View style={styles.text_header}>
                 <Text style={[styles.text_header,{margin:"10px"}]}> Enter Event Information  </Text>
             </View>
@@ -98,10 +145,12 @@ const CreateEvent = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => eventNameChange(val)}
+                            // onEndEditing={(e) => handleValidEventName(e.nativeEvent.text)}
+                            value={data.eventName}
+
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidEventName ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -114,7 +163,7 @@ const CreateEvent = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidEventName ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Event Name must be 4 characters long.</Text>
@@ -140,10 +189,10 @@ const CreateEvent = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => eventPlannerName(val)}
+                            // onEndEditing={(e) => handleValidPlannerName(e.nativeEvent.text)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidPlanner ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -156,7 +205,7 @@ const CreateEvent = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidPlanner ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
@@ -181,10 +230,10 @@ const CreateEvent = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => eventPlannerId(val)}
+                            // onEndEditing={(e) => handleValidPlannerId(e.nativeEvent.text)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidPId ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -197,7 +246,7 @@ const CreateEvent = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidPId ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Id Should Be Valid.</Text>
@@ -223,10 +272,10 @@ const CreateEvent = () => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
-                            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                            onChangeText={(val) => eventDesc(val)}
+                            // onEndEditing={(e) => handleValidDesc(e.nativeEvent.text)}
                         />
-                        {data.check_textInputChange ?
+                        {data.isValidDesc ?
                             <Animatable.View
                                 animation="bounceIn"
                             >
@@ -239,7 +288,7 @@ const CreateEvent = () => {
                             : null}
                     </View>
 
-                    {data.isValidUser ? null :
+                    {data.isValidDesc ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
                             <Text style={styles.errorMsg}>Description Should Be Valid.</Text>
@@ -312,12 +361,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#FF0000',
         paddingBottom: 5
     },
-    textInput: {
-        flex: 1,
-        marginTop: Platform.OS === 'ios' ? 0 : -12,
-        paddingLeft: 10,
-        color: '#05375a',
-    },
+    
     errorMsg: {
         color: '#FF0000',
         fontSize: 14,
@@ -325,6 +369,15 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         marginTop: 50
+    },
+    textInput: {
+        marginLeft:"8px",
+        border:"1px solid #D3D3D3	",
+        borderRadius:"10px",
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,
+        paddingLeft: 10,
+        color: '#05375a',
     },
     signIn: {
         width: '100%',

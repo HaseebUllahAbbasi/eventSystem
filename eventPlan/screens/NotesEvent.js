@@ -8,7 +8,7 @@ const NotesEvent = () => {
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
-        "tasks": [
+        "notes": [
             {
                 "_id": "61a902652c03ace148847b40",
                 "eventId": "61a4e0ed5f599ed12becaaf3",
@@ -35,7 +35,7 @@ const NotesEvent = () => {
         <View>
                 <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Add New Note"}></Button>
                 {
-                    data.success == true && data.tasks.map((note, i) => <Card key={i} >
+                    data.success == true && data.notes.map((note, i) => <Card key={i} >
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
                         <Card.Divider />
                         <View style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>

@@ -15,7 +15,7 @@ const MyRequests = () => {
         <View>
             <Card.Title> My Requests</Card.Title>
             {
-                requests.length != 0 && requests.map(item => <Card>
+                requests.length != 0 && requests.map((item,i) => <Card key={i}>
                     <Card.Title>
                         {item.eventName}
                     </Card.Title>

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Card, ListItem,ThemeProvider, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
 const MyEvents = () => {
@@ -48,65 +48,74 @@ const MyEvents = () => {
         <View>
             <Text >
                 {
-                    data.success == true && data.events.map((eventItem, i) => <Text>
-                        {/* {eventItem.eventStatus} */}
-                        <Card>
-                            <Card.Title style={[{backgroundColor:colors.card}]}>{eventItem.eventName}</Card.Title>
-                            <Card.Divider />
-                            <View key={i} style={[{backgroundColor:colors.border , borderRadius:"5px", padding:"5px",color: colors.text}]}>
-                                <View>
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        Description
-                                    </Text>
-                                <Text style={[ styles.section, {color:colors.text, paddingLeft:"5px" }]}> {eventItem.eventDesc} </Text>
-                                
-                                </View>
-                               
-                                <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
-                                
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        Planner 
+                    data.success == true && data.events.map((eventItem, i) => <Card key={i}>
+                        <Card.Title style={[{ backgroundColor: colors.card }]}>{eventItem.eventName}</Card.Title>
+                        <Card.Divider />
+                        <View key={i} style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
+                            <View>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Description
                                 </Text>
-                               
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        {eventItem.userId}
-                                </Text>
+                                <Text style={[styles.section, { color: colors.text, paddingLeft: "5px" }]}> {eventItem.eventDesc} </Text>
 
-                                
-                                </View>
-                                <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
-
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        Team Members 
-                                </Text>
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        {eventItem.team.length}
-                                </Text>
-                                </View>
-                                <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
-
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        Tasks Assigned 
-                                </Text>
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        {eventItem.tasks.length}
-                                </Text>
-                                </View>
-                                <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
-
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        Notes 
-                                </Text>
-                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
-                                        {eventItem.notes.length}
-                                </Text>
-                                </View>
-                                
                             </View>
-                            
 
-                        </Card>
-                    </Text>)
+                            <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Planner
+                                </Text>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {eventItem.userId}
+                                </Text>
+
+
+                            </View>
+                            <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Team Members
+                                </Text>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {eventItem.team.length}
+                                </Text>
+                            </View>
+                            <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Tasks Assigned
+                                </Text>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {eventItem.tasks.length}
+                                </Text>
+                            </View>
+                            <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Notes
+                                </Text>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {eventItem.notes.length}
+                                </Text>
+                            </View>
+                            <View style={[styles.row, { justifyContent: "space-evenly" }]}>
+
+                                <ThemeProvider >
+
+                                    <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "80px", color: "red" }]} title={"Complete"}>
+                                    </Button>
+                                </ThemeProvider>
+
+                                <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "80px" }]} type="outline" size={3} title={"View"}>
+                                </Button>
+
+                            </View>
+                        </View>
+
+
+                    </Card>
+                    )
 
                 }
 
@@ -165,5 +174,5 @@ const styles = StyleSheet.create({
     },
     blackColor: {
         color: "black",
-      }
+    }
 });
