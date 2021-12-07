@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { Card,  Button } from 'react-native-elements'
+
 import { View, Text, StyleSheet } from "react-native";
-const OneEvent = (props) => {
+import { useTheme } from '@react-navigation/native';
+const OneEvent = (props) => 
+{
+    const { colors } = useTheme();
 
     const navigation = props.navigation;
     const [data, setData] = useState({
-        "_id": "619032f2271ff186b1c1eca7",
+        "_id": "619032f2271ff186b1c1ech7",
         "userId": "619032a107",
         "eventName": "BirthDay",
         "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
@@ -95,3 +100,53 @@ const OneEvent = (props) => {
 }
 export default OneEvent;
 
+
+
+const styles = StyleSheet.create({
+    drawerContent: {
+        flex: 1,
+    },
+    userInfoSection: {
+        paddingLeft: 20,
+    },
+    title: {
+        fontSize: 16,
+        marginTop: 3,
+        fontWeight: 'bold',
+    },
+    caption: {
+        fontSize: 14,
+        lineHeight: 14,
+    },
+    row: {
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    section: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 15,
+    },
+    paragraph: {
+        fontWeight: 'bold',
+        marginRight: 3,
+    },
+    drawerSection: {
+        marginTop: 15,
+    },
+    bottomDrawerSection: {
+        marginBottom: 15,
+        borderTopColor: '#f4f4f4',
+        borderTopWidth: 1
+    },
+    preference: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+    },
+    blackColor: {
+        color: "black",
+    }
+});

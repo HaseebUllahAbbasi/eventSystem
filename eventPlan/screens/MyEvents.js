@@ -121,7 +121,9 @@ const MyEvents = (props) => {
 
                                 </ThemeProvider>
 
-                                <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "100px" }]} type="outline" size={3} title={"View"}>
+                                <Button onPress={()=> {
+                                    navigation.navigate('OneEvent')
+                                }} style={[{ marginTop: "20px", marginBottom: "5px", width: "100px" }]} type="outline" size={3} title={"View"}>
                                 </Button>
 
                             </View>
