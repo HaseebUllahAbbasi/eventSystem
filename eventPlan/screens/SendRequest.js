@@ -18,7 +18,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
-const SendRequest = () => {
+const SendRequest = (props) => {
+    const navigation = props.navigation;
     const data_1 = {eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
     const { colors } = useTheme();
 

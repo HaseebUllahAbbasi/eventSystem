@@ -11,7 +11,9 @@ const theme = {
     }
   };
   
-const EventTeam = () => {
+const EventTeam = (props) => {
+    const navigation = props.navigation;
+
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
@@ -63,11 +65,11 @@ const EventTeam = () => {
                             
                             <Button   type="outline"  size={3} style={[{ marginTop: "20px", marginBottom: "5px" , width:"80px",color:"red"}]}  title={"Remove"}>
                                 </Button>
-                            </ThemeProvider>
                                 
                                 <Button  style={[{ marginTop: "20px", marginBottom:"5px" ,width:"80px" }]} type="outline" size={3} title={"View"}>
                                 </Button>
-                                
+                                </ThemeProvider>
+
                             </View>
                         </View>
                     </Card>

@@ -4,7 +4,8 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
 
-const NotesEvent = () => {
+const NotesEvent = (props) => {
+    const navigation = props.navigation;
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,

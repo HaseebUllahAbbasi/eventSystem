@@ -18,7 +18,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
-const CreateNote = () => {
+const CreateNote = (props) => {
+    const navigation = props.navigation;
     const { colors } = useTheme();
 
 

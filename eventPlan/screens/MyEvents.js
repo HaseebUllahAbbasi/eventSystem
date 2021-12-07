@@ -6,7 +6,9 @@ import { useTheme } from '@react-navigation/native';
 import { Card, ListItem,ThemeProvider, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
-const MyEvents = () => {
+const MyEvents = (props) => {
+    const navigation = props.navigation;
+
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
@@ -99,15 +101,27 @@ const MyEvents = () => {
                                     {eventItem.notes.length}
                                 </Text>
                             </View>
+                            <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
+
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    Status
+                                </Text>
+                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                    {eventItem.eventStatus ? "Completed" : "In Progess" }
+                                </Text>
+                            </View>
                             <View style={[styles.row, { justifyContent: "space-evenly" }]}>
 
                                 <ThemeProvider >
 
-                                    <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "80px", color: "red" }]} title={"Complete"}>
-                                    </Button>
+                                {eventItem.eventStatus ? 
+                                     <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "100px", color: "red" }]} title={"Complete"} disabled>
+                                    </Button> : <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "100px", color: "red" }]} title={"Complete"}>
+                                    </Button> }
+
                                 </ThemeProvider>
 
-                                <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "80px" }]} type="outline" size={3} title={"View"}>
+                                <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "100px" }]} type="outline" size={3} title={"View"}>
                                 </Button>
 
                             </View>

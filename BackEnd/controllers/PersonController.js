@@ -10,16 +10,14 @@ exports.requestsDetailsById = catchAsyncErrors(async (req, res, next) => {
     if (foundPerson) {
         const requestDetailedData = [];
         const requestList = foundPerson.requests;
-        if (requestList.length == 0) 
-        {
+        if (requestList.length == 0) {
             res.status(401).json({
                 success: false,
                 msg: "has no requests"
 
             })
         }
-        else 
-        {
+        else {
             const allEvents = await EventSchema.find();
             for (let i = 0; i < allEvents.length; i++) {
                 for (let j = 0; j < requestList.length; j++) {
@@ -136,10 +134,22 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
         }
         else return null;
     })
-    res.status(200).json({
-        success: true,
-        users
-    })
+    if (users) {
+
+        res.status(200).json({
+            success: true,
+            users
+        })
+
+    }
+    else
+    {
+        res.status(200).json({
+            success:false,
+            message: "Incorrect Email or Password"
+        })
+    }
+
 
 
 })
@@ -292,21 +302,18 @@ exports.requestsById = catchAsyncErrors(async (req, res, next) => {
 
 
 })
-exports.acceptRequest = catchAsyncErrors(async (req, res, next) => 
-{
+exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
     const { userId, eventId, eventName } = req.body;
     const foundPerson = await PersonSchema.findById(userId);
-    if (foundPerson) 
-    {
+    if (foundPerson) {
         const requestList = foundPerson.requests;
-        
-        const index =  searchIndex(requestList,eventId);
-        
-        if (index != -1) 
-        {
+
+        const index = searchIndex(requestList, eventId);
+
+        if (index != -1) {
 
             const addingToEvent = foundPerson.requests.splice(index, 1);
-            
+
             foundPerson.member.push(addingToEvent)
             console.log(foundPerson)
             console.log(addingToEvent)
@@ -315,10 +322,10 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) =>
             const eventByID = await EventSchema.findById(eventId);
             console.log(eventByID)
 
-            eventByID.team.push({id: foundPerson._id , name :  foundPerson.name})
+            eventByID.team.push({ id: foundPerson._id, name: foundPerson.name })
 
             requestList.splice(index, 1);
-            
+
             // const UpdatedEvent = await EventSchema.updateOne(eventByID);
             // const updatedPerson = await PersonSchema.updateOne(foundPerson);
 
@@ -345,19 +352,16 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) =>
         })
     }
 })
-const searchIndex = (list,id)=>
-{
-    let boolean = false; 
-    list.forEach((element,i) => {
+const searchIndex = (list, id) => {
+    let boolean = false;
+    list.forEach((element, i) => {
         console.log(element.id == id)
-        if(element.id == id)
-        {
+        if (element.id == id) {
             boolean = true;
             return i;
         }
     });
-    if(!boolean)
-    {
+    if (!boolean) {
         return -1;
     }
 }

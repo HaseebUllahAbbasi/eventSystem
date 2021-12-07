@@ -9,6 +9,8 @@ import MainTabScreen from "./MainTabScreen";
 const Drawer = createDrawerNavigator();
 const DrawerComponent = (props)=>
 {
+    const navigation = props.navigation;
+
     return(
         <NavigationContainer>
             <Drawer.Navigator drawerContent={props=> <DrawerContent {...props} />}>

@@ -14,8 +14,8 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
-const SignInScreen = ({navigation}) => {
-
+const SignInScreen = (props) => {
+    const navigation = props.navigation;
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -219,6 +219,7 @@ const SignInScreen = ({navigation}) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+
                     // onPress={() => navigation.navigate('SignUpScreen')}
                     style={[styles.signIn, {
                         borderColor: '#009387',
@@ -281,6 +282,9 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
+        marginLeft:"8px",
+        border:"1px solid #D3D3D3	",
+        borderRadius:"10px",
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

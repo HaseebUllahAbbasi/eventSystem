@@ -4,9 +4,9 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import { CheckBox } from 'react-native';
 
-const EventTasks = () => {
+const EventTasks = (props) => {
+    const navigation = props.navigation;
     const colors = useTheme();
-
     const [data, setData] = useState([
         {
             "_id": "6191254806d9d4318b2f83f1",

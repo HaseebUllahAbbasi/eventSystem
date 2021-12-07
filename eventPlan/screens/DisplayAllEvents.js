@@ -6,7 +6,9 @@ import { useTheme } from '@react-navigation/native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
-const DisplayAllEvents = () => {
+const DisplayAllEvents = (props) => {
+    const navigation = props.navigation;
+
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
@@ -98,8 +100,20 @@ const DisplayAllEvents = () => {
                                         {eventItem.notes.length}
                                 </Text>
                                 </View>
+                                <View style={[{marginTop:"10px", flexDirection:"row", justifyContent:"space-between"}]}>
+
+                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
+                                        Status 
+                                </Text>
+                                <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
+                                {eventItem.eventStatus ? "Completed" : "In Progess" }
+                                </Text>
+                                </View>
                                     
-                                    <Button style={[{ marginTop: "20px", marginBottom: "5px" }]} type="outline" size={3} title={"View"}>
+                                    <Button onPress={()=>{
+                                                            navigation.navigate('Home')
+
+                                    }} style={[{ marginTop: "20px", marginBottom: "5px" }]} type="outline" size={3} title={"View"}>
                                 </Button>
                                 
                             </View>

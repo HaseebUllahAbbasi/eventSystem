@@ -3,7 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
-const MyRequests = () => {
+const MyRequests = (props) => {
+    const navigation = props.navigation;
+
     const { colors } = useTheme();
     const [requests, setRequests] = useState([
         { id: "id_1", eventName: "Name of Event", Desc: "Lorem IPSUM , This is Descrption" },

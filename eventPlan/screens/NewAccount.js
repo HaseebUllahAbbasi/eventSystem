@@ -14,8 +14,8 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
-const NewAccount = ({navigation}) => {
-
+const NewAccount = (props) => {
+    const navigation = props.navigation;
     const [data, setData] = React.useState({
         username: '',
         password: '',
