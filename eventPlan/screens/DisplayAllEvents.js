@@ -42,7 +42,7 @@ const DisplayAllEvents = (props) => {
                 "guestList": [],
                 "notes": [],
                 "eventStatus": false,
-                "__v": 0
+                "_v": 0
             }
         ]
     });
@@ -54,7 +54,7 @@ const DisplayAllEvents = (props) => {
                         <Card key={i}>
                             <Card.Title style={[{backgroundColor:colors.card}]}>{eventItem.eventName}</Card.Title>
                             <Card.Divider />
-                            <View style={[{backgroundColor:colors.border , borderRadius:"5px", padding:"5px",color: colors.text}]}>
+                            <View style={[{backgroundColor:colors.border , borderRadius:3, padding:"5px",color: colors.text}]}>
                                 <View>
                                 <Text style={[{textAlign:"center", fontSize:"1rem", fontWeight:"bold", color: colors.text} ]}>
                                         Description

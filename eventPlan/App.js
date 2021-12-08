@@ -10,7 +10,6 @@ import Navigator from './routes/NewDrawer';
 
 import React from "react";
 
-import { createDrawerNavigator } from '@react-navigation/drawer'
 
 
 

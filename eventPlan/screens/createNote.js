@@ -28,79 +28,70 @@ const CreateNote = (props) => {
     //     plannerId: "61a4e0045f599ed12becaaee",
     //     Note: "This is Note"
     // });
-    const handleEventId = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handleEventId = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 eventID: value,
-                isValidEventId : true
+                isValidEventId: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 eventID: value,
-                isValidEventId : false
+                isValidEventId: false
             })
         }
     }
 
 
-    const handlePlannerId = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handlePlannerId = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 plannerId: value,
-                isValidPlanner : true
+                isValidPlanner: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 plannerId: value,
-                isValidPlanner : false
+                isValidPlanner: false
             })
         }
     }
 
-    const handleDesc = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handleDesc = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 eventDesc: value,
-                isValidDesc : true
+                isValidDesc: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 eventDesc: value,
-                isValidDesc : false
+                isValidDesc: false
             })
         }
     }
-    
+
     const [data, setData] = useState({
         isValidEventId: false,
         isValidPlanner: false,
-        isValidDesc : false,
+        isValidDesc: false,
         eventID: "",
         plannerId: "",
         eventDesc: "",
     });
-    
+
 
     return (
         <View style={styles.container}>
@@ -306,9 +297,10 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft:"8px",
-        border:"1px solid #D3D3D3	",
-        borderRadius:"10px",
+        marginLeft: "8px",
+        borderStyle: "solid",
+       borderWidth: 1,
+        borderColor: "#D3D3D3", borderRadius: 3,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

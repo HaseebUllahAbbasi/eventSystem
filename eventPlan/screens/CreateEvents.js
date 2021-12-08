@@ -373,8 +373,13 @@ const styles = StyleSheet.create({
     },
     textInput: {
         marginLeft:"8px",
-        border:"1px solid #D3D3D3	",
+        
+        borderStyle:"solid",
+        borderWidth: 1,
+        borderColor:"#D3D3D3",
+        
         borderRadius:"10px",
+        
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

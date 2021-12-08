@@ -32,7 +32,7 @@ const OneEvent = (props) =>
             <Card>
                 <Card.Title style={[{ backgroundColor: colors.card }]}>{data.eventName}</Card.Title>
                 <Card.Divider />
-                <View style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
+                <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: "5px", color: colors.text }]}>
                     <View>
                         <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
                             Description

@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { View, StyleSheet } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-
 import { Card, ListItem,ThemeProvider, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
@@ -53,7 +52,7 @@ const MyEvents = (props) => {
                     data.success == true && data.events.map((eventItem, i) => <Card key={i}>
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{eventItem.eventName}</Card.Title>
                         <Card.Divider />
-                        <View key={i} style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
+                        <View key={i} style={[{ backgroundColor: colors.border, borderRadius: 5, padding: "5px", color: colors.text }]}>
                             <View>
                                 <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
                                     Description

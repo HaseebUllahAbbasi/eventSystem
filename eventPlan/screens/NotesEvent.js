@@ -39,7 +39,7 @@ const NotesEvent = (props) => {
                     data.success == true && data.notes.map((note, i) => <Card key={i} >
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
                         <Card.Divider />
-                        <View style={[{ backgroundColor: colors.border, borderRadius: "5px", padding: "5px", color: colors.text }]}>
+                        <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: "5px", color: colors.text }]}>
                             <View>
                                 <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
                                     {note.NotesText}

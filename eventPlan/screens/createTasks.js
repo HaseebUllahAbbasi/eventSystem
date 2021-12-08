@@ -18,100 +18,90 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
-const CreateTask = () => {
+const CreateTask = (props) => {
+    const navigation = props.navigation;
+
     const { colors } = useTheme();
 
-    const handleEventId = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handleEventId = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 eventID: value,
-                isValidEventId : true
+                isValidEventId: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 eventID: value,
-                isValidEventId : false
+                isValidEventId: false
             })
         }
     }
 
 
-    const handlePlannerId = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handlePlannerId = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 plannerId: value,
-                isValidPlanner : true
+                isValidPlanner: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 plannerId: value,
-                isValidPlanner : false
+                isValidPlanner: false
             })
         }
     }
 
 
-    const handleDesc = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handleDesc = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 eventDesc: value,
-                isValidDesc : true
+                isValidDesc: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 eventDesc: value,
-                isValidDesc : false
+                isValidDesc: false
             })
         }
     }
-    const handleValidUser = (value)=>
-    {
-        if(value.trim().length>4)
-        {
+    const handleValidUser = (value) => {
+        if (value.trim().length > 4) {
             setData({
                 ...data,
                 assignTo: value,
-                isValidPerson : true
+                isValidPerson: true
             })
         }
-        else
-        {
-            
+        else {
+
             setData({
                 ...data,
                 assignTo: value,
-                isValidPerson : false
+                isValidPerson: false
             })
         }
     }
 
-    
+
     const [data, setData] = useState({
         isValidEventId: false,
         isValidPlanner: false,
-        isValidPerson : false,
-        isValidTask : false,
+        isValidPerson: false,
+        isValidTask: false,
         eventID: "",
         assignTo: "",
         plannerId: "",
@@ -217,7 +207,7 @@ const CreateTask = () => {
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>
-                        Task Assign To 
+                        Task Assign To
                     </Text>
                     <View style={styles.action}>
                         <FontAwesome
@@ -295,7 +285,7 @@ const CreateTask = () => {
                     }
                 </View>
 
-                
+
                 <View style={styles.button}>
                     <TouchableOpacity
                         // onPress={() => navigation.navigate('SignUpScreen')}
@@ -361,9 +351,11 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft:"8px",
-        border:"1px solid #D3D3D3	",
-        borderRadius:"10px",
+        marginLeft: "8px",
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "#D3D3D3", 
+        borderRadius: 3,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

@@ -20,7 +20,7 @@ const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
 const SendRequest = (props) => {
     const navigation = props.navigation;
-    const data_1 = {eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
+    const data_1 = { eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
     const { colors } = useTheme();
 
     const [data, setData] = useState({
@@ -45,8 +45,7 @@ const SendRequest = (props) => {
         }
     }
     const textInputChange = (val) => {
-        if (val.trim().length >= 4) 
-        {
+        if (val.trim().length >= 4) {
             setData({
                 ...data,
                 username: val,
@@ -66,9 +65,9 @@ const SendRequest = (props) => {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
-            
+
             <View style={styles.text_header}>
-                <Text style={[styles.text_header,{margin:"10px"}]}>  Request Information  </Text>
+                <Text style={[styles.text_header, { margin: "10px" }]}>  Request Information  </Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -88,7 +87,7 @@ const SendRequest = (props) => {
                             size={20}
                         />
                         <TextInput
-                        editable={false}
+                            editable={false}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -96,10 +95,10 @@ const SendRequest = (props) => {
                             }]}
                             value={data_1.eventName}
                             autoCapitalize="none"
-                            // onChangeText={(val) => textInputChange(val)}
-                            
-                            // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            
+                        // onChangeText={(val) => textInputChange(val)}
+
+                        // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+
                         />
                         {data.validData ?
                             <Animatable.View
@@ -194,25 +193,25 @@ const SendRequest = (props) => {
                         </Animatable.View>
                     }
                 </View>
-                
-            <View style={styles.button}>
-            <TouchableOpacity
-                    onPress={()=>{
-                        alert(`Sending Request to Name ${data.username}` )
-                    }}
-                    // onPress={() => navigation.navigate('SignUpScreen')}
-                    style={[styles.signIn, {
-                        borderColor: '#009387',
-                        borderWidth: 1,
-                        marginTop: 5
-                    }]}
-                >
-                    <Text style={[styles.textSign, {
-                        color: '#009387'
-                    }]}>Send Request</Text>
-                </TouchableOpacity>
 
-            </View>
+                <View style={styles.button}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            alert(`Sending Request to Name ${data.username}`)
+                        }}
+                        // onPress={() => navigation.navigate('SignUpScreen')}
+                        style={[styles.signIn, {
+                            borderColor: '#009387',
+                            borderWidth: 1,
+                            marginTop: 5
+                        }]}
+                    >
+                        <Text style={[styles.textSign, {
+                            color: '#009387'
+                        }]}>Send Request</Text>
+                    </TouchableOpacity>
+
+                </View>
 
             </Animatable.View>
 
@@ -264,9 +263,10 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft:"8px",
-        border:"1px solid #D3D3D3	",
-        borderRadius:"10px",
+        marginLeft: "8px",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "#D3D3D3", borderRadius: "10px",
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,
