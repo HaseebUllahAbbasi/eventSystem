@@ -7,7 +7,12 @@ import { Card, ListItem, ThemeProvider, Button, Icon } from 'react-native-elemen
 import { Text } from "../components/Themed"
 const HomeScreen = (props) => {
     const navigation = props.navigation;
-
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('number');
+    const _requests = navigation.getParam('requests');
+    
 
     const { colors } = useTheme();
     const [data, setData] = useState({
@@ -50,8 +55,11 @@ const HomeScreen = (props) => {
         <ScrollView>
             <View>
                 <Card style={[{ backgroundColor: colors.card }]}>
+                    
                     <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
-                        You Have {2} Requests
+                    
+                        Hi {_user} , 
+                        You Have {_requests} Requests
                     </Text>
                     <View>
                         <Button onPress={() => {
@@ -136,7 +144,7 @@ const HomeScreen = (props) => {
                                 </ThemeProvider>
 
                                 <Button onPress={() => {
-                                    navigation.navigate('OneEvent')
+                                    navigation.navigate('OneEvent', {user: _user, email: _email, number:_number, id: _id ,eventId : eventItem._id, eventName : eventItem.eventName, eventAdmin: eventItem.userId })
                                 }} style={[{ marginTop: 10, marginBottom: 5, width: 50 }]} type="outline" size={3} title={"View"}>
                                 </Button>
 

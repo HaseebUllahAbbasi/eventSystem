@@ -10,24 +10,33 @@ import {
     TextInput,
     Platform,
     TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import apiLink from '../shared/apiLink';
+
 
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
 const CreateNote = (props) => {
+
     const navigation = props.navigation;
+
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+
     const { colors } = useTheme();
 
 
-    // const [data, setData] = useState({
-    //     eventId: "Party_1",
-    //     plannerId: "61a4e0045f599ed12becaaee",
-    //     Note: "This is Note"
-    // });
+    
     const handleEventId = (value) => {
         if (value.trim().length > 4) {
             setData({
@@ -85,10 +94,11 @@ const CreateNote = (props) => {
 
     const [data, setData] = useState({
         isValidEventId: false,
+        apiHit: false,
         isValidPlanner: false,
         isValidDesc: false,
-        eventID: "",
-        plannerId: "",
+        eventID: _eventId,
+        plannerId: _eventAdmin,
         eventDesc: "",
     });
 
@@ -118,6 +128,8 @@ const CreateNote = (props) => {
                             size={20}
                         />
                         <TextInput
+                            editable = {false}
+                            value={data.eventID}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -161,6 +173,8 @@ const CreateNote = (props) => {
                             size={20}
                         />
                         <TextInput
+                        value={data.plannerId}
+                            editable = {false}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -232,9 +246,41 @@ const CreateNote = (props) => {
                     }
                 </View>
 
+                {
+                    data.apiHit && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                }
                 <View style={styles.button}>
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate('SignUpScreen')}
+                        onPress={async () => {
+                            
+                            setData({
+                                ...data,apiHit: true 
+                            });
+
+                            const apiBody = { eventId: _eventId, plannerId: _eventAdmin, noteText: data.eventDesc };
+                            const apiData = await fetch(`${apiLink}/addNote`, {
+                                method: 'POST', // or 'PUT'
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(apiBody),
+                            });
+                            const jsonData = await apiData.json();
+                            console.log(jsonData);                        
+                            setData({
+                                ...data,apiHit: true 
+                            });
+    
+                            if(jsonData.success)
+                            {
+                                alert("Note Created")
+                            }
+                            else
+                            {
+                                alert("Note Not created")
+                            }
+
+                        }}
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,

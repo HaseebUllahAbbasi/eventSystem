@@ -1,50 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
+import apiLink from "../shared/apiLink";
 
 
 const NotesEvent = (props) => {
     const navigation = props.navigation;
-    const { colors } = useTheme();
-    const [data, setData] = useState({
-        "success": true,
-        "notes": [
-            {
-                "_id": "61a902652c03ace148847b40",
-                "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "Lorem ipsum is a pseudo-Latin text used in web design, typography, layout, and printing in place of English to emphasise design elements over content. It's also ...",
-                "__v": 0
-            },
-            {
-                "_id": "61a902762c03ace148847b44",
-                "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "The Lorem ipum filling text is used by graphic designers, programmers and printers with the aim of occupying the spaces of a website, an advertising product or ..",
-                "__v": 0
-            },
-            {
-                "_id": "61a9027a2c03ace148847b48",
-                "eventId": "61a4e0ed5f599ed12becaaf3",
-                "NotesText": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is",
-                "__v": 0
-            }
-        ]
-    }
 
-    );
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+
+    const { colors } = useTheme();
+    const [data, setData] = useState({success: false});
+    useEffect(async () => {
+        const apiBody = { id: _eventId };
+        const apiData = await fetch(`${apiLink}/notesOfEvent`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiBody),
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+
+        if (jsonData.success) 
+        {
+            const notesList =  jsonData.notesList
+            setData({...data,success:true, notes: [...notesList] })
+            alert("Got the notes")
+        }
+        else {
+            alert("No Notes")
+        }
+
+    }, [])
     return (
         <ScrollView>
 
             <View>
                 <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                     <Button onPress={() => {
-                        navigation.navigate('newNote')
+                        navigation.navigate('newNote',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin } )
                     }
                     } size={5} title={"Add New Note"}></Button>
 
                 </View>
                 {
-                    data.success == true && data.notes.map((note, i) => <Card key={i} >
+                    data.success == true ? data.notes.map((note, i) => <Card key={i} >
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
                         <Card.Divider />
                         <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
@@ -60,6 +69,15 @@ const NotesEvent = (props) => {
                         </View>
                     </Card>
                     )
+                        : <Card style={[{ backgroundColor: colors.card }]}>
+
+                            <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                                No Notes For The Event
+                            </Text>
+
+                        </Card>
+
+
                 }
             </View>
 

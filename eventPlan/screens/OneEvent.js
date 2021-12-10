@@ -4,9 +4,19 @@ import { Card, Button } from 'react-native-elements'
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
 const OneEvent = (props) => {
-    const { colors } = useTheme();
-
+    
     const navigation = props.navigation;
+
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+    
+
+    const { colors } = useTheme();
     const [data, setData] = useState({
         "_id": "619032f2271ff186b1c1ech7",
         "userId": "619032a107",
@@ -37,7 +47,6 @@ const OneEvent = (props) => {
                             Description
                         </Text>
                         <Text style={[styles.section, { color: colors.text, paddingLeft: 5 }]}> {data.eventDesc} </Text>
-
                     </View>
                     <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
@@ -88,30 +97,25 @@ const OneEvent = (props) => {
                     </View>
 
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
-
-
-
-
-
-
                         <Button onPress={() => {
-                            navigation.navigate('eventTask')
+
+                            navigation.navigate('eventTask',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
 
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Tasks"}>
                         </Button>
                         <Button onPress={() => {
-                            navigation.navigate('eventNotes')
+                            navigation.navigate('eventNotes',
+                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
 
 
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
                         </Button>
 
                         <Button onPress={() => {
-                            navigation.navigate('eventTeam')
+                            navigation.navigate('eventTeam',
+                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
                         </Button>
-
-
 
                     </View>
 

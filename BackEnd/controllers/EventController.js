@@ -174,6 +174,24 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
     }
 
 })
+exports.removeNote = catchAsyncErrors(async (req, res, next) => {
+    const { eventId, plannerId, noteId  } = req.body;
+
+    const event = await EventSchema.findById(eventId);
+    if (event) 
+    {
+
+    }
+    else {
+        res.status(404).json(
+            {
+                success: false,
+                message: "No Event"
+            }
+        )
+    }
+
+})
 exports.sendRequestByName = catchAsyncErrors(async (req, res, next) => {
     const { plannerId, eventId, eventName, recipientName } = req.body;
     const foundUsers = await PersonSchema.find();
@@ -333,20 +351,43 @@ exports.assignTaskByName = catchAsyncErrors(async (req, res, next) => {
 
 
 exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
+    // const { eventId } = req.body;
+    // const notesList = await NotesSchema.find();
+    // const noteListsFound = notesList.filter(note => note.eventId == eventId); 
+         
+    // res.status(200).json(
+    //     {
+    //         success: true,
+    //         noteListsFound
+    //     }
+    // )
+
     const { eventId } = req.body;
     const notesList = await NotesSchema.find();
-    const noteListsFound = notesList.filter((note) => {
-        if (note.eventId == eventId) {
-            return note;
-        }
-    });
 
-    res.status(200).json(
-        {
-            success: true,
-            noteListsFound
-        }
-    )
+    const noteListsFound  =  notesList.filter(note => note.eventId == eventId);
+    
+    if(noteListsFound.length != 0 )
+    {
+        res.status(200).json(
+            {
+                success: true,
+                noteListsFound,
+            }
+        )
+    }
+    else
+    {
+        res.status(200).json(
+            {
+                success: false,
+                message: "No Notes",
+                noteListsFound,
+                notesList
+            
+            }
+        )
+    }
 })
 exports.addGuest = catchAsyncErrors(async (req, res, next) => {
     const { eventId, plannerId, guestName, guestNumber } = req.body;
