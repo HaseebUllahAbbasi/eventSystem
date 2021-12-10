@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
@@ -33,28 +33,37 @@ const NotesEvent = (props) => {
 
     );
     return (
-        <View>
-                <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Add New Note"}></Button>
+        <ScrollView>
+
+            <View>
+                <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
+                    <Button onPress={() => {
+                        navigation.navigate('newNote')
+                    }
+                    } size={5} title={"Add New Note"}></Button>
+
+                </View>
                 {
                     data.success == true && data.notes.map((note, i) => <Card key={i} >
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
                         <Card.Divider />
-                        <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: "5px", color: colors.text }]}>
+                        <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
                             <View>
-                                <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
                                     {note.NotesText}
                                 </Text>
-                                <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Remove Note"}>
-                                </Button>
+                                <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 30, marginRight: 30 }]} >
+                                    <Button type="outline" size={3} title={"Remove Note"}>
+                                    </Button>
+                                </View>
                             </View>
                         </View>
                     </Card>
                     )
-
                 }
+            </View>
 
-
-        </View>
+        </ScrollView>
     )
 }
 export default NotesEvent;

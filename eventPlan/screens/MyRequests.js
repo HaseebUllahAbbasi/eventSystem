@@ -15,24 +15,23 @@ const MyRequests = (props) => {
     ]);
     return (
         <View>
-            <Card.Title> My Requests</Card.Title>
-            {
+           {
                 requests.length != 0 && requests.map((item, i) => <Card key={i}>
                     <Card.Title>
                         {item.eventName}
                     </Card.Title>
                     <Card.Divider />
                     <View>
-                        <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
                             {item.Desc}
                         </Text>
                         <View style={[styles.row, { justifyContent: "space-evenly" }]}>
 
 
-                            <Button type="outline" size={3} style={[{ marginTop: "20px", marginBottom: "5px", width: "80px", color: "red" }]} title={"Accept"}>
+                            <Button type="outline" size={3} style={[{ marginTop: 20, marginBottom: 5, width: 50, color: "red" }]} title={"Accept"}>
                             </Button>
 
-                            <Button style={[{ marginTop: "20px", marginBottom: "5px", width: "80px" }]} type="outline" size={3} title={"Cancel"}>
+                            <Button style={[{ marginTop: 20, marginBottom: 5, width: 50 }]} type="outline" size={3} title={"Cancel"}>
                             </Button>
 
                         </View>

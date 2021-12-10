@@ -113,7 +113,7 @@ const CreateTask = (props) => {
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
 
             <View style={styles.text_header}>
-                <Text style={[styles.text_header, { margin: "10px" }]}> Create New Task  </Text>
+                <Text style={[styles.text_header, { margin: 10 }]}> Create New Task  </Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -122,7 +122,7 @@ const CreateTask = (props) => {
                 }]}
             >
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Id</Text>
@@ -163,7 +163,7 @@ const CreateTask = (props) => {
                 </View>
 
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>
@@ -203,7 +203,7 @@ const CreateTask = (props) => {
                         </Animatable.View>
                     }
                 </View>
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>
@@ -245,7 +245,7 @@ const CreateTask = (props) => {
                     }
                 </View>
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Tasks </Text>
@@ -291,7 +291,7 @@ const CreateTask = (props) => {
                         // onPress={() => navigation.navigate('SignUpScreen')}
                         style={[styles.signIn, {
                             borderColor: '#009387',
-                            borderWidth: 1,
+                            borderWidth: 2,
                             marginTop: 5
                         }]}
                     >
@@ -351,11 +351,11 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft: "8px",
+        marginLeft: 6,
         borderStyle: "solid",
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: "#D3D3D3", 
-        borderRadius: 3,
+        borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,
@@ -381,3 +381,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+

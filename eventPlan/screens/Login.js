@@ -40,10 +40,10 @@ const LoginScreen = (props) => {
                 color: colors.text
             }]}>Make Your Events Happen</Text>
             
-            <View style={{flexDirection:"row", marginTop:"3rem"}}>
+            <View style={{flexDirection:"row", marginTop:20}}>
 
             <TouchableOpacity
-                    // onPress={() => navigation.navigate('SignUpScreen')}
+                    onPress={() => navigation.navigate('NewAccount')}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
@@ -58,7 +58,7 @@ const LoginScreen = (props) => {
                 </TouchableOpacity>
 
             <TouchableOpacity
-                    // onPress={() => navigation.navigate('SignUpScreen')}
+                    onPress={() => navigation.navigate('Login')}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     textSign: {
         color: 'black',
         fontWeight: 'bold'
-    }
+    },
 });
 
 

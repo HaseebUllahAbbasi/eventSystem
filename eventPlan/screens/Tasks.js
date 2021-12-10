@@ -26,7 +26,7 @@ const Tasks = (props) => {
     ]);
     return (
         <View>
-        <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Add New Task"}></Button>
+        {/* <Button style={[{ marginTop: 10, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Add New Task"}></Button> */}
             {
                 data.length !== 0  && data.map((item,i) => <Card key={i}>
                     <Card.Title>
@@ -34,38 +34,38 @@ const Tasks = (props) => {
                     </Card.Title>
                     <Card.Divider />
                     <View>
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                        <View style={[{ marginTop: 8, flexDirection: "row", justifyContent: "space-between" }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 Id
                             </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 {item._id}
                             </Text>
                         </View>
 
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                        <View style={[{ marginTop: 8, flexDirection: "row", justifyContent: "space-between" }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 Event
                             </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 {item.eventId}
                             </Text>
                         </View>
 
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                        <View style={[{ marginTop: 8, flexDirection: "row", justifyContent: "space-between" }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 Task Status
                             </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                                 {item.taskStatus === true ? "Completed" : "Not Completed"}
                             </Text>
                         </View>
-                        {item.taskStatus === true ? <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="solid" size={5} title={"Completed"} disabled>
+                        {item.taskStatus === true ? <Button style={[{ marginTop: 10, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="solid" size={5} title={"Completed"} disabled>
 
-                        </Button> : <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Complete Task"}>
+                        </Button> : <Button style={[{ marginTop: 10, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Complete Task"}>
 
                         </Button>}
 

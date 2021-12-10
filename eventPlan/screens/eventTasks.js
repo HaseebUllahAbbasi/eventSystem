@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import { CheckBox } from 'react-native';
@@ -25,54 +25,61 @@ const EventTasks = (props) => {
         }
     ]);
     return (
-        <View>
-        <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Add New Task"}></Button>
-            {
-                data.length !== 0  && data.map((item,i) => <Card key={i}>
-                    <Card.Title>
-                        {item.taskText}
-                    </Card.Title>
-                    <Card.Divider />
-                    <View>
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                Id
-                            </Text>
+        <ScrollView>
+            <View>
+                <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]} >
+                    <Button onPress={() => {
+                        navigation.navigate('newTask')
+                    }} size={4} title={"Add New Task"}></Button>
+                </View>
+                {
+                    data.length !== 0 && data.map((item, i) => <Card key={i}>
+                        <Card.Title>
+                            {item.taskText}
+                        </Card.Title>
+                        <Card.Divider />
+                        <View>
+                            <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    Id
+                                </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                {item._id}
-                            </Text>
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    {item._id}
+                                </Text>
+                            </View>
+
+                            <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    Event
+                                </Text>
+
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    {item.eventId}
+                                </Text>
+                            </View>
+
+                            <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    Task Status
+                                </Text>
+
+                                <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                                    {item.taskStatus === true ? "Completed" : "Not Completed"}
+                                </Text>
+                            </View>
+                            {item.taskStatus === true ? <Button style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="solid" size={5} title={"Completed"} disabled>
+
+                            </Button> : <Button style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Complete Task"}>
+
+                            </Button>}
+
                         </View>
+                    </Card>)
+                }
+            </View>
 
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                Event
-                            </Text>
-
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                {item.eventId}
-                            </Text>
-                        </View>
-
-                        <View style={[{ marginTop: "10px", flexDirection: "row", justifyContent: "space-between" }]}>
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                Task Status
-                            </Text>
-
-                            <Text style={[{ textAlign: "center", fontSize: "1rem", fontWeight: "bold", color: colors.text }]}>
-                                {item.taskStatus === true ? "Completed" : "Not Completed"}
-                            </Text>
-                        </View>
-                        {item.taskStatus === true ? <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="solid" size={5} title={"Completed"} disabled>
-
-                        </Button> : <Button style={[{ marginTop: "30px", marginBottom: "5px", marginLeft: "40px", marginRight: "40px" }]} type="outline" size={5} title={"Complete Task"}>
-
-                        </Button>}
-
-                    </View>
-                </Card>)
-            }
-        </View>
+        </ScrollView>
     )
 
 }

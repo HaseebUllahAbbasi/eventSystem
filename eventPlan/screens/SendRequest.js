@@ -67,7 +67,7 @@ const SendRequest = (props) => {
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
 
             <View style={styles.text_header}>
-                <Text style={[styles.text_header, { margin: "10px" }]}>  Request Information  </Text>
+                <Text style={[styles.text_header, { margin: 10 }]}>  Request Information  </Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -76,7 +76,7 @@ const SendRequest = (props) => {
                 }]}
             >
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Name</Text>
@@ -116,7 +116,7 @@ const SendRequest = (props) => {
                 </View>
 
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Planner</Text>
@@ -153,7 +153,7 @@ const SendRequest = (props) => {
                     </View>
                 </View>
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Member Name</Text>
@@ -263,10 +263,11 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft: "8px",
+        marginLeft: 5,
         borderStyle: "solid",
-        borderWidth: "1px",
-        borderColor: "#D3D3D3", borderRadius: "10px",
+        borderWidth: 2,
+        borderColor: "#D3D3D3", 
+        borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

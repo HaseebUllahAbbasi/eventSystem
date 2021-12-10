@@ -282,10 +282,12 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft: "8px",
+        marginLeft: 5,
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: "#D3D3D3", borderRadius: 5,
+        borderColor:"#a09e9e",
+        
+        borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

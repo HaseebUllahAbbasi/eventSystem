@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
-import { Card, ListItem,ThemeProvider, Button, Icon } from 'react-native-elements'
+import { Card, ListItem, ThemeProvider, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
-const MyEvents = (props) => {
+const HomeScreen = (props) => {
     const navigation = props.navigation;
+
 
     const { colors } = useTheme();
     const [data, setData] = useState({
@@ -46,7 +47,22 @@ const MyEvents = (props) => {
         ]
     });
     return (
-        <View>
+        <ScrollView>
+            <View>
+                <Card style={[{ backgroundColor: colors.card }]}>
+                    <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                        You Have {2} Requests
+                    </Text>
+                    <View>
+                        <Button onPress={() => {
+                            navigation.navigate('myRequests')
+
+                        }} title={"View Requests"}>
+
+                        </Button>
+                    </View>
+
+                </Card>
                 {
                     data.success == true && data.events.map((eventItem, i) => <Card key={i}>
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{eventItem.eventName}</Card.Title>
@@ -105,23 +121,23 @@ const MyEvents = (props) => {
                                     Status
                                 </Text>
                                 <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                                    {eventItem.eventStatus ? "Completed" : "In Progess" }
+                                    {eventItem.eventStatus ? "Completed" : "In Progess"}
                                 </Text>
                             </View>
                             <View style={[styles.row, { justifyContent: "space-evenly" }]}>
 
                                 <ThemeProvider >
 
-                                {eventItem.eventStatus ? 
-                                     <Button type="outline" size={3} style={[{ marginTop: 10, marginBottom: 5, width:50 , color: "red" }]} title={"Complete"} disabled>
-                                    </Button> : <Button type="outline" size={3} style={[{ marginTop: 10, marginBottom: 5, width:50 , color: "red" }]} title={"Complete"}>
-                                    </Button> }
+                                    {eventItem.eventStatus ?
+                                        <Button type="outline" size={3} style={[{ marginTop: 10, marginBottom: 5, width: 50, color: "red" }]} title={"Complete"} disabled>
+                                        </Button> : <Button type="outline" size={3} style={[{ marginTop: 10, marginBottom: 5, width: 50, color: "red" }]} title={"Complete"}>
+                                        </Button>}
 
                                 </ThemeProvider>
 
-                                <Button onPress={()=> {
+                                <Button onPress={() => {
                                     navigation.navigate('OneEvent')
-                                }} style={[{ marginTop: 10 , marginBottom: 5, width: 50 }]} type="outline" size={3} title={"View"}>
+                                }} style={[{ marginTop: 10, marginBottom: 5, width: 50 }]} type="outline" size={3} title={"View"}>
                                 </Button>
 
                             </View>
@@ -134,13 +150,12 @@ const MyEvents = (props) => {
                 }
 
 
-        </View>
+            </View>
+        </ScrollView>
+
     )
 }
-export default MyEvents;
-
-
-
+export default HomeScreen;
 const styles = StyleSheet.create({
     drawerContent: {
         flex: 1,

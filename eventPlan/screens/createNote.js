@@ -98,7 +98,7 @@ const CreateNote = (props) => {
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
 
             <View style={styles.text_header}>
-                <Text style={[styles.text_header, { margin: "10px" }]}> Create New Note  </Text>
+                <Text style={[styles.text_header, { margin: 10 }]}> Create New Note  </Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -107,7 +107,7 @@ const CreateNote = (props) => {
                 }]}
             >
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Id</Text>
@@ -148,7 +148,7 @@ const CreateNote = (props) => {
                 </View>
 
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>
@@ -190,7 +190,7 @@ const CreateNote = (props) => {
                     }
                 </View>
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Note </Text>
@@ -297,10 +297,11 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
-        marginLeft: "8px",
+        marginLeft: 8,
         borderStyle: "solid",
-       borderWidth: 1,
-        borderColor: "#D3D3D3", borderRadius: 3,
+        borderWidth: 2,
+        borderColor: "#D3D3D3",
+        borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,

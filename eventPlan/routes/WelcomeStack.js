@@ -3,25 +3,30 @@ import LoginScreen from '../screens/Login';
 import MyEvents from '../screens/MyEvents'
 import NewAccount from '../screens/NewAccount';
 import SignInScreen from '../screens/Sign';
+import Header from '../shared/header';
+
 const screens = {
+    Intro:{
+        screen: LoginScreen,
+       navigationOptions: ({ navigation }) => {
+            return {
+              headerTitle: () => <Header title='Login' navigation={navigation} />
+            }
+          },
+    },
     Login:{
         screen: SignInScreen,
         navigationOptions: {
-            title: 'Login',
+            title: 'Login Screen',
         }
-    },
+        },
     NewAccount:{
         screen: NewAccount,
         navigationOptions: {
             title: 'New Account',
         }
     },
-    Intro:{
-        screen: LoginScreen,
-        navigationOptions: {
-            title: 'Intro Screen',
-        }
-    },
+    
     
 
 };

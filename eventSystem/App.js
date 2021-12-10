@@ -26,6 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import OneEvent from './screens/OneEvent';
+import Navigator from "./routes/NewDrawer"
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -61,9 +63,11 @@ const App: () => Node = () => {
   };
 
   return (
-    <Button title={"Simple"}> 
-      SImple
-    </Button>
+  
+    <Navigator/>
+
+    
+  
     // <SafeAreaView style={backgroundStyle}>
     //   <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
     //   <ScrollView

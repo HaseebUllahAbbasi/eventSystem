@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Card, Button } from 'react-native-elements'
+import { Card,  Button } from 'react-native-elements'
 
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
-const OneEvent = (props) => {
+const OneEvent = (props) => 
+{
     const { colors } = useTheme();
 
     const navigation = props.navigation;
@@ -31,15 +32,15 @@ const OneEvent = (props) => {
             <Card>
                 <Card.Title style={[{ backgroundColor: colors.card }]}>{data.eventName}</Card.Title>
                 <Card.Divider />
-                <View style={[{ backgroundColor: colors.border, borderRadius: 8, padding: 5, color: colors.text }]}>
+                <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
                     <View>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize: 10 , fontWeight: "bold", color: colors.text }]}>
                             Description
                         </Text>
                         <Text style={[styles.section, { color: colors.text, paddingLeft: 5 }]}> {data.eventDesc} </Text>
 
                     </View>
-                    <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
+                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Planner
@@ -50,7 +51,7 @@ const OneEvent = (props) => {
 
 
                     </View>
-                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
+                    <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Team Members
@@ -59,7 +60,7 @@ const OneEvent = (props) => {
                             {data.team.length}
                         </Text>
                     </View>
-                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
+                    <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Tasks Assigned
@@ -68,7 +69,7 @@ const OneEvent = (props) => {
                             {data.tasks.length}
                         </Text>
                     </View>
-                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
+                    <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Notes
@@ -77,7 +78,7 @@ const OneEvent = (props) => {
                             {data.notes.length}
                         </Text>
                     </View>
-                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
+                    <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Status
@@ -87,33 +88,8 @@ const OneEvent = (props) => {
                         </Text>
                     </View>
 
-                    <View style={[styles.row, { justifyContent: "space-evenly" }]}>
-
-
-
-
-
-
-                        <Button onPress={() => {
-                            navigation.navigate('eventTask')
-
-                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Tasks"}>
-                        </Button>
-                        <Button onPress={() => {
-                            navigation.navigate('eventNotes')
-
-
-                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
-                        </Button>
-
-                        <Button onPress={() => {
-                            navigation.navigate('eventTeam')
-                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
-                        </Button>
-
-
-
-                    </View>
+                    <Button style={[{ marginTop: 20, marginBottom: 5 }]} type="outline" size={3} title={"View"}>
+                    </Button>
 
                 </View>
 

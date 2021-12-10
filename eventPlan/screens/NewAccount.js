@@ -21,50 +21,19 @@ const NewAccount = (props) => {
         password: '',
         email : '',
         number:'',
-        check_textInputChange: false,
         secureTextEntry: true,
-        isValidUser: true,
-        isValidPassword: true,
+
+        isValidNumber: false,
+        isValidUser: false,
+        isValidPassword: false,
+        isValidEmail : false,
     });
 
     const { colors } = useTheme();
 
     // const { signIn } = React.useContext(AuthContext);
 
-    const textInputChange = (val) => {
-        if( val.trim().length >= 4 ) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
-
-    const handlePasswordChange = (val) => {
-        if( val.trim().length >= 8 ) {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: true
-            });
-        } else {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: false
-            });
-        }
-    }
-
+    
     const updateSecureTextEntry = () => {
         setData({
             ...data,
@@ -72,41 +41,90 @@ const NewAccount = (props) => {
         });
     }
 
-    const handleValidUser = (val) => {
-        if( val.trim().length >= 4 ) {
+    
+    const  handleValidUser = (val)=>
+    {
+        if(val.trim().length()>4)
+        {
             setData({
                 ...data,
+                username: data.username,
                 isValidUser: true
-            });
-        } else {
+            })
+        }
+        else
+        {
+            
             setData({
                 ...data,
+                username: data.username,
                 isValidUser: false
-            });
+            })
         }
     }
-
-    const loginHandle = (userName, password) => {
-
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
-
-        if ( data.username.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                {text: 'Okay'}
-            ]);
-            return;
+    const  handleValidEmail = (val)=>
+    {
+        if(val.trim().length()>8 )
+        {
+            setData({
+                ...data,
+                email: data.email,
+                isValidEmail: true
+            })
         }
-
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                {text: 'Okay'}
-            ]);
-            return;
+        else
+        {
+            
+            setData({
+                ...data,
+                email: data.email,
+                isValidEmail: false
+            })
         }
-        signIn(foundUser);
     }
+    
+    const  handleValidPassword = (val)=>
+    {
+        if(val.trim().length()>7)
+        {
+            setData({
+                ...data,
+                password: data.password,
+                isValidPassword: true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                username: data.username,
+                isValidPassword: false
+            })
+        }
+    }
+    const  handleValidNumber = (val)=>
+    {
+        if(val.trim().length()>10)
+        {
+            setData({
+                ...data,
+                number: data.number,
+                isValidNumber: true
+            })
+        }
+        else
+        {
+            
+            setData({
+                ...data,
+                number: data.number,
+                isValidNumber: false
+            })
+        }
+    }
+    
+    
 
     return (
       <View style={styles.container}>
@@ -120,7 +138,7 @@ const NewAccount = (props) => {
                 backgroundColor: colors.background
             }]}
         >
-            <View style={{marginBottom:"1rem"}}>
+            <View style={{marginBottom:10}}>
             <Text style={[styles.text_footer, {
                 color: colors.text
             }]}>Username</Text>
@@ -137,10 +155,9 @@ const NewAccount = (props) => {
                         color: colors.text
                     }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
-                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                    onChangeText={(val) => handleValidUser(val)}
                 />
-                {data.check_textInputChange ? 
+                {data.isValidUser ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -161,7 +178,7 @@ const NewAccount = (props) => {
             }
             </View>
 
-            <View style={{marginBottom:"1rem"}}>
+            <View style={{marginBottom:10}}>
             <Text style={[styles.text_footer, {
                 color: colors.text
             }]}>Email</Text>
@@ -178,10 +195,9 @@ const NewAccount = (props) => {
                         color: colors.text
                     }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
-                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                    onChangeText={(val) => handleValidEmail(val)}
                 />
-                {data.check_textInputChange ? 
+                {data.isValidEmail ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -194,7 +210,7 @@ const NewAccount = (props) => {
                 : null}
             </View>
 
-            { data.isValidUser ? null : 
+            { data.isValidEmail ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
             
             <Text style={styles.errorMsg}>Email Should Be Valid.</Text>
@@ -218,10 +234,9 @@ const NewAccount = (props) => {
                         color: colors.text
                     }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
-                    onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                    onChangeText={(val) => handleValidNumber(val)}
                 />
-                {data.check_textInputChange ? 
+                {data.isValidNumber ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -234,7 +249,7 @@ const NewAccount = (props) => {
                 : null}
             </View>
 
-            { data.isValidUser ? null : 
+            { data.isValidNumber ? null : 
             <Animatable.View animation="fadeInLeft" duration={500}>
             
             <Text style={styles.errorMsg}>Number must be 11 characters </Text>
@@ -262,7 +277,7 @@ const NewAccount = (props) => {
                         color: colors.text
                     }]}
                     autoCapitalize="none"
-                    onChangeText={(val) => handlePasswordChange(val)}
+                    onChangeText={(val) => handleValidPassword(val)}
                 />
                 <TouchableOpacity
                     onPress={updateSecureTextEntry}
@@ -354,6 +369,13 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     textInput: {
+        marginLeft:10,
+        marginRight:10,
+
+        height:'200%',
+        borderWidth:1,
+        borderColor:"#8b929b",
+        borderRadius:10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,
