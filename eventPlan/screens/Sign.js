@@ -223,7 +223,8 @@ const SignInScreen = (props) => {
                             setData({ ...data, api: true })
                             const apiBody = { name: data.username, password: data.password };
 
-                            const apiData =   await fetch(`${apiLink}/login`, {
+                            const apiData =   await fetch(`${apiLink}/login`, 
+                            {
                                 method: 'POST', // or 'PUT'
                                 headers: {
                                     'Content-Type': 'application/json',

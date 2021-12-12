@@ -15,7 +15,7 @@ const OneEvent = (props) => {
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
     
-
+    console.log(_eventId)
     const { colors } = useTheme();
     const [data, setData] = useState({
         "_id": "619032f2271ff186b1c1ech7",
@@ -115,6 +115,11 @@ const OneEvent = (props) => {
                             navigation.navigate('eventTeam',
                             {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
+                        </Button>
+                        <Button onPress={() => {
+                            navigation.navigate('eventGuest',
+                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
+                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Guests "}>
                         </Button>
 
                     </View>

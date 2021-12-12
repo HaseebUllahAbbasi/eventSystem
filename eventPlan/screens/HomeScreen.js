@@ -1,10 +1,11 @@
 import React, { useState } from "react"
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView ,ActivityIndicator} from 'react-native';
 import { useTheme } from '@react-navigation/native';
 
 import { Card, ListItem, ThemeProvider, Button, Icon } from 'react-native-elements'
 
 import { Text } from "../components/Themed"
+import apiLink from "../shared/apiLink";
 const HomeScreen = (props) => {
     const navigation = props.navigation;
     const _user = navigation.getParam('user');
@@ -19,41 +20,53 @@ const HomeScreen = (props) => {
         "success": true,
         "events": [
             {
-                "_id": "619032f2271ff186b1c1eca7",
-                "userId": "619032a107",
-                "eventName": "BirthDay",
-                "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
-                "team": [
-                    "61903152fd325904426375da"
-                ],
-                "tasks": [
-                    "6190e046e5cb2abbe906c653",
-                    "6190e111aea523d027c4dbed",
-                    "6191254806d9d4318b2f83f1",
-                    "6197e64193c8dc7293981279"
-                ],
-                "guestList": [],
-                "notes": [],
-                "eventStatus": false,
-                "__v": 0
-            },
-            {
-                "_id": "6196843e6198affe7a130ac8",
-                "userId": "619681e80c",
+                "_id": "61abe16a0722c9f739f10729",
+                "userId": "61abe10b0722c9f739f10720",
                 "eventName": "Party_1",
-                "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
-                "team": [],
+                "eventDesc": "Kuch Ziada Nahi",
+                "userName": "Shaikh",
+                "team": [
+                    {
+                        "personID": "61abe12b0722c9f739f10726",
+                        "name": "nazeer2"
+                    }
+                ],
                 "tasks": [],
                 "guestList": [],
-                "notes": [],
+                "notes": [
+                    "61b3abfbb66eee83ede808c7",
+                    "61b3b3d4c4c26e0540e33218",
+                    "61b60f0cdf446b9656ec5e05",
+                    "61b61647df446b9656ec5e17"
+                ],
                 "eventStatus": false,
                 "__v": 0
             }
         ]
     });
+
+    useState( async()=>
+    {
+        setData({
+            ...data,apiHit: true 
+        });
+        
+        const apiData = await fetch(`${apiLink}/getEvents`);
+        const jsonData = await apiData.json();
+        console.log(jsonData);                        
+        setData({
+            ...data,apiHit: false 
+        });
+
+        
+        
+    },[])
     return (
         <ScrollView>
             <View>
+            {
+                    data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
                 <Card style={[{ backgroundColor: colors.card }]}>
                     
                     <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>

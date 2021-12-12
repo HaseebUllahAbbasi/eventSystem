@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import CreateNote from '../screens/createNote';
 import CreateTask from '../screens/createTasks';
+import EventGuest from '../screens/EventGuest';
 import EventTasks from '../screens/eventTasks';
 import EventTeam from '../screens/EventTeam';
 import HomeScreen from '../screens/HomeScreen';
@@ -79,10 +80,13 @@ const screens = {
             title: "Notes"
         }
     },
-    
-    
-
-
+    eventGuest : 
+    {
+        screen: EventGuest,
+        navigationOptions:{
+            title: "Event Guests"
+        }
+    },
 };
 
 const EventStack = createStackNavigator(screens, {

@@ -10,16 +10,31 @@ import {
     TextInput,
     Platform,
     TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import apiLink from '../shared/apiLink';
+
 
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
 const CreateTask = (props) => {
+
     const navigation = props.navigation;
+
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+
+
+
 
     const { colors } = useTheme();
 
@@ -98,18 +113,23 @@ const CreateTask = (props) => {
 
 
     const [data, setData] = useState({
+        api: false,
         isValidEventId: false,
         isValidPlanner: false,
         isValidPerson: false,
         isValidTask: false,
-        eventID: "",
+        eventID: _eventId,
         assignTo: "",
-        plannerId: "",
+        plannerId: _eventAdmin,
         task: "",
     });
 
     return (
         <View style={styles.container}>
+
+            {
+                data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
 
             <View style={styles.text_header}>
@@ -133,6 +153,8 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
+                        editable={false}
+                        value={data.eventID}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -176,6 +198,8 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
+                        editable={false}
+                        value={data.plannerId}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -216,6 +240,7 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
+                        value={data.assignTo}
                             placeholder="Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -256,6 +281,7 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
+                        value={data.task}
                             placeholder="Description"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -288,7 +314,38 @@ const CreateTask = (props) => {
 
                 <View style={styles.button}>
                     <TouchableOpacity
-                        // onPress={() => navigation.navigate('SignUpScreen')}
+                        onPress={
+                            async () => {
+                                
+
+                                setData({
+                                    ...data, api: true
+                                });
+
+                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, taskAssignedTo : `${data.assignTo}`, taskText: `${data.task}` };
+                                const apiData = await fetch(`${apiLink}/assignTaskByName`, {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
+                                const jsonData = await apiData.json();
+                                console.log(jsonData);
+                                setData({
+                                    ...data, api: false
+                                });
+
+                                if (jsonData.success) {
+                                    alert("Note Created")
+                                }
+                                else {
+                                    alert("Note Not created")
+                                }
+
+                            }
+
+                        }
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 2,
@@ -354,7 +411,7 @@ const styles = StyleSheet.create({
         marginLeft: 6,
         borderStyle: "solid",
         borderWidth: 2,
-        borderColor: "#D3D3D3", 
+        borderColor: "#D3D3D3",
         borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,

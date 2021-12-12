@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView,ActivityIndicator } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import apiLink from "../shared/apiLink";
@@ -19,7 +19,7 @@ const NotesEvent = (props) => {
     const { colors } = useTheme();
     const [data, setData] = useState({success: false});
     useEffect(async () => {
-        const apiBody = { id: _eventId };
+        const apiBody = { eventId: _eventId };
         const apiData = await fetch(`${apiLink}/notesOfEvent`, {
             method: 'POST', // or 'PUT'
             headers: {
@@ -32,8 +32,8 @@ const NotesEvent = (props) => {
 
         if (jsonData.success) 
         {
-            const notesList =  jsonData.notesList
-            setData({...data,success:true, notes: [...notesList] })
+            const noteListsFound =  jsonData.noteListsFound
+            setData({...data,success:true, notes: [...noteListsFound] })
             alert("Got the notes")
         }
         else {
@@ -43,7 +43,9 @@ const NotesEvent = (props) => {
     }, [])
     return (
         <ScrollView>
-
+            {
+                    data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
             <View>
                 <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                     <Button onPress={() => {

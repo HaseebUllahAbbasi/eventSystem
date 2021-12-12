@@ -1,5 +1,5 @@
 import { useTheme } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     View,
@@ -10,25 +10,40 @@ import {
     TextInput,
     Platform,
     TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
+import apiLink from '../shared/apiLink'
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
 const SendRequest = (props) => {
     const navigation = props.navigation;
+
+
+    
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+
+
     const data_1 = { eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
     const { colors } = useTheme();
 
     const [data, setData] = useState({
+        api: false,
         validData: true,
         eventName: "Dinner &  Party",
         eventPlanner: "Faisal Nisar",
         eventStatus: false,
-        eventDesc: "This is Desc",
         username: ""
     });
     const handleValidUser = (val) => {
@@ -61,11 +76,14 @@ const SendRequest = (props) => {
             });
         }
     }
-
+    
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
 
+            {
+                data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
             <View style={styles.text_header}>
                 <Text style={[styles.text_header, { margin: 10 }]}>  Request Information  </Text>
             </View>
@@ -87,13 +105,14 @@ const SendRequest = (props) => {
                             size={20}
                         />
                         <TextInput
+
                             editable={false}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
                                 color: colors.text
                             }]}
-                            value={data_1.eventName}
+                            value={_eventName}
                             autoCapitalize="none"
                         // onChangeText={(val) => textInputChange(val)}
 
@@ -136,8 +155,7 @@ const SendRequest = (props) => {
                             autoCapitalize="none"
                             // onChangeText={(val) => textInputChange(val)}
                             // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            value={data_1.eventPlanner}
-
+                            value={_eventAdmin}
                         />
                         {data.validData ?
                             <Animatable.View
@@ -164,6 +182,7 @@ const SendRequest = (props) => {
                             size={20}
                         />
                         <TextInput
+                            value={data.username}
                             placeholder="UserName"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -196,9 +215,37 @@ const SendRequest = (props) => {
 
                 <View style={styles.button}>
                     <TouchableOpacity
-                        onPress={() => {
-                            alert(`Sending Request to Name ${data.username}`)
-                        }}
+                        onPress={
+                            async () => {
+
+                                setData({
+                                    ...data, api: true
+                                });
+
+
+                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, recipientName: `${data.username}`, eventName: `${_eventName}` };
+                                const apiData = await fetch(`${apiLink}/sendReqByName`, {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
+                                const jsonData = await apiData.json();
+                                console.log(jsonData);
+                                setData({
+                                    ...data, api: false
+                                });
+
+                                if (jsonData.success) 
+                                {
+                                    alert("Sent Request")
+                                }
+                                else {
+                                    alert("Not Sent")
+                                }
+                            }
+                        }
                         // onPress={() => navigation.navigate('SignUpScreen')}
                         style={[styles.signIn, {
                             borderColor: '#009387',
@@ -266,7 +313,7 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         borderStyle: "solid",
         borderWidth: 2,
-        borderColor: "#D3D3D3", 
+        borderColor: "#D3D3D3",
         borderRadius: 10,
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,

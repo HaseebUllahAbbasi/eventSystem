@@ -1,39 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import { CheckBox } from 'react-native';
+import apiLink from "../shared/apiLink";
 
 const EventTasks = (props) => {
     const navigation = props.navigation;
+
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
     const colors = useTheme();
-    const [data, setData] = useState([
-        {
-            "_id": "6191254806d9d4318b2f83f1",
-            "eventId": "619032f2271ff186b1c1eca7",
-            "taskText": "Bring Cake",
-            "assignTo": "61903152fd325904426375da",
-            "__v": 0,
-            "taskStatus": true
-        },
-        {
-            "_id": "6197e64193c8dc7293981279",
-            "eventId": "619032f2271ff186b1c1eca7",
-            "taskText": "Bring Candles",
-            "assignTo": "61903152fd325904426375da",
-            "__v": 0
+    const [data, setData] = useState({
+        api:false,
+        "success": true,
+        tasks: []
+    });
+    
+    useEffect(async () => {
+        const apiBody = { eventId: _eventId };
+        const apiData = await fetch(`${apiLink}/assignTask/${_eventId}`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiBody),
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+
+        if (jsonData.success) {
+            const tasks = jsonData.tasks
+            setData({ ...data, success: true, tasks: [...tasks] })
+            alert("Got the notes")
         }
-    ]);
+        else {
+            alert("No Notes")
+        }
+
+
+    }, [])
+    
     return (
         <ScrollView>
+            {
+                data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
             <View>
                 <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]} >
                     <Button onPress={() => {
-                        navigation.navigate('newTask')
+                        navigation.navigate('newTask',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin } )
+
                     }} size={4} title={"Add New Task"}></Button>
                 </View>
                 {
-                    data.length !== 0 && data.map((item, i) => <Card key={i}>
+                    data.tasks.length != 0 ? data.tasks.map((item, i) => <Card key={i}>
                         <Card.Title>
                             {item.taskText}
                         </Card.Title>
@@ -75,7 +101,13 @@ const EventTasks = (props) => {
                             </Button>}
 
                         </View>
-                    </Card>)
+                    </Card>) : <Card style={[{ backgroundColor: colors.card }]}>
+
+                        <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                            No Tasks For The Event
+                        </Text>
+
+                    </Card>
                 }
             </View>
 

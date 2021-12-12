@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import { CheckBox } from 'react-native';
+import apiLink from "../shared/apiLink";
 
 const Tasks = (props) => {
     const colors = useTheme();
     const navigation = props.navigation;
+    const [apiState,setApi] = useState(false);
     const [data, setData] = useState([
         {
             "_id": "6191254806d9d4318b2f83f1",
@@ -24,6 +26,17 @@ const Tasks = (props) => {
             "__v": 0
         }
     ]);
+    useEffect(()=>{
+        
+        const apiBody = {};
+        fetch(`${apiLink}/assignTask`,{
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiBody),
+        });
+    },[])
     return (
         <View>
         {/* <Button style={[{ marginTop: 10, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Add New Task"}></Button> */}
@@ -71,6 +84,9 @@ const Tasks = (props) => {
 
                     </View>
                 </Card>)
+            }
+            {
+                    apiState && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
             }
         </View>
     )

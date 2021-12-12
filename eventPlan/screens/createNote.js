@@ -247,17 +247,17 @@ const CreateNote = (props) => {
                 </View>
 
                 {
-                    data.apiHit && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                    data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
                 }
                 <View style={styles.button}>
                     <TouchableOpacity
                         onPress={async () => {
                             
                             setData({
-                                ...data,apiHit: true 
+                                ...data,api: true 
                             });
 
-                            const apiBody = { eventId: _eventId, plannerId: _eventAdmin, noteText: data.eventDesc };
+                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, noteText: `${data.eventDesc}` };
                             const apiData = await fetch(`${apiLink}/addNote`, {
                                 method: 'POST', // or 'PUT'
                                 headers: {
@@ -268,7 +268,7 @@ const CreateNote = (props) => {
                             const jsonData = await apiData.json();
                             console.log(jsonData);                        
                             setData({
-                                ...data,apiHit: true 
+                                ...data,api: false 
                             });
     
                             if(jsonData.success)

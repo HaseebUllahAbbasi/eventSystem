@@ -8,7 +8,8 @@ import {
     Platform,
     StyleSheet,
     StatusBar,
-    Alert
+    Alert,
+    ScrollView,ActivityIndicator 
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -46,27 +47,29 @@ const NewAccount = (props) => {
 
 
     const handleValidUser = (val) => {
-        if (val.trim().length() > 4) {
+        console.log(val)
+        if (val.trim().length > 4) {
             setData({
                 ...data,
-                username: data.username,
+                username: val,
                 isValidUser: true
             })
         }
-        else {
-
+        else
+         {
             setData({
                 ...data,
-                username: data.username,
+                username: val,
                 isValidUser: false
             })
+
         }
     }
     const handleValidEmail = (val) => {
-        if (val.trim().length() > 8) {
+        if (val.trim().length > 8) {
             setData({
                 ...data,
-                email: data.email,
+                email: val,
                 isValidEmail: true
             })
         }
@@ -74,17 +77,17 @@ const NewAccount = (props) => {
 
             setData({
                 ...data,
-                email: data.email,
+                email: val,
                 isValidEmail: false
             })
         }
     }
 
     const handleValidPassword = (val) => {
-        if (val.trim().length() > 7) {
+        if (val.trim().length > 7) {
             setData({
                 ...data,
-                password: data.password,
+                password: val,
                 isValidPassword: true
             })
         }
@@ -92,16 +95,16 @@ const NewAccount = (props) => {
 
             setData({
                 ...data,
-                username: data.username,
+                password: val,
                 isValidPassword: false
             })
         }
     }
     const handleValidNumber = (val) => {
-        if (val.trim().length() > 10) {
+        if (val.trim().length > 10) {
             setData({
                 ...data,
-                number: data.number,
+                number: val,
                 isValidNumber: true
             })
         }
@@ -109,7 +112,7 @@ const NewAccount = (props) => {
 
             setData({
                 ...data,
-                number: data.number,
+                number: val,
                 isValidNumber: false
             })
         }
@@ -118,225 +121,234 @@ const NewAccount = (props) => {
 
 
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor='#009387' barStyle="light-content" />
-            <View style={styles.header}>
-                <Text style={styles.text_header}>Welcome To Event Plan </Text>
-            </View>
-            <Animatable.View
-                animation="fadeInUpBig"
-                style={[styles.footer, {
-                    backgroundColor: colors.background
-                }]}
-            >
-                <View style={{ marginBottom: 10 }}>
-                    <Text style={[styles.text_footer, {
-                        color: colors.text
-                    }]}>Username</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="user-o"
-                            color={colors.text}
-                            size={20}
-                        />
-                        <TextInput
-                            placeholder="Your Username"
-                            placeholderTextColor="#666666"
-                            style={[styles.textInput, {
-                                color: colors.text
-                            }]}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleValidUser(val)}
-                        />
-                        {data.isValidUser ?
-                            <Animatable.View
-                                animation="bounceIn"
-                            >
-                                <Feather
-                                    name="check-circle"
-                                    color="green"
-                                    size={20}
-                                />
-                            </Animatable.View>
-                            : null}
-                    </View>
-
-                    {data.isValidUser ? null :
-                        <Animatable.View animation="fadeInLeft" duration={500}>
-
-                            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
-                        </Animatable.View>
-                    }
+        <ScrollView>
+            <View style={styles.container}>
+                <StatusBar backgroundColor='#009387' barStyle="light-content" />
+                <View style={styles.header}>
+                    <Text style={styles.text_header}>Welcome To Event Plan </Text>
                 </View>
-
-                <View style={{ marginBottom: 10 }}>
-                    <Text style={[styles.text_footer, {
-                        color: colors.text
-                    }]}>Email</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="envelope-o"
-                            color={colors.text}
-                            size={20}
-                        />
-                        <TextInput
-                            placeholder="Your Email"
-                            placeholderTextColor="#666666"
-                            style={[styles.textInput, {
-                                color: colors.text
-                            }]}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleValidEmail(val)}
-                        />
-                        {data.isValidEmail ?
-                            <Animatable.View
-                                animation="bounceIn"
-                            >
-                                <Feather
-                                    name="check-circle"
-                                    color="green"
-                                    size={20}
-                                />
-                            </Animatable.View>
-                            : null}
-                    </View>
-
-                    {data.isValidEmail ? null :
-                        <Animatable.View animation="fadeInLeft" duration={500}>
-
-                            <Text style={styles.errorMsg}>Email Should Be Valid.</Text>
-                        </Animatable.View>
-                    }
-                </View>
-                <View>
-                    <Text style={[styles.text_footer, {
-                        color: colors.text
-                    }]}>Number</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="phone"
-                            color={colors.white}
-                            size={20}
-                        />
-                        <TextInput
-                            placeholder="Your Number"
-                            placeholderTextColor="#666666"
-                            style={[styles.textInput, {
-                                color: colors.text
-                            }]}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleValidNumber(val)}
-                        />
-                        {data.isValidNumber ?
-                            <Animatable.View
-                                animation="bounceIn"
-                            >
-                                <Feather
-                                    name="check-circle"
-                                    color="green"
-                                    size={20}
-                                />
-                            </Animatable.View>
-                            : null}
-                    </View>
-
-                    {data.isValidNumber ? null :
-                        <Animatable.View animation="fadeInLeft" duration={500}>
-
-                            <Text style={styles.errorMsg}>Number must be 11 characters </Text>
-                        </Animatable.View>
-                    }
-                </View>
-
-
-
-                <Text style={[styles.text_footer, {
-                    color: colors.text,
-                    marginTop: 35
-                }]}>Password</Text>
-                <View style={styles.action}>
-                    <Feather
-                        name="lock"
-                        color={colors.text}
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="Your Password"
-                        placeholderTextColor="#666666"
-                        secureTextEntry={data.secureTextEntry ? true : false}
-                        style={[styles.textInput, {
+                <Animatable.View
+                    animation="fadeInUpBig"
+                    style={[styles.footer, {
+                        backgroundColor: colors.background
+                    }]}
+                >
+                    <View style={{ marginBottom: 10 }}>
+                        <Text style={[styles.text_footer, {
                             color: colors.text
-                        }]}
-                        autoCapitalize="none"
-                        onChangeText={(val) => handleValidPassword(val)}
-                    />
-                    <TouchableOpacity
-                        onPress={updateSecureTextEntry}
-                    >
-                        {data.secureTextEntry ?
-                            <Feather
-                                name="eye-off"
-                                color="grey"
+                        }]}>Username</Text>
+                        <View style={styles.action}>
+                            <FontAwesome
+                                name="user-o"
+                                color={colors.text}
                                 size={20}
                             />
-                            :
-                            <Feather
-                                name="eye"
-                                color="grey"
-                                size={20}
+                            <TextInput
+                        value={data.username}
+
+                                placeholder="Your Username"
+                                placeholderTextColor="#666666"
+                                style={[styles.textInput, {
+                                    color: colors.text
+                                }]}
+                                autoCapitalize="none"
+                                onChangeText={(val) => handleValidUser(val)}
                             />
+                            {data.isValidUser ?
+                                <Animatable.View
+                                    animation="bounceIn"
+                                >
+                                    <Feather
+                                        name="check-circle"
+                                        color="green"
+                                        size={20}
+                                    />
+                                </Animatable.View>
+                                : null}
+                        </View>
+
+                        {data.isValidUser ? null :
+                            <Animatable.View animation="fadeInLeft" duration={500}>
+
+                                <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+                            </Animatable.View>
                         }
-                    </TouchableOpacity>
-                </View>
-                {data.isValidPassword ? null :
-                    <Animatable.View animation="fadeInLeft" duration={500}>
-                        <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
-                    </Animatable.View>
-                }
+                    </View>
 
-                {
-                    data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
-                }
-                <View style={styles.button}>
-                    <TouchableOpacity
+                    <View style={{ marginBottom: 10 }}>
+                        <Text style={[styles.text_footer, {
+                            color: colors.text
+                        }]}>Email</Text>
+                        <View style={styles.action}>
+                            <FontAwesome
+                                name="envelope-o"
+                                color={colors.text}
+                                size={20}
+                            />
+                            <TextInput
+                        value={data.email}
 
-                        onPress={ async() => {
-                            setData({...data,api: true})
-                            const apiBody = { name: data.username, password: data.password, email: data.email, number: data.number };
-                            const apiData = await fetch(`${apiLink}/person`, {
-                                method: 'POST', // or 'PUT'
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(apiBody),
-                            });
-                            const jsonData = await apiData.json();
-                            setData({...data,api: false})
-                            if(jsonData.success)
-                            {
-                                alert("New Account Created")
+                                placeholder="Your Email"
+                                placeholderTextColor="#666666"
+                                style={[styles.textInput, {
+                                    color: colors.text
+                                }]}
+                                autoCapitalize="none"
+                                onChangeText={(val) => handleValidEmail(val)}
+                            />
+                            {data.isValidEmail ?
+                                <Animatable.View
+                                    animation="bounceIn"
+                                >
+                                    <Feather
+                                        name="check-circle"
+                                        color="green"
+                                        size={20}
+                                    />
+                                </Animatable.View>
+                                : null}
+                        </View>
+
+                        {data.isValidEmail ? null :
+                            <Animatable.View animation="fadeInLeft" duration={500}>
+
+                                <Text style={styles.errorMsg}>Email Should Be Valid.</Text>
+                            </Animatable.View>
+                        }
+                    </View>
+                    <View>
+                        <Text style={[styles.text_footer, {
+                            color: colors.text
+                        }]}>Number</Text>
+                        <View style={styles.action}>
+                            <FontAwesome
+                                name="phone"
+                                color={colors.white}
+                                size={20}
+                            />
+                            <TextInput
+                        value={data.number}
+
+                                placeholder="Your Number"
+                                placeholderTextColor="#666666"
+                                style={[styles.textInput, {
+                                    color: colors.text
+                                }]}
+                                autoCapitalize="none"
+                                onChangeText={(val) => handleValidNumber(val)}
+                            />
+                            {data.isValidNumber ?
+                                <Animatable.View
+                                    animation="bounceIn"
+                                >
+                                    <Feather
+                                        name="check-circle"
+                                        color="green"
+                                        size={20}
+                                    />
+                                </Animatable.View>
+                                : null}
+                        </View>
+
+                        {data.isValidNumber ? null :
+                            <Animatable.View animation="fadeInLeft" duration={500}>
+
+                                <Text style={styles.errorMsg}>Number must be 11 characters </Text>
+                            </Animatable.View>
+                        }
+                    </View>
+
+
+
+                    <Text style={[styles.text_footer, {
+                        color: colors.text,
+                        marginTop: 35
+                    }]}>Password</Text>
+                    <View style={styles.action}>
+                        <Feather
+                            name="lock"
+                            color={colors.text}
+                            size={20}
+                        />
+                        <TextInput
+                        value={data.password}
+                            placeholder="Your Password"
+                            placeholderTextColor="#666666"
+                            secureTextEntry={data.secureTextEntry ? true : false}
+                            style={[styles.textInput, {
+                                color: colors.text
+                            }]}
+                            autoCapitalize="none"
+                            onChangeText={(val) => handleValidPassword(val)}
+                        />
+                        <TouchableOpacity
+                            onPress={updateSecureTextEntry}
+                        >
+                            {data.secureTextEntry ?
+                                <Feather
+                                    name="eye-off"
+                                    color="grey"
+                                    size={20}
+                                />
+                                :
+                                <Feather
+                                    name="eye"
+                                    color="grey"
+                                    size={20}
+                                />
                             }
-                            else{
-                                alert("Not Created")
+                        </TouchableOpacity>
+                    </View>
+                    {data.isValidPassword ? null :
+                        <Animatable.View animation="fadeInLeft" duration={500}>
+                            <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+                        </Animatable.View>
+                    }
 
-                            }
+                    {
+                        data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                    }
+                    <View style={styles.button}>
+                        <TouchableOpacity
+
+                            onPress={async () => {
+                                setData({ ...data, api: true })
+                                const apiBody = { name: data.username, password: data.password, email: data.email, number: data.number };
+                                const apiData = await fetch(`${apiLink}/person`, {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
+                                const jsonData = await apiData.json();
+                                setData({ ...data, api: false })
+                                if (jsonData.success) {
+                                    alert("New Account Created")
+                                }
+                                else {
+                                    alert("Not Created")
+
+                                }
 
 
-                        }}
-                        style={[styles.signIn, {
-                            borderColor: '#009387',
-                            borderWidth: 1,
-                            marginTop: 5
-                        }]}
-                    >
-                        <Text style={[styles.textSign, {
-                            color: '#009387'
-                        }]}>Create New Account</Text>
-                    </TouchableOpacity>
+                            }}
+                            style={[styles.signIn, {
+                                borderColor: '#009387',
+                                borderWidth: 1,
+                                marginTop: 5
+                            }]}
+                        >
+                            <Text style={[styles.textSign, {
+                                color: '#009387'
+                            }]}>Create New Account</Text>
+                        </TouchableOpacity>
 
-                </View>
-            </Animatable.View>
-        </View>
+                    </View>
+                </Animatable.View>
+            </View>
+        </ScrollView>
+
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView,ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Card, ListItem, ThemeProvider, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 
@@ -11,20 +11,11 @@ const theme = {
     }
 };
 
-const EventTeam = (props) => {
+const EventGuest = (props) => {
     const navigation = props.navigation;
-
-    const _user = navigation.getParam('user');
-    const _email = navigation.getParam('email');
-    const _id = navigation.getParam('id');
-    const _number = navigation.getParam('event');
-    const _eventName = navigation.getParam('eventName');
-    const _eventId = navigation.getParam('eventId');
-    const _eventAdmin = navigation.getParam('eventAdmin');
 
     const { colors } = useTheme();
     const [data, setData] = useState({
-        api:false,
         "success": true,
         "team":
             [
@@ -63,8 +54,7 @@ const EventTeam = (props) => {
             <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                 
             <Button onPress={() => {
-                    navigation.navigate('sendRequest',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin } )
-
+                    navigation.navigate('sendRequest')
                 }}   size={5} title={"Add New Member"}>
                     
                 </Button>
@@ -103,7 +93,7 @@ const EventTeam = (props) => {
         </ScrollView>
     )
 }
-export default EventTeam;
+export default EventGuest;
 const styles = StyleSheet.create({
     drawerContent: {
         flex: 1,
