@@ -62,9 +62,9 @@ const HomeScreen = (props) => {
         const apiData = await fetch(`${apiLink}/getEvents`);
         const jsonData = await apiData.json();
         console.log(jsonData);
-        console.log(navigation.getParam('user')+ "new user");                        
+                               
         setData({
-            ...data,api: false 
+            ...data,api: false,events: [...jsonData.events] 
         });
         setScreen({
             userName: _user,
@@ -77,7 +77,7 @@ const HomeScreen = (props) => {
     },[])
     return (
         <ScrollView>
-            <View>
+            
             {
                     data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
             }
@@ -95,8 +95,21 @@ const HomeScreen = (props) => {
 
                         </Button>
                     </View>
-
                 </Card>
+                <Card style={[{ backgroundColor: colors.card , marginTop:5 } ]}>    
+                    <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                    
+                        Why Are You Waiting ! Just Create New Event
+                    </Text>
+                    <View>
+                        <Button onPress={() => {
+                            navigation.navigate('createEvent',{user: _user, email: _email, number:_number, id: _id  })
+                        }} title={"Create Event"}>
+
+                        </Button>
+                    </View>
+                </Card>
+                
                 {
                     data.success == true && data.events.map((eventItem, i) => <Card key={i}>
                         <Card.Title style={[{ backgroundColor: colors.card }]}>{eventItem.eventName}</Card.Title>
@@ -122,6 +135,7 @@ const HomeScreen = (props) => {
 
 
                             </View>
+
                             <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                                 <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
@@ -175,7 +189,7 @@ const HomeScreen = (props) => {
                                 </Button>
 
                             </View>
-                            
+
                         </View>
 
 
@@ -185,7 +199,6 @@ const HomeScreen = (props) => {
                 }
 
 
-            </View>
         </ScrollView>
 
     )

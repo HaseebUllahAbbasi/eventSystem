@@ -291,7 +291,7 @@ const InviteGuest = (props) => {
                                 });
 
 
-                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, guestName: `${data.username}`, guestNumber: `${_eventName}` };
+                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, guestName: `${data.username}`, guestNumber: `${data.number}` };
                                 const apiData = await fetch(`${apiLink}/addGuest`, {
                                     method: 'POST', // or 'PUT'
                                     headers: {

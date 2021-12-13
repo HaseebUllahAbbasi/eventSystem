@@ -9,29 +9,37 @@ import {
     StatusBar,
     TextInput,
     Platform,
-    TouchableOpacity,
+    TouchableOpacity,ActivityIndicator,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import apiLink from '../shared/apiLink';
 
 
 const { height } = Dimensions.get("screen");
 const height_logo = height * 0.25;
 const CreateEvent = (props) => {
+
     const navigation = props.navigation;
+    
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
     const { colors } = useTheme();
 
     const [data, setData] = useState({
+        api:false,
         isValidEventName: false,
-        isValidPId : false,
+        isValidPId : true,
         isValidDesc:false,
-        isValidPlanner: false,
+        isValidPlanner: true,
         eventName: "",
-        plannerId: "61a4e0045f599ed12becaaee",
+        plannerId: _id,
         eventStatus: false,
-        eventDesc: "This is Desc",
-        PlannerName: "nazeer"
+        eventDesc: "",
+        PlannerName: _user
     });
     
     const handleValidPlannerId = (val) => {
@@ -184,11 +192,13 @@ const CreateEvent = (props) => {
                             size={20}
                         />
                         <TextInput
+                        value={data.PlannerName}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
                                 color: colors.text
                             }]}
+                            editable={false}
                             autoCapitalize="none"
                             onChangeText={(val) => eventPlannerName(val)}
                             // onEndEditing={(e) => handleValidPlannerName(e.nativeEvent.text)}
@@ -225,6 +235,8 @@ const CreateEvent = (props) => {
                             size={20}
                         />
                         <TextInput
+                        editable={false}
+                        value={data.plannerId}
                             placeholder="Your ID"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -299,7 +311,34 @@ const CreateEvent = (props) => {
                 
             <View style={styles.button}>
             <TouchableOpacity
-                    // onPress={() => navigation.navigate('SignUpScreen')}
+            onPress={ async ()=>{
+                setData({
+                                ...data,api:true 
+                            });
+
+                const apiBody = { userName: `${_user}`, plannerId: `${_id}`, eventName: data.eventName,  eventStatus : false,  eventDesc: data.eventDesc   };
+                            const apiData = await fetch(`${apiLink}/event`, {
+                                method: 'POST', // or 'PUT'
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(apiBody),
+                            });
+                            const jsonData = await apiData.json();
+                            console.log(jsonData);                        
+                            setData({
+                                ...data,api: false 
+                            });
+    
+                            if(jsonData.success)
+                            {
+                                alert("Event Created")
+                            }
+                            else
+                            {
+                                alert("Event Not created")
+                            }
+            }}
                     style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
@@ -312,6 +351,9 @@ const CreateEvent = (props) => {
                 </TouchableOpacity>
 
             </View>
+            {
+                data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
 
             </Animatable.View>
 
@@ -372,13 +414,12 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     textInput: {
-        marginLeft:"8px",
-        
+        marginLeft:5,
         borderStyle:"solid",
         borderWidth: 1,
         borderColor:"#D3D3D3",
         
-        borderRadius:"10px",
+        borderRadius:10,
         
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,

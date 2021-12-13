@@ -68,20 +68,21 @@ const EventTeam = (props) => {
         const jsonData = await apiData.json();
         console.log(jsonData);
 
-        if (jsonData.success) 
-        {
+        if (jsonData.success) {
             const members = jsonData.members;
-            const team =  jsonData.team
-            setData({...data,success:true, team: [...team] })
+            const team = jsonData.team
+            setData({ ...data, success: true, team: [...team] })
         }
         else {
+            setData({ ...data, success: false, })
+
             alert("No Members")
         }
 
     }, [])
     return (
         <ScrollView>
-       
+
             <View>
                 <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
 
@@ -92,7 +93,7 @@ const EventTeam = (props) => {
                     </Button>
                 </View>
                 {
-                    data.success == true && data.team.map((member, i) => <Card key={i} >
+                    data.success == true ? data.team.map((member, i) => <Card key={i} >
                         <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
                             <View>
                                 <Text style={[{ textAlign: "center", fontSize: 20, fontWeight: "bold", color: colors.text }]}>
@@ -107,7 +108,7 @@ const EventTeam = (props) => {
                                     </Button>
 
                                     <Button onPress={() => {
-                                        navigation.navigate('memberProfile',{name: member.name, id: member.id } );
+                                        navigation.navigate('memberProfile', { name: member.name, id: member.id });
                                     }} style={[{ marginTop: 15, marginBottom: 5, width: 40 }]} type="outline" size={3} title={"View"}>
                                     </Button>
                                 </ThemeProvider>
@@ -115,14 +116,20 @@ const EventTeam = (props) => {
                             </View>
                         </View>
                     </Card>
-                    )
+                    ) : <Card style={[{ backgroundColor: colors.card }]}>
+
+                        <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                            No Team Members
+                        </Text>
+
+                    </Card>
 
                 }
 
                 {
-             
-             data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
-     }
+
+                    data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                }
 
             </View>
 

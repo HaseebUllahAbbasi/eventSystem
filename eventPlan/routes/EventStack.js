@@ -1,4 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack';
+import CreateEvent from '../screens/CreateEvents';
 import CreateNote from '../screens/createNote';
 import CreateTask from '../screens/createTasks';
 import EventGuest from '../screens/EventGuest';
@@ -29,6 +30,12 @@ const screens = {
         screen: HomeScreen,
         navigationOptions:{
             title:'Home'
+        }
+    },
+    createEvent:{
+        screen: CreateEvent,
+        navigationOptions:{
+            title:"Create New Event"
         }
     },
     OneEvent: {
