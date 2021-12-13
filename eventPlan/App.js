@@ -6,9 +6,11 @@ import { StyleSheet } from "react-native";
 // import DrawerComponent from "./screens/DrawerHome";
 
 
-import Navigator from './routes/NewDrawer';
+// import Navigator from './routes/NewDrawer';
+
 
 import React from "react";
+import NavContainer from "./routes/NewDrawer";
 
 
 
@@ -40,7 +42,8 @@ export default function App() {
 
 
   return (
-    <Navigator/>
+    <NavContainer/>
+    // <Navigator/>
 
     // <NavigationContainer>
     //   <Drawer.Navigator >

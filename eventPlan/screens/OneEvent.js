@@ -111,7 +111,11 @@ const OneEvent = (props) => {
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
                         </Button>
 
-                        <Button onPress={() => {
+                        
+
+                    </View>
+                    <View style={[styles.row, { justifyContent: "space-evenly" }]}>
+                    <Button onPress={() => {
                             navigation.navigate('eventTeam',
                             {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
@@ -121,7 +125,6 @@ const OneEvent = (props) => {
                             {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Guests "}>
                         </Button>
-
                     </View>
 
                 </View>

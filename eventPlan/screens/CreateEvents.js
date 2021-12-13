@@ -31,7 +31,7 @@ const CreateEvent = (props) => {
         plannerId: "61a4e0045f599ed12becaaee",
         eventStatus: false,
         eventDesc: "This is Desc",
-        PlannerName: "Shaikh"
+        PlannerName: "nazeer"
     });
     
     const handleValidPlannerId = (val) => {

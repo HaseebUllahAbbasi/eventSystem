@@ -11,16 +11,24 @@ import NotesEvent from '../screens/NotesEvent';
 import OneEvent from '../screens/OneEvent';
 import Profile from '../screens/Profile';
 import SendRequest from '../screens/SendRequest';
+import Sign from '../screens/Sign'
 import Header from '../shared/header';
 
 const screens = {
-    Home: {
-        screen: HomeScreen,
-        navigationOptions: ({ navigation }) => {
+    Login: {
+        screen: Sign,
+        navigationOptions: ({ navigation }) => 
+        {
             return {
-                headerTitle: () => <Header title='Home' navigation={navigation} />
+                headerTitle: () => <Header title='Login' navigation={navigation} />
             }
         },
+    },
+    Home: {
+        screen: HomeScreen,
+        navigationOptions:{
+            title:'Home'
+        }
     },
     OneEvent: {
         screen: OneEvent,

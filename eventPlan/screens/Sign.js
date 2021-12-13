@@ -20,7 +20,7 @@ const SignInScreen = (props) => {
     const navigation = props.navigation;
     const [data, setData] = React.useState({
         api: false,
-        username: 'shaikh',
+        username: 'nazeer',
         password: 'password',
         check_textInputChange: false,
         secureTextEntry: true,
@@ -131,7 +131,7 @@ const SignInScreen = (props) => {
                         size={20}
                     />
                     <TextInput
-                    value={data.username}
+                        value={data.username}
                         placeholder="Your Username"
                         placeholderTextColor="#666666"
                         style={[styles.textInput, {
@@ -209,7 +209,7 @@ const SignInScreen = (props) => {
                     <Text style={{ color: '#009387', marginTop: 15 }}>Forgot password?</Text>
                 </TouchableOpacity>
                 {
-                    data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                    data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
                 }
                 <View style={styles.button}>
                     <TouchableOpacity
@@ -223,19 +223,24 @@ const SignInScreen = (props) => {
                             setData({ ...data, api: true })
                             const apiBody = { name: data.username, password: data.password };
 
-                            const apiData =   await fetch(`${apiLink}/login`, 
-                            {
-                                method: 'POST', // or 'PUT'
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(apiBody),
-                            });
+                            const apiData = await fetch(`${apiLink}/login`,
+                                {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
                             const jsonData = await apiData.json();
                             setData({ ...data, api: false })
-                            if(jsonData.success)
-                            {
-                                navigation.navigate('Home',{user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id , requests : jsonData.users.requests.length  })
+                            if (jsonData.success) {
+                                console.log({ user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id, requests: jsonData.users.requests.length })
+                                // navigation.navigate("Root",{
+                                //     screen: "Home",
+                                //     param: {user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id , requests : jsonData.users.requests.length  }
+                                // })
+                                // navigation.navigate('Root', { screen: 'Home', params: { screen: 'Sound', params: { screen: 'Media' } } });
+                                navigation.navigate('Home',{ user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id, requests: jsonData.users.requests.length }  );
                             }
                             else
                                 alert("Wrong User Name and Password")
@@ -253,7 +258,7 @@ const SignInScreen = (props) => {
 
                     <TouchableOpacity
 
-                        // onPress={() => navigation.navigate('SignUpScreen')}
+                        onPress={() => navigation.navigate('NewAccount')}
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,

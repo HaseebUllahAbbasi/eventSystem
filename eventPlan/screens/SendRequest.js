@@ -76,6 +76,12 @@ const SendRequest = (props) => {
             });
         }
     }
+    useEffect(()=>
+    {
+    console.log("in send")
+
+
+    },[])
     
     return (
         <View style={styles.container}>

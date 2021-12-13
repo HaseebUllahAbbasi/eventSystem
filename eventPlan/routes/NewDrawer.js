@@ -6,13 +6,13 @@ import WelcomeStack from './WelcomeStack';
 const RootDrawerNavigator = createDrawerNavigator(
     {
         
-        Welcome: {
-            screen: WelcomeStack,
-        },
         Home: {
             screen:EventStack,
         },
-    });
+        Logout: {
+            screen: WelcomeStack,
+        },
+    },);
 
 export default createAppContainer(RootDrawerNavigator);
 

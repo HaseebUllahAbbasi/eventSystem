@@ -18,6 +18,7 @@ const NotesEvent = (props) => {
 
     const { colors } = useTheme();
     const [data, setData] = useState({success: false});
+
     useEffect(async () => {
         const apiBody = { eventId: _eventId };
         const apiData = await fetch(`${apiLink}/notesOfEvent`, {
@@ -78,8 +79,6 @@ const NotesEvent = (props) => {
                             </Text>
 
                         </Card>
-
-
                 }
             </View>
 

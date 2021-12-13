@@ -8,13 +8,21 @@ import { Text } from "../components/Themed"
 import apiLink from "../shared/apiLink";
 const HomeScreen = (props) => {
     const navigation = props.navigation;
+    
+
     const _user = navigation.getParam('user');
     const _email = navigation.getParam('email');
     const _id = navigation.getParam('id');
     const _number = navigation.getParam('number');
     const _requests = navigation.getParam('requests');
     
-
+    
+    const [homeScreenData,setScreen] = useState({
+        userName: _user,
+        email: _email,
+        req: _requests,
+        num: _number
+    }) 
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
@@ -48,16 +56,22 @@ const HomeScreen = (props) => {
     useState( async()=>
     {
         setData({
-            ...data,apiHit: true 
+            ...data,api: true 
         });
         
         const apiData = await fetch(`${apiLink}/getEvents`);
         const jsonData = await apiData.json();
-        console.log(jsonData);                        
+        console.log(jsonData);
+        console.log(navigation.getParam('user')+ "new user");                        
         setData({
-            ...data,apiHit: false 
+            ...data,api: false 
         });
-
+        setScreen({
+            userName: _user,
+            email: _email,
+            req: _requests,
+            num: _number
+        });
         
         
     },[])
@@ -71,13 +85,12 @@ const HomeScreen = (props) => {
                     
                     <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
                     
-                        Hi {_user} , 
-                        You Have {_requests} Requests
+                        Hi {homeScreenData.userName} , 
+                        You Have  {homeScreenData.req} Requests
                     </Text>
                     <View>
                         <Button onPress={() => {
-                            navigation.navigate('myRequests')
-
+                            navigation.navigate('myRequests',{user: _user, email: _email, number:_number, id: _id  })
                         }} title={"View Requests"}>
 
                         </Button>
@@ -162,6 +175,7 @@ const HomeScreen = (props) => {
                                 </Button>
 
                             </View>
+                            
                         </View>
 
 
