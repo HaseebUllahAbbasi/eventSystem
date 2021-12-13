@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView,ActivityIndicator } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { Card, ListItem, ThemeProvider, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
+import apiLink from "../shared/apiLink";
 
 const theme = {
     Button: {
@@ -24,7 +25,7 @@ const EventTeam = (props) => {
 
     const { colors } = useTheme();
     const [data, setData] = useState({
-        api:false,
+        api: false,
         "success": true,
         "team":
             [
@@ -54,21 +55,42 @@ const EventTeam = (props) => {
                 }
 
             ]
-    }
+    });
 
-    );
+    useEffect(async () => {
+        // const apiBody = { eventId: _eventId };
+        const apiData = await fetch(`${apiLink}/getMembers/${_eventId}`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+
+        if (jsonData.success) 
+        {
+            const members = jsonData.members;
+            const team =  jsonData.team
+            setData({...data,success:true, team: [...team] })
+        }
+        else {
+            alert("No Members")
+        }
+
+    }, [])
     return (
         <ScrollView>
+       
             <View>
-            <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
-                
-            <Button onPress={() => {
-                    navigation.navigate('sendRequest',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin } )
+                <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
 
-                }}   size={5} title={"Add New Member"}>
-                    
-                </Button>
-            </View>
+                    <Button onPress={() => {
+                        navigation.navigate('sendRequest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                    }} size={5} title={"Add New Member"}>
+
+                    </Button>
+                </View>
                 {
                     data.success == true && data.team.map((member, i) => <Card key={i} >
                         <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
@@ -85,7 +107,7 @@ const EventTeam = (props) => {
                                     </Button>
 
                                     <Button onPress={() => {
-                                        navigation.navigate('memberProfile');
+                                        navigation.navigate('memberProfile',{name: member.name, id: member.id } );
                                     }} style={[{ marginTop: 15, marginBottom: 5, width: 40 }]} type="outline" size={3} title={"View"}>
                                     </Button>
                                 </ThemeProvider>
@@ -97,6 +119,10 @@ const EventTeam = (props) => {
 
                 }
 
+                {
+             
+             data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+     }
 
             </View>
 

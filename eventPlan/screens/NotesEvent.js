@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView,ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 import { useTheme } from '@react-navigation/native';
 import apiLink from "../shared/apiLink";
@@ -17,7 +17,7 @@ const NotesEvent = (props) => {
     const _eventAdmin = navigation.getParam('eventAdmin');
 
     const { colors } = useTheme();
-    const [data, setData] = useState({success: false});
+    const [data, setData] = useState({ success: false });
 
     useEffect(async () => {
         const apiBody = { eventId: _eventId };
@@ -31,10 +31,9 @@ const NotesEvent = (props) => {
         const jsonData = await apiData.json();
         console.log(jsonData);
 
-        if (jsonData.success) 
-        {
-            const noteListsFound =  jsonData.noteListsFound
-            setData({...data,success:true, notes: [...noteListsFound] })
+        if (jsonData.success) {
+            const noteListsFound = jsonData.noteListsFound
+            setData({ ...data, success: true, notes: [...noteListsFound] })
             alert("Got the notes")
         }
         else {
@@ -45,12 +44,12 @@ const NotesEvent = (props) => {
     return (
         <ScrollView>
             {
-                    data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+                data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
             }
             <View>
                 <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                     <Button onPress={() => {
-                        navigation.navigate('newNote',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin } )
+                        navigation.navigate('newNote', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
                     }
                     } size={5} title={"Add New Note"}></Button>
 
@@ -65,7 +64,31 @@ const NotesEvent = (props) => {
                                     {note.NotesText}
                                 </Text>
                                 <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 30, marginRight: 30 }]} >
-                                    <Button type="outline" size={3} title={"Remove Note"}>
+                                    <Button onPress={async () => {
+                                        const apiBody = { eventId: _eventId , plannerId: _eventAdmin, noteId :note._id   };
+                                        const apiData = await fetch(`${apiLink}/removeNote`, {
+                                            method: 'POST', // or 'PUT'
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify(apiBody),
+                                        });
+                                        const jsonData = await apiData.json();
+                                        console.log(jsonData);
+
+                                        if (jsonData.success) {
+                                            
+                                            alert("Note removed")
+                                        }
+                                        else {
+                                            alert("Incomplete")
+                                        }
+
+
+
+                                    }}
+
+                                        type="outline" size={3} title={"Remove Note"}>
                                     </Button>
                                 </View>
                             </View>

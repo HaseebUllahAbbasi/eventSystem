@@ -5,6 +5,7 @@ import EventGuest from '../screens/EventGuest';
 import EventTasks from '../screens/eventTasks';
 import EventTeam from '../screens/EventTeam';
 import HomeScreen from '../screens/HomeScreen';
+import InviteGuest from '../screens/InviteGuest';
 import MyEvents from '../screens/MyEvents'
 import MyRequests from '../screens/MyRequests';
 import NotesEvent from '../screens/NotesEvent';
@@ -95,6 +96,15 @@ const screens = {
             title: "Event Guests"
         }
     },
+    inviteGuest : 
+    {
+        screen: InviteGuest,
+        navigationOptions:{
+            title: "Invite Guest"
+        }
+    },
+    
+
 };
 
 const EventStack = createStackNavigator(screens, {

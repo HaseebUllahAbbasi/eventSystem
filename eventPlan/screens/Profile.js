@@ -1,21 +1,54 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button } from 'react-native-elements'
 
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
+import apiLink from "../shared/apiLink";
 
-const Profile = (props) => {
+const Profile = (props) => 
+{
     const { colors } = useTheme();
-    const [data, setData] = useState({
-        name: "simple",
-        number: "3013579802",
-        email: "Simple@gmail.com"
-    });
-
+    
     const navigation = props.navigation;
+
+    const _id = navigation.getParam('id');
+    const _name = navigation.getParam('name');
+
+    const [data, setData] = useState({
+        name: _name,
+        number: "",
+        email: "",
+        id: _id
+    });
+    useEffect(async () => {
+        // const apiBody = { eventId: _eventId };
+        const apiData = await fetch(`${apiLink}/person/${_id}`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+
+        if (jsonData.success) 
+        {
+            const members = jsonData.members;
+            const team =  jsonData.team;
+            console.log(jsonData)
+            setData({...data,success:true, name: jsonData.personFetched.name, email: jsonData.personFetched.email , number:jsonData.personFetched.number })
+            alert("Got the Member")
+        }
+        else {
+            alert("No Members")
+        }
+
+    }, [])
+
     return (
         <View>
+        
             <View>
                 <Card>
                     <Card.Title style={[{ backgroundColor: colors.card , fontSize: 25 }]}>{data.name}</Card.Title>
@@ -50,6 +83,10 @@ const Profile = (props) => {
                 </Card>
             </View>
 
+            {
+             
+                 data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
+            }
         </View>
     )
 }

@@ -13,11 +13,20 @@ const theme = {
 
 const EventGuest = (props) => {
     const navigation = props.navigation;
+    
+    const _user = navigation.getParam('user');
+    const _email = navigation.getParam('email');
+    const _id = navigation.getParam('id');
+    const _number = navigation.getParam('event');
+    const _eventName = navigation.getParam('eventName');
+    const _eventId = navigation.getParam('eventId');
+    const _eventAdmin = navigation.getParam('eventAdmin');
+
 
     const { colors } = useTheme();
     const [data, setData] = useState({
         "success": true,
-        "team":
+        "guests":
             [
                 {
                     "id": "61abe12b0722c9f739f10726",
@@ -54,13 +63,13 @@ const EventGuest = (props) => {
             <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                 
             <Button onPress={() => {
-                    navigation.navigate('sendRequest')
-                }}   size={5} title={"Add New Member"}>
+                    navigation.navigate('inviteGuest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                }}   size={5} title={"Add New Guest"}>
                     
                 </Button>
             </View>
                 {
-                    data.success == true && data.team.map((member, i) => <Card key={i} >
+                    data.success == true && data.guests.map((member, i) => <Card key={i} >
                         <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
                             <View>
                                 <Text style={[{ textAlign: "center", fontSize: 20, fontWeight: "bold", color: colors.text }]}>

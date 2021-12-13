@@ -262,7 +262,7 @@ const NewAccount = (props) => {
 
                     <Text style={[styles.text_footer, {
                         color: colors.text,
-                        marginTop: 35
+                        marginTop: 20
                     }]}>Password</Text>
                     <View style={styles.action}>
                         <Feather
