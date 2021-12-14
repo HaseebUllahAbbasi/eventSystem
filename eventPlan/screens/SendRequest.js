@@ -33,7 +33,7 @@ const SendRequest = (props) => {
     const _eventName = navigation.getParam('eventName');
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
-
+    const _AdminName = navigation.getParam('adminName');
 
     const data_1 = { eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
     const { colors } = useTheme();
@@ -161,7 +161,7 @@ const SendRequest = (props) => {
                             autoCapitalize="none"
                             // onChangeText={(val) => textInputChange(val)}
                             // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            value={_eventAdmin}
+                            value={_AdminName}
                         />
                         {data.validData ?
                             <Animatable.View

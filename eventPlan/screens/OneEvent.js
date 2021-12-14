@@ -139,13 +139,13 @@ const OneEvent = (props) => {
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         <Button onPress={() => {
 
-                            navigation.navigate('eventTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                            navigation.navigate('eventTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName })
 
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Tasks"}>
                         </Button>
                         <Button onPress={() => {
                             navigation.navigate('eventNotes',
-                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName})
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
                         </Button>
 
@@ -153,7 +153,7 @@ const OneEvent = (props) => {
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         <Button onPress={() => {
                             navigation.navigate('eventTeam',
-                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin,  adminName : data.event.userName})
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
                         </Button>
                         <Button onPress={() => {

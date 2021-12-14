@@ -5,15 +5,18 @@ const GuestSchema = new mongoose.Schema(
             type: String,
             required: [true, "please Enter Name"],
             maxlength: [30, "Your Name cannot exceed 30 charachters"],
-            unique:[true,"User Already Exists with Name"]
         },
         number:
         {
             type: String,
             required: [true, "please Enter Number"],
             maxlength: [11, "Your Number cannot exceed 11 Numbers"],
-            unique:[true,"User Already Exists with Number"]
-        }
+        },
+        eventId: {
+            type: String,
+            required: [true, "Please Enter the Event Id "],
+            maxlength: [25, "Id invalid"]
+        },
     }
 )
 module.exports = mongoose.model('Guest',GuestSchema);

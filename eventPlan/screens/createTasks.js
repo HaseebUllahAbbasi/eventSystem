@@ -32,9 +32,7 @@ const CreateTask = (props) => {
     const _eventName = navigation.getParam('eventName');
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
-
-
-
+    const _AdminName = navigation.getParam('adminName');
 
     const { colors } = useTheme();
 
@@ -80,16 +78,16 @@ const CreateTask = (props) => {
         if (value.trim().length > 4) {
             setData({
                 ...data,
-                eventDesc: value,
-                isValidDesc: true
+                task: value,
+                isValidTask: true
             })
         }
         else {
 
             setData({
                 ...data,
-                eventDesc: value,
-                isValidDesc: false
+                task: value,
+                isValidTask: false
             })
         }
     }
@@ -154,7 +152,7 @@ const CreateTask = (props) => {
                         />
                         <TextInput
                         editable={false}
-                        value={data.eventID}
+                        value={_eventName}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -199,7 +197,7 @@ const CreateTask = (props) => {
                         />
                         <TextInput
                         editable={false}
-                        value={data.plannerId}
+                        value={_AdminName}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -288,7 +286,7 @@ const CreateTask = (props) => {
                                 color: colors.text
                             }]}
                             autoCapitalize="none"
-                            onChangeText={(val) => textInputChange(val)}
+                            onChangeText={(val) => handleDesc(val)}
                         />
                         {data.isValidTask ?
                             <Animatable.View

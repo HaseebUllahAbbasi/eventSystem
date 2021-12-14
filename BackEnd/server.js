@@ -1,5 +1,6 @@
 const app = require('./app')
 const dotEnv = require('dotenv')
+
 const connectDatabase = require('./config/database')
 
 dotEnv.config({

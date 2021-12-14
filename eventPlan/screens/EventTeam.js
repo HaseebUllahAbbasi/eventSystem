@@ -22,6 +22,8 @@ const EventTeam = (props) => {
     const _eventName = navigation.getParam('eventName');
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
+    const _AdminName = navigation.getParam('adminName');
+
 
     const { colors } = useTheme();
     const [data, setData] = useState({
@@ -87,7 +89,7 @@ const EventTeam = (props) => {
                 <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
 
                     <Button onPress={() => {
-                        navigation.navigate('sendRequest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
+                        navigation.navigate('sendRequest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin,adminName : _AdminName })
                     }} size={5} title={"Add New Member"}>
 
                     </Button>
@@ -111,7 +113,7 @@ const EventTeam = (props) => {
                                                 ...data, api: true
                                             });
 
-                                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, memberId : `${member._id}`, memberName: member.name };
+                                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, memberId : `${member.id}`, memberName: member.name };
                                             const apiData = await fetch(`${apiLink}/removeMember`, {
                                                 method: 'POST', // or 'PUT'
                                                 headers: {
