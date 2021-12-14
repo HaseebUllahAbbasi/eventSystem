@@ -286,6 +286,11 @@ const InviteGuest = (props) => {
                     <TouchableOpacity
                         onPress={
                             async () => {
+                                if(data.isValidNumber == false || data.validData == false)
+                                {
+                                    alert("please enter Complete Data")
+                                    return;
+                                }
 
                                 setData({
                                     ...data, api: true

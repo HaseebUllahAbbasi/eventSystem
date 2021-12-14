@@ -253,6 +253,12 @@ const CreateNote = (props) => {
                     <TouchableOpacity
                         onPress={async () => {
                             
+                            if(!data.isValidDesc)
+                            {
+                                alert("please Write Complete Description ")
+                                return;
+                            }
+
                             setData({
                                 ...data,api: true 
                             });

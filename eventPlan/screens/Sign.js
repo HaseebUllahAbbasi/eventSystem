@@ -20,8 +20,8 @@ const SignInScreen = (props) => {
     const navigation = props.navigation;
     const [data, setData] = React.useState({
         api: false,
-        username: 'nazeer',
-        password: 'password',
+        username: '',
+        password: '',
         check_textInputChange: false,
         secureTextEntry: true,
         isValidUser: true,

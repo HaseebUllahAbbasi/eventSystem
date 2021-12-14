@@ -89,7 +89,16 @@ const EventTeam = (props) => {
                 <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
 
                     <Button onPress={() => {
-                        navigation.navigate('sendRequest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin,adminName : _AdminName })
+                        if(_eventAdmin == _id)
+                        {
+                            navigation.navigate('sendRequest', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin,adminName : _AdminName })
+                        
+                        }
+                        else
+                        {
+                            alert("Not Authorized")
+
+                        }
                     }} size={5} title={"Add New Member"}>
 
                     </Button>

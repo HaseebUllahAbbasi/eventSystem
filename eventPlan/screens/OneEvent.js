@@ -68,59 +68,68 @@ const OneEvent = (props) => {
     return (
         <View>
             <Card>
-                <Card.Title style={[{ backgroundColor: colors.card }]}>{data.event.eventName}</Card.Title>
+                <Card.Title style={[{ backgroundColor: colors.card, fontSize: 20 }]}>{data.event.eventName}</Card.Title>
                 <Card.Divider />
                 <View style={[{ backgroundColor: colors.border, borderRadius: 8, padding: 5, color: colors.text }]}>
-                    <View>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
+
+                        <Text style={[{ fontSize: 15, fontWeight: "bold", color: colors.text }]}>
                             Description
                         </Text>
-                        <Text style={[styles.section, { color: colors.text, paddingLeft: 5 }]}> {data.event.eventDesc} </Text>
+                        <Text style={[{ fontSize: 15, fontWeight: "bold", color: colors.text }]}>
+                            {data.event.eventDesc}
+                        </Text>
+
+
                     </View>
+
+
                     <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
                             Planner
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.userId}
                         </Text>
 
 
                     </View>
+
+
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             Team Members
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.team.length}
                         </Text>
                     </View>
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             Tasks Assigned
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.tasks.length}
                         </Text>
                     </View>
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             Notes
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.notes.length}
                         </Text>
                     </View>
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            Guest 
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
+                            Guest
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.guestList.length}
                         </Text>
                     </View>
@@ -128,10 +137,10 @@ const OneEvent = (props) => {
 
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             Status
                         </Text>
-                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                        <Text style={[{ textAlign: "center", fontSize : 15, fontWeight: "bold", color: colors.text }]}>
                             {data.event.eventStatus ? "Completed" : "In Progess"}
                         </Text>
                     </View>
@@ -139,13 +148,13 @@ const OneEvent = (props) => {
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         <Button onPress={() => {
 
-                            navigation.navigate('eventTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName })
+                            navigation.navigate('eventTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin, adminName: data.event.userName })
 
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Tasks"}>
                         </Button>
                         <Button onPress={() => {
                             navigation.navigate('eventNotes',
-                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName})
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin, adminName: data.event.userName })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
                         </Button>
 
@@ -153,46 +162,49 @@ const OneEvent = (props) => {
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         <Button onPress={() => {
                             navigation.navigate('eventTeam',
-                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin,  adminName : data.event.userName})
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin, adminName: data.event.userName })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
                         </Button>
                         <Button onPress={() => {
                             navigation.navigate('eventGuest',
-                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName})
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin, adminName: data.event.userName })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Guests "}>
                         </Button>
                     </View>
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
-                        <Button onPress={async () => {
+                        {
+                            data.event.eventStatus ? <Button onPress={async () => {
 
-                            setData({
-                                ...data, api: true
-                            });
+                                setData({
+                                    ...data, api: true
+                                });
 
-                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, eventStatus: true };
-                            const apiData = await fetch(`${apiLink}/changeStatus`, {
-                                method: 'POST', // or 'PUT'
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(apiBody),
-                            });
-                            const jsonData = await apiData.json();
-                            console.log(jsonData);
-                            setData({
-                                ...data, api: false
-                            });
+                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, eventStatus: true };
+                                const apiData = await fetch(`${apiLink}/changeStatus`, {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
+                                const jsonData = await apiData.json();
+                                console.log(jsonData);
+                                setData({
+                                    ...data, api: false
+                                });
 
 
-                            if (jsonData.success) {
-                                alert("Complete event ")
-                            }
-                            else {
-                                alert("Event not Completed")
-                            }
+                                if (jsonData.success) {
+                                    alert(" Event Completed ")
+                                }
+                                else {
+                                    alert("Event not Completed")
+                                }
 
-                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"Complete Event"}>
-                        </Button>
+                            }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"Completed Event"}>
+                            </Button>
+                                : <Button disabled type="outline" ></Button>
+                        }
                     </View>
 
                 </View>

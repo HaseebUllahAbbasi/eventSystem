@@ -128,7 +128,7 @@ const CreateEvent = (props) => {
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
             
             <View style={styles.text_header}>
-                <Text style={[styles.text_header,{margin:"10px"}]}> Enter Event Information  </Text>
+                <Text style={[styles.text_header,{margin:10}]}> Enter Event Information  </Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -137,7 +137,7 @@ const CreateEvent = (props) => {
                 }]}
             >
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 10 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Name</Text>
@@ -181,7 +181,7 @@ const CreateEvent = (props) => {
                 </View>
 
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 10 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Event Planner</Text>
@@ -224,7 +224,7 @@ const CreateEvent = (props) => {
                     }
                 </View>
 
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 10 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Planner ID</Text>
@@ -266,7 +266,7 @@ const CreateEvent = (props) => {
                         </Animatable.View>
                     }
                 </View>
-                <View style={{ marginBottom: "1rem" }}>
+                <View style={{ marginBottom: 10 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>Description</Text>

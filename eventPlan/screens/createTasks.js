@@ -313,8 +313,15 @@ const CreateTask = (props) => {
                 <View style={styles.button}>
                     <TouchableOpacity
                         onPress={
+                            
+
                             async () => {
                                 
+                                if(data.isValidTask == false || data.isValidPerson == false)
+                                {
+                                    alert("please Enter Complete Details")
+                                    return;
+                                }
 
                                 setData({
                                     ...data, api: true

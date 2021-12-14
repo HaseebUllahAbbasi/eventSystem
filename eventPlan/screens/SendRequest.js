@@ -224,6 +224,10 @@ const SendRequest = (props) => {
                         onPress={
                             async () => {
 
+                                if(data.username == "")
+                                {
+                                    alert("please Enter the User Name ")
+                                }
                                 setData({
                                     ...data, api: true
                                 });
