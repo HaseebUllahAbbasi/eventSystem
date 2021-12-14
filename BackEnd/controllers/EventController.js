@@ -74,10 +74,8 @@ exports.removeMember = catchAsyncErrors(async (req, res, next) => {
 
                 const memberList = personFound.member;
                 let indexPerson = 0;
-                for(let j=0; j<memberList.length; j++)
-                {
-                    if(memberList[j].id == eventId)
-                    {
+                for (let j = 0; j < memberList.length; j++) {
+                    if (memberList[j].id == eventId) {
                         indexPerson = j;
                     }
                 }
@@ -188,22 +186,21 @@ exports.addNotes = catchAsyncErrors(async (req, res, next) => {
 })
 exports.removeNote = catchAsyncErrors(async (req, res, next) => {
     const { eventId, plannerId, noteId } = req.body;
-
     const event = await EventSchema.findById(eventId);
     if (event) {
         if (event.userId == plannerId) {
-            const deletedNote = await NotesSchema.deleteOne({ _id: noteId });
+            // const deletedNote = await NotesSchema.deleteOne({ _id: noteId });
             const notesList = event.notes;
             const index = notesList.indexOf(noteId);
             if (index != -1) {
                 notesList.splice(index, 1);
-                const updateNoteList = EventSchema.updateOne({ _id: eventId }, { notes: [...notesList] })
+                const updatedEvent = await EventSchema.updateOne({ _id: event._id }, { notes: [...event.notes] });
                 res.status(200).json(
                     {
                         success: true,
                         notesList,
-                        message: "note removed"
-
+                        message: "note removed",
+                        updatedEvent
                     }
                 )
 
@@ -216,7 +213,6 @@ exports.removeNote = catchAsyncErrors(async (req, res, next) => {
                     }
                 )
             }
-
         }
         else {
             res.status(200).json(
@@ -225,9 +221,7 @@ exports.removeNote = catchAsyncErrors(async (req, res, next) => {
                     message: "Not Authorized"
                 }
             )
-
         }
-
     }
     else {
         res.status(404).json(
@@ -433,6 +427,7 @@ exports.assignTask = catchAsyncErrors(async (req, res, next) => {
     })
     const eventById = await EventSchema.findById(eventId);
     const personById = await PersonSchema.findById(taskAssignedTo)
+
     eventById.tasks.push(taskCreated._id);
     personById.tasks.push(taskCreated._id)
     const UpdatedEvent = await EventSchema.updateOne({ _id: eventById._id }, { eventById });
@@ -452,28 +447,42 @@ exports.assignTaskByName = catchAsyncErrors(async (req, res, next) => {
     })
     const eventById = await EventSchema.findById(eventId);
     const personsById = await PersonSchema.find();
-    const  filteredPerson  = personsById.filter(person => person.name == taskAssignedTo);
-    if(filteredPerson.length==0)
-    {
+    const filteredPerson = personsById.filter(person => person.name == taskAssignedTo);
+    if (filteredPerson.length == 0) {
         res.status(200).json({
             success: false,
             message: "Person Not Found",
         })
+    }
+    else {
+        let found = false;
+        for (let i = 0; i < eventById.team.length; i++) {
+            if (eventById.team[0].name == taskAssignedTo)
+                found = true;
+        }
+        if (found==false) 
+        {
+            res.status(200).json({
+                success: false,
+                message: "Person is Not Team Member",
+            })  
+
+        }
+        else {
+            eventById.tasks.push(taskCreated._id);
+            filteredPerson[0].tasks.push(taskCreated._id)
+            const UpdatedEvent = await EventSchema.updateOne({ _id: eventById._id }, { tasks: [...eventById.tasks] });
+            const updatedPerson = await PersonSchema.updateOne({ _id: filteredPerson[0]._id }, { tasks: [...filteredPerson[0].tasks] });
+
+            res.status(200).json({
+                success: true,
+                taskCreated,
+            })
+        }
+
 
     }
-    else 
-    {
-        eventById.tasks.push(taskCreated._id);
-        filteredPerson[0].tasks.push(taskCreated._id)
-        const UpdatedEvent = await EventSchema.updateOne({ _id: eventById._id }, { tasks:  [...eventById.tasks] });
-        const updatedPerson = await PersonSchema.updateOne({ _id: filteredPerson[0]._id }, { tasks: [... filteredPerson[0].tasks]   });
 
-        res.status(200).json({
-            success: true,
-            taskCreated,
-        })
-    }
-    
 })
 
 
@@ -481,21 +490,9 @@ exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
     const { eventId } = req.body;
     const notesList = await NotesSchema.find();
 
-    // res.status(200).json(
-    //     {
-    //         success: true,
-    //         notesList
-    //     }
-    // )
+    
     const noteListsFound = notesList.filter(note => note.eventId == eventId);
-    // let noteListsFound = [] ;
-    // notesList.forEach(item=>
-    //     {
-    //         if(item.eventId ==  eventId)
-    //         {
-    //             noteListsFound.push(item);
-    //         }
-    //     })
+    
 
     if (noteListsFound.length != 0) {
         res.status(200).json(

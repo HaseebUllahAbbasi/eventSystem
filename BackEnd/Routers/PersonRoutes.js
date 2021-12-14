@@ -1,5 +1,5 @@
 const express = require('express');
-const { addPerson, updatePerson,completeTasks,cancelRequest,requestsDetailsById,myEvents,getEventByUserId,getTasksByUser,findByName,requestsById,acceptRequest,login,deletePerson,getAllpersons, getPersonByID, getCompletedTasksByUser, getUnCompletedTasksByUser } = require('../controllers/PersonController');
+const { addPerson, updatePerson,getAllNames,completeTasks,cancelRequest,requestsDetailsById,myEvents,getEventByUserId,getTasksByUser,findByName,requestsById,acceptRequest,login,deletePerson,getAllpersons, getPersonByID, getCompletedTasksByUser, getUnCompletedTasksByUser } = require('../controllers/PersonController');
 const router = express.Router();
 router.route('/persons').get(getAllpersons);
 router.route('/person').put(updatePerson);
@@ -19,6 +19,6 @@ router.route('/unCompletedTasks/:userId').get(getUnCompletedTasksByUser)
 router.route('/completeTask').post(completeTasks);
 router.route('/getEventByUser').post(getEventByUserId);
 router.route('/myEvents').post(myEvents);
-
+router.route('/getAllName').get(getAllNames);
 
 module.exports = router;

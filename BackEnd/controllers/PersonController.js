@@ -34,9 +34,7 @@ exports.requestsDetailsById = catchAsyncErrors(async (req, res, next) => {
                 requestList,
                 requestDetailedData
             })
-
         }
-
     }
     else {
         res.status(402).json({
@@ -45,6 +43,30 @@ exports.requestsDetailsById = catchAsyncErrors(async (req, res, next) => {
         })
     }
 
+
+})
+exports.getAllNames =  catchAsyncErrors(async (req, res, next) => {
+    const persons =  await PersonSchema.find();
+    const  namesList =   persons.map(person=> person.name);
+    if( namesList.length==0)
+    {
+        res.status(200).json(
+            {
+                success : false,
+                message: "Not Person"
+            }
+        )
+    }
+    else
+    {
+        
+        res.status(200).json(
+            {
+                success : false,
+                namesList
+            }
+        )
+    }
 
 })
 exports.myEvents = catchAsyncErrors(async (req, res, next) => {
@@ -73,10 +95,15 @@ exports.myEvents = catchAsyncErrors(async (req, res, next) => {
 exports.getEventByUserId = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.body;
     const events = await EventSchema.find();
-    const teamsLists = events.filter(event => {
+    const teamsLists = events.filter(event => 
+    {
         const listofOneTeam = event.team;
-        const result = listofOneTeam.find(item => item == id)
-        if (result != undefined) {
+        if(event.userId== id)
+            return event;
+        console.log(listofOneTeam)  
+        for(let i=0; i<listofOneTeam.length; i++)
+        {
+            if(id == listofOneTeam[i].id)
             return event;
         }
     });
@@ -88,7 +115,7 @@ exports.getEventByUserId = catchAsyncErrors(async (req, res, next) => {
     else
         res.status(200).json({
             success: true,
-            teamsLists
+            events: teamsLists
         })
 })
 
@@ -275,8 +302,6 @@ exports.completeTasks = catchAsyncErrors(async (req, res, next) => {
     const { taskId, userId } = req.body;
     const foundTask = await TasksSchema.findById(taskId);
     foundTask.taskStatus = true;
-    console.log(foundTask);
-    console.log("after the update")
     await TasksSchema.updateOne({ _id: taskId }, { taskStatus: true });
 
     res.status(200).json({
