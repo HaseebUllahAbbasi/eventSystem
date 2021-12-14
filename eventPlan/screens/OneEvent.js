@@ -22,19 +22,12 @@ const OneEvent = (props) => {
         api: false,
 
         event: {
-            "_id": "619032f2271ff186b1c1ech7",
-            "userId": "619032a107",
-            "eventName": "BirthDay",
-            "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
-            "team": [
-                "61903152fd325904426375da"
-            ],
-            "tasks": [
-                "6190e046e5cb2abbe906c653",
-                "6190e111aea523d027c4dbed",
-                "6191254806d9d4318b2f83f1",
-                "6197e64193c8dc7293981279"
-            ],
+            "_id": "",
+            "userId": "",
+            "eventName": "",
+            "eventDesc": "",
+            "team": [],
+            "tasks": [],
             "guestList": [],
             "notes": [],
             "eventStatus": false,
@@ -90,7 +83,7 @@ const OneEvent = (props) => {
                             Planner
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
-                            {data.event.userId}
+                            {data.event.userName}
                         </Text>
 
 
@@ -173,7 +166,7 @@ const OneEvent = (props) => {
                     </View>
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         {
-                            data.event.eventStatus ? <Button onPress={async () => {
+                            data.event.eventStatus == false  ? <Button onPress={async () => {
 
                                 setData({
                                     ...data, api: true
@@ -201,9 +194,9 @@ const OneEvent = (props) => {
                                     alert("Event not Completed")
                                 }
 
-                            }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"Completed Event"}>
+                            }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"Complete Event"}>
                             </Button>
-                                : <Button disabled type="outline" ></Button>
+                                : <Button disabled type="outline" title={"Complete Event"} ></Button>
                         }
                     </View>
 

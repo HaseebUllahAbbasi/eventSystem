@@ -312,6 +312,11 @@ const CreateEvent = (props) => {
             <View style={styles.button}>
             <TouchableOpacity
             onPress={ async ()=>{
+                if(data.eventName == "" || data.eventDesc == "" )
+                {
+                    alert("please Enter the All Data")
+                    return;
+                }
                 setData({
                                 ...data,api:true 
                             });

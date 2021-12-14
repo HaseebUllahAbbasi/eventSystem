@@ -15,6 +15,7 @@ const ViewGuest = (props) =>
     const _id = navigation.getParam('id');
     const _name = navigation.getParam('name');
     const _number = navigation.getParam('number');
+    
 
     const [data, setData] = useState({
         name: _name,

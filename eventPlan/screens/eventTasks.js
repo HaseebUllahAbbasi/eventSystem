@@ -19,11 +19,11 @@ const EventTasks = (props) => {
 
     const colors = useTheme();
     const [data, setData] = useState({
-        api:false,
+        api: false,
         "success": true,
         tasks: []
     });
-    
+
     useEffect(async () => {
         const apiBody = { eventId: _eventId };
         const apiData = await fetch(`${apiLink}/assignTask/${_eventId}`, {
@@ -39,7 +39,6 @@ const EventTasks = (props) => {
         if (jsonData.success) {
             const tasks = jsonData.tasks
             setData({ ...data, success: true, tasks: [...tasks] })
-            alert("Got the notes")
         }
         else {
             alert("No Notes")
@@ -47,7 +46,7 @@ const EventTasks = (props) => {
 
 
     }, [])
-    
+
     return (
         <ScrollView>
             {
@@ -56,12 +55,10 @@ const EventTasks = (props) => {
             <View>
                 <View style={[{ marginTop: 25, marginBottom: 5, marginLeft: 40, marginRight: 40 }]} >
                     <Button onPress={() => {
-                        if(_eventAdmin == _id)
-                        {
-                            navigation.navigate('newTask',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin, adminName: _AdminName } )
+                        if (_eventAdmin == _id) {
+                            navigation.navigate('newTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin, adminName: _AdminName })
                         }
-                        else
-                        {
+                        else {
                             alert("Not Authorized")
                         }
 
@@ -74,13 +71,15 @@ const EventTasks = (props) => {
                         </Card.Title>
                         <Card.Divider />
                         <View>
+
+
                             <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
                                 <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
-                                    Id
+                                    Task No
                                 </Text>
 
                                 <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
-                                    {item._id}
+                                    {i + 1}
                                 </Text>
                             </View>
 
@@ -90,7 +89,7 @@ const EventTasks = (props) => {
                                 </Text>
 
                                 <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
-                                    {item.eventId}
+                                    {_eventName}
                                 </Text>
                             </View>
 
@@ -103,9 +102,32 @@ const EventTasks = (props) => {
                                     {item.taskStatus === true ? "Completed" : "Not Completed"}
                                 </Text>
                             </View>
-                            {item.taskStatus === true ? <Button style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="solid" size={5} title={"Completed"} disabled>
+                            {item.taskStatus === true ? <Button onPress={() => {
+                                alert("Already Completed")
+                            }} style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="solid" size={5} title={"Completed"} disabled>
 
-                            </Button> : <Button style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Complete Task"}>
+                            </Button> : <Button onPress={async () => {
+
+
+
+                                const apiBody = {taskId :item._id  };
+                                const apiData = await fetch(`${apiLink}/completeTask`, {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(apiBody),
+                                });
+                                const jsonData = await apiData.json();
+                                if(jsonData.success)
+                                {
+                                    alert("Task Completed");
+                                }
+                                else
+                                {
+                                    alert("Task Not Completed")
+                                }
+                            }} style={[{ marginTop: 15, marginBottom: 5, marginLeft: 20, marginRight: 20 }]} type="outline" size={5} title={"Complete Task"}>
 
                             </Button>}
 

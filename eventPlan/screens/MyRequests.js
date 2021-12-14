@@ -116,6 +116,10 @@ const MyRequests = (props) => {
                             if(jsonData.success)
                             {
                                 alert("Cancelled Request")
+                                const filteredList = data.notes.filter(reqItem=> reqItem._id != item._id);
+                                setData({
+                                    ...data, notes: [...filteredList]
+                                })
                             }
                             else
                             {
@@ -138,10 +142,15 @@ const MyRequests = (props) => {
                             setData({
                                 ...data,api: false 
                             });
-    
+                            
+                            
                             if(jsonData.success)
                             {
                                 alert("Accepted Request ")
+                                const filteredList = data.notes.filter(reqItem=> reqItem._id != item._id);
+                                setData({
+                                    ...data, notes: [...filteredList]
+                                })
                             }
                             else
                             {

@@ -31,31 +31,7 @@ const EventTeam = (props) => {
         "success": true,
         "team":
             [
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                },
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                },
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                },
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                },
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                },
-                {
-                    "id": "61abe12b0722c9f739f10726",
-                    "name": "nazeer2"
-                }
-
+               
             ]
     });
 

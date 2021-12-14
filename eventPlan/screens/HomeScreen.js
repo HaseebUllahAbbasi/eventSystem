@@ -27,29 +27,7 @@ const HomeScreen = (props) => {
     const [data, setData] = useState({
         "success": true,
         "events": [
-            {
-                "_id": "61abe16a0722c9f739f10729",
-                "userId": "61abe10b0722c9f739f10720",
-                "eventName": "Party_1",
-                "eventDesc": "Kuch Ziada Nahi",
-                "userName": "Shaikh",
-                "team": [
-                    {
-                        "personID": "61abe12b0722c9f739f10726",
-                        "name": "nazeer2"
-                    }
-                ],
-                "tasks": [],
-                "guestList": [],
-                "notes": [
-                    "61b3abfbb66eee83ede808c7",
-                    "61b3b3d4c4c26e0540e33218",
-                    "61b60f0cdf446b9656ec5e05",
-                    "61b61647df446b9656ec5e17"
-                ],
-                "eventStatus": false,
-                "__v": 0
-            }
+
         ]
     });
 
@@ -58,13 +36,25 @@ const HomeScreen = (props) => {
             ...data, api: true
         });
 
-        const apiData = await fetch(`${apiLink}/getEvents`);
+        const apiBody = { id: _id };
+        const apiData = await fetch(`${apiLink}/getEventByUser`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiBody),
+        });
         const jsonData = await apiData.json();
         console.log(jsonData);
+        if (jsonData.success)
+            setData({
+                ...data, api: false, events: [...jsonData.events]
+            });
+        else {
+            setData({ ...data, api: false, success : false })
 
-        setData({
-            ...data, api: false, events: [...jsonData.events]
-        });
+        }
+
         setScreen({
             userName: _user,
             email: _email,
@@ -110,18 +100,18 @@ const HomeScreen = (props) => {
             </Card>
 
             {
-                data.success == true && data.events.map((eventItem, i) => <Card key={i}>
-                    <Card.Title style={[{ backgroundColor: colors.card , fontSize: 18}]}>{eventItem.eventName}</Card.Title>
+                data.success == true ? data.events.map((eventItem, i) => <Card key={i}>
+                    <Card.Title style={[{ backgroundColor: colors.card, fontSize: 18 }]}>{eventItem.eventName}</Card.Title>
                     <Card.Divider />
                     <View key={i} style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
-                        
+
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Planner
                             </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.eventDesc}
                             </Text>
                         </View>
@@ -129,11 +119,11 @@ const HomeScreen = (props) => {
 
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Planner
                             </Text>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.userName}
                             </Text>
 
@@ -143,37 +133,37 @@ const HomeScreen = (props) => {
 
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Team Members
                             </Text>
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.team.length}
                             </Text>
                         </View>
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Tasks Assigned
                             </Text>
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.tasks.length}
                             </Text>
                         </View>
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Notes
                             </Text>
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.notes.length}
                             </Text>
                         </View>
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 Status
                             </Text>
-                            <Text style={[{ textAlign: "center", fontSize : 13, fontWeight: "bold", color: colors.text }]}>
+                            <Text style={[{ textAlign: "center", fontSize: 13, fontWeight: "bold", color: colors.text }]}>
                                 {eventItem.eventStatus ? "Completed" : "In Progess"}
                             </Text>
                         </View>
@@ -188,7 +178,13 @@ const HomeScreen = (props) => {
 
                     </View>
                 </Card>
-                )
+                ) : <Card style={[{ backgroundColor: colors.card }]}>
+
+                    <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text, marginBottom: 10 }]}>
+                        No Events
+                    </Text>
+
+                </Card>
             }
         </ScrollView>
 

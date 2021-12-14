@@ -312,6 +312,12 @@ const NewAccount = (props) => {
                         <TouchableOpacity
 
                             onPress={async () => {
+                                if(data.isValidEmail == false || data.isValidUser == false , data.isValidPassword == false || data.isValidNumber == false )
+                                {
+                                    alert("Please Enter All Data Correctly")
+                                    return ;
+
+                                }
                                 setData({ ...data, api: true })
                                 const apiBody = { name: data.username, password: data.password, email: data.email, number: data.number };
                                 const apiData = await fetch(`${apiLink}/person`, {
@@ -325,6 +331,7 @@ const NewAccount = (props) => {
                                 setData({ ...data, api: false })
                                 if (jsonData.success) {
                                     alert("New Account Created")
+                                    navigation.navigate('Login');
                                 }
                                 else {
                                     alert("Not Created")

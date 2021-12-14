@@ -79,6 +79,7 @@ const NotesEvent = (props) => {
 
                                         if (jsonData.success) {
                                             const new_Notes =  data.notes.filter(noteItem=> noteItem._id != note._id )
+
                                             setData({...data,notes :[...new_Notes] })
                                             alert("Note removed")
                                         }
@@ -86,9 +87,7 @@ const NotesEvent = (props) => {
                                             alert("Incomplete")
                                         }
 
-
-
-                                    }}
+                                   }}
 
                                         type="outline" size={3} title={"Remove Note"}>
                                     </Button>

@@ -272,7 +272,6 @@ const CreateNote = (props) => {
                                 body: JSON.stringify(apiBody),
                             });
                             const jsonData = await apiData.json();
-                            console.log(jsonData);                        
                             setData({
                                 ...data,api: false 
                             });

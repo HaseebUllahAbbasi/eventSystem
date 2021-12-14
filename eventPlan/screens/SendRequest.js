@@ -222,11 +222,13 @@ const SendRequest = (props) => {
                 <View style={styles.button}>
                     <TouchableOpacity
                         onPress={
+
                             async () => {
 
                                 if(data.username == "")
                                 {
                                     alert("please Enter the User Name ")
+                                    return;
                                 }
                                 setData({
                                     ...data, api: true
