@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button } from 'react-native-elements'
 
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
+import apiLink from "../shared/apiLink";
 const OneEvent = (props) => {
-    
+
     const navigation = props.navigation;
 
     const _user = navigation.getParam('user');
@@ -14,39 +15,67 @@ const OneEvent = (props) => {
     const _eventName = navigation.getParam('eventName');
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
-    
+
     console.log(_eventId)
     const { colors } = useTheme();
     const [data, setData] = useState({
-        "_id": "619032f2271ff186b1c1ech7",
-        "userId": "619032a107",
-        "eventName": "BirthDay",
-        "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
-        "team": [
-            "61903152fd325904426375da"
-        ],
-        "tasks": [
-            "6190e046e5cb2abbe906c653",
-            "6190e111aea523d027c4dbed",
-            "6191254806d9d4318b2f83f1",
-            "6197e64193c8dc7293981279"
-        ],
-        "guestList": [],
-        "notes": [],
-        "eventStatus": false,
-        "__v": 0
-    });
+        api: false,
+
+        event: {
+            "_id": "619032f2271ff186b1c1ech7",
+            "userId": "619032a107",
+            "eventName": "BirthDay",
+            "eventDesc": "Simple Desc of Event but this is just nothing just a small description",
+            "team": [
+                "61903152fd325904426375da"
+            ],
+            "tasks": [
+                "6190e046e5cb2abbe906c653",
+                "6190e111aea523d027c4dbed",
+                "6191254806d9d4318b2f83f1",
+                "6197e64193c8dc7293981279"
+            ],
+            "guestList": [],
+            "notes": [],
+            "eventStatus": false,
+            "__v": 0
+        }
+
+    }
+    );
+
+    useEffect(async () => {
+        // const apiBody = { eventId: _eventId };
+
+        const apiData = await fetch(`${apiLink}/event/${_eventId}`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+
+        if (jsonData.success) {
+            setData({ ...data, event: jsonData.event })
+
+        }
+        else {
+            alert("No Notes")
+        }
+    }, [])
+
     return (
         <View>
             <Card>
-                <Card.Title style={[{ backgroundColor: colors.card }]}>{data.eventName}</Card.Title>
+                <Card.Title style={[{ backgroundColor: colors.card }]}>{data.event.eventName}</Card.Title>
                 <Card.Divider />
                 <View style={[{ backgroundColor: colors.border, borderRadius: 8, padding: 5, color: colors.text }]}>
                     <View>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Description
                         </Text>
-                        <Text style={[styles.section, { color: colors.text, paddingLeft: 5 }]}> {data.eventDesc} </Text>
+                        <Text style={[styles.section, { color: colors.text, paddingLeft: 5 }]}> {data.event.eventDesc} </Text>
                     </View>
                     <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
@@ -54,7 +83,7 @@ const OneEvent = (props) => {
                             Planner
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            {data.userId}
+                            {data.event.userId}
                         </Text>
 
 
@@ -65,7 +94,7 @@ const OneEvent = (props) => {
                             Team Members
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            {data.team.length}
+                            {data.event.team.length}
                         </Text>
                     </View>
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
@@ -74,7 +103,7 @@ const OneEvent = (props) => {
                             Tasks Assigned
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            {data.tasks.length}
+                            {data.event.tasks.length}
                         </Text>
                     </View>
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
@@ -83,47 +112,86 @@ const OneEvent = (props) => {
                             Notes
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            {data.notes.length}
+                            {data.event.notes.length}
                         </Text>
                     </View>
+                    <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
+
+                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                            Guest 
+                        </Text>
+                        <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
+                            {data.event.guestList.length}
+                        </Text>
+                    </View>
+
+
                     <View style={[{ marginTop: 10, flexDirection: "row", justifyContent: "space-between" }]}>
 
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
                             Status
                         </Text>
                         <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                            {data.eventStatus ? "Completed" : "In Progess"}
+                            {data.event.eventStatus ? "Completed" : "In Progess"}
                         </Text>
                     </View>
 
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
                         <Button onPress={() => {
 
-                            navigation.navigate('eventTask',{user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
+                            navigation.navigate('eventTask', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
 
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Tasks"}>
                         </Button>
                         <Button onPress={() => {
                             navigation.navigate('eventNotes',
-                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
-
-
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Notes"}>
                         </Button>
 
-                        
-
                     </View>
                     <View style={[styles.row, { justifyContent: "space-evenly" }]}>
-                    <Button onPress={() => {
+                        <Button onPress={() => {
                             navigation.navigate('eventTeam',
-                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Members "}>
                         </Button>
                         <Button onPress={() => {
                             navigation.navigate('eventGuest',
-                            {user: _user, email: _email, number:_number, id: _id ,eventId : _eventId, eventName : _eventName, eventAdmin: _eventAdmin })
+                                { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin , adminName : data.event.userName})
                         }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"View Guests "}>
+                        </Button>
+                    </View>
+                    <View style={[styles.row, { justifyContent: "space-evenly" }]}>
+                        <Button onPress={async () => {
+
+                            setData({
+                                ...data, api: true
+                            });
+
+                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, eventStatus: true };
+                            const apiData = await fetch(`${apiLink}/changeStatus`, {
+                                method: 'POST', // or 'PUT'
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(apiBody),
+                            });
+                            const jsonData = await apiData.json();
+                            console.log(jsonData);
+                            setData({
+                                ...data, api: false
+                            });
+
+
+                            if (jsonData.success) {
+                                alert("Complete event ")
+                            }
+                            else {
+                                alert("Event not Completed")
+                            }
+
+                        }} style={[{ marginTop: 10, marginBottom: 5 }]} type="outline" size={3} title={"Complete Event"}>
                         </Button>
                     </View>
 

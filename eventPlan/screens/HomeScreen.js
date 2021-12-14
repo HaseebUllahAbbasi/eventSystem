@@ -130,7 +130,7 @@ const HomeScreen = (props) => {
                                 </Text>
 
                                 <Text style={[{ textAlign: "center", fontSize: 10, fontWeight: "bold", color: colors.text }]}>
-                                    {eventItem.userId}
+                                    {eventItem.userName}
                                 </Text>
 
 

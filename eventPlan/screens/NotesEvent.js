@@ -34,7 +34,6 @@ const NotesEvent = (props) => {
         if (jsonData.success) {
             const noteListsFound = jsonData.noteListsFound
             setData({ ...data, success: true, notes: [...noteListsFound] })
-            alert("Got the notes")
         }
         else {
             alert("No Notes")
@@ -47,6 +46,8 @@ const NotesEvent = (props) => {
                 data.api && <ActivityIndicator color="#0000ff" style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
             }
             <View>
+                <Card.Title style={[{ backgroundColor: colors.card, fontSize: 30 }]}>{_eventName}</Card.Title>
+
                 <View style={[{ marginTop: 20, marginBottom: 5, marginLeft: 40, marginRight: 40 }]}>
                     <Button onPress={() => {
                         navigation.navigate('newNote', { user: _user, email: _email, number: _number, id: _id, eventId: _eventId, eventName: _eventName, eventAdmin: _eventAdmin })
@@ -56,7 +57,7 @@ const NotesEvent = (props) => {
                 </View>
                 {
                     data.success == true ? data.notes.map((note, i) => <Card key={i} >
-                        <Card.Title style={[{ backgroundColor: colors.card }]}>{note._id}</Card.Title>
+                        <Card.Title style={[{ backgroundColor: colors.card }]}>Note : {i+1} </Card.Title>
                         <Card.Divider />
                         <View style={[{ backgroundColor: colors.border, borderRadius: 5, padding: 5, color: colors.text }]}>
                             <View>
@@ -77,7 +78,8 @@ const NotesEvent = (props) => {
                                         console.log(jsonData);
 
                                         if (jsonData.success) {
-                                            
+                                            const new_Notes =  data.notes.filter(noteItem=> noteItem._id != note._id )
+                                            setData({...data,notes :[...new_Notes] })
                                             alert("Note removed")
                                         }
                                         else {

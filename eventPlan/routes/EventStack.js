@@ -14,6 +14,7 @@ import OneEvent from '../screens/OneEvent';
 import Profile from '../screens/Profile';
 import SendRequest from '../screens/SendRequest';
 import Sign from '../screens/Sign'
+import ViewGuest from '../screens/ViewGuest';
 import Header from '../shared/header';
 
 const screens = {
@@ -110,6 +111,13 @@ const screens = {
             title: "Invite Guest"
         }
     },
+    viewGuest:
+    {
+        screen:ViewGuest,
+        navigationOptions:{
+            title:"Guest"
+        }
+    }
     
 
 };

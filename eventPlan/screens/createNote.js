@@ -120,7 +120,7 @@ const CreateNote = (props) => {
                 <View style={{ marginBottom: 15 }}>
                     <Text style={[styles.text_footer, {
                         color: colors.text
-                    }]}>Event Id</Text>
+                    }]}>Event Name</Text>
                     <View style={styles.action}>
                         <FontAwesome
                             name="group"
@@ -129,7 +129,7 @@ const CreateNote = (props) => {
                         />
                         <TextInput
                             editable = {false}
-                            value={data.eventID}
+                            value={_eventName}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -154,7 +154,7 @@ const CreateNote = (props) => {
                     {data.isValidEventId ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
-                            <Text style={styles.errorMsg}>Event ID Should be Valid.</Text>
+                            <Text style={styles.errorMsg}>Event Name Should be Valid.</Text>
                         </Animatable.View>
                     }
                 </View>
@@ -164,7 +164,7 @@ const CreateNote = (props) => {
                     <Text style={[styles.text_footer, {
                         color: colors.text
                     }]}>
-                        Your Id
+                        Your Name
                     </Text>
                     <View style={styles.action}>
                         <FontAwesome
@@ -173,7 +173,7 @@ const CreateNote = (props) => {
                             size={20}
                         />
                         <TextInput
-                        value={data.plannerId}
+                        value={_user}
                             editable = {false}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
@@ -199,7 +199,7 @@ const CreateNote = (props) => {
                     {data.isValidPlanner ? null :
                         <Animatable.View animation="fadeInLeft" duration={500}>
 
-                            <Text style={styles.errorMsg}>Your Id Must be Valid.</Text>
+                            <Text style={styles.errorMsg}>Your Name Must be Valid.</Text>
                         </Animatable.View>
                     }
                 </View>

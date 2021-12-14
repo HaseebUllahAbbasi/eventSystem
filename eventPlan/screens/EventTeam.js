@@ -104,7 +104,39 @@ const EventTeam = (props) => {
 
                                 <ThemeProvider theme={theme}>
 
-                                    <Button type="outline" size={3} style={[{ marginTop: 15, marginBottom: 5, width: 40, color: "red" }]} title={"Remove"}>
+                                    <Button
+                                        onPress={async () => {
+
+                                            setData({
+                                                ...data, api: true
+                                            });
+
+                                            const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, memberId : `${member._id}`, memberName: member.name };
+                                            const apiData = await fetch(`${apiLink}/removeMember`, {
+                                                method: 'POST', // or 'PUT'
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify(apiBody),
+                                            });
+                                            const jsonData = await apiData.json();
+                                            console.log(jsonData);
+                                            setData({
+                                                ...data, api: false
+                                            });
+                                            
+
+                                            if (jsonData.success) 
+                                            {
+                                                alert("Member Removed ")
+                                            }
+                                            else {
+                                                alert("Member Not Removed")
+                                            }
+
+                                        }}
+
+                                        type="outline" size={3} style={[{ marginTop: 15, marginBottom: 5, width: 40, color: "red" }]} title={"Remove"}>
                                     </Button>
 
                                     <Button onPress={() => {

@@ -33,6 +33,7 @@ const InviteGuest = (props) => {
     const _eventName = navigation.getParam('eventName');
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
+    const _AdminName = navigation.getParam('adminName');
 
 
     const data_1 = { eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
@@ -180,7 +181,7 @@ const InviteGuest = (props) => {
                             autoCapitalize="none"
                             // onChangeText={(val) => textInputChange(val)}
                             // onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                            value={_eventAdmin}
+                            value={_AdminName}
                         />
                         {data.validData ?
                             <Animatable.View
@@ -289,8 +290,6 @@ const InviteGuest = (props) => {
                                 setData({
                                     ...data, api: true
                                 });
-
-
                                 const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, guestName: `${data.username}`, guestNumber: `${data.number}` };
                                 const apiData = await fetch(`${apiLink}/addGuest`, {
                                     method: 'POST', // or 'PUT'

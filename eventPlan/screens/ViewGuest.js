@@ -6,7 +6,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
 import apiLink from "../shared/apiLink";
 
-const Profile = (props) => 
+const ViewGuest = (props) => 
 {
     const { colors } = useTheme();
     
@@ -14,34 +14,14 @@ const Profile = (props) =>
 
     const _id = navigation.getParam('id');
     const _name = navigation.getParam('name');
+    const _number = navigation.getParam('number');
 
     const [data, setData] = useState({
         name: _name,
-        number: "",
-        email: "",
+        number: _number,
         id: _id
     });
-    useEffect(async () => {
-        // const apiBody = { eventId: _eventId };
-        const apiData = await fetch(`${apiLink}/person/${_id}`, {
-            method: 'GET', // or 'PUT'
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        const jsonData = await apiData.json();
-
-        if (jsonData.success) 
-        {
-            const members = jsonData.members;
-            const team =  jsonData.team;
-            setData({...data,success:true, name: jsonData.personFetched.name, email: jsonData.personFetched.email , number:jsonData.personFetched.number })
-        }
-        else {
-            alert("No Members")
-        }
-
-    }, [])
+    
 
     return (
         <View>
@@ -53,17 +33,7 @@ const Profile = (props) =>
 
                     <View style={[{ backgroundColor: colors.border, borderRadius: 8, padding: 5, color: colors.text }]}>
                         
-                        <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
-
-                            <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
-                                Email
-                            </Text>
-                            <Text style={[{ textAlign: "center", fontSize: 20, fontWeight: "bold", color: colors.text }]}>
-                                {data.email}
-                            </Text>
-
-
-                        </View>
+                     
                         <View style={[{ marginTop: 5, flexDirection: "row", justifyContent: "space-between" }]}>
 
                             <Text style={[{ textAlign: "center", fontSize: 15, fontWeight: "bold", color: colors.text }]}>
@@ -73,21 +43,17 @@ const Profile = (props) =>
                                 {data.number}
                             </Text>
 
-
                         </View>
                     </View>
 
                 </Card>
             </View>
 
-            {
-             
-                 data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
-            }
+            
         </View>
     )
 }
-export default Profile;
+export default ViewGuest;
 
 const styles = StyleSheet.create({
     drawerContent: {
