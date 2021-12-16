@@ -100,7 +100,7 @@ exports.getEventByUserId = catchAsyncErrors(async (req, res, next) => {
         const listofOneTeam = event.team;
         if(event.userId== id)
             return event;
-        console.log(listofOneTeam)  
+        // console.log(listofOneTeam)  
         for(let i=0; i<listofOneTeam.length; i++)
         {
             if(id == listofOneTeam[i].id)
@@ -421,7 +421,7 @@ exports.acceptRequest = catchAsyncErrors(async (req, res, next) => {
 const searchIndex = (list, id) => {
     let boolean = false;
     list.forEach((element, i) => {
-        console.log(element.id == id)
+        // console.log(element.id == id)
         if (element.id == id) {
             boolean = true;
             return i;
