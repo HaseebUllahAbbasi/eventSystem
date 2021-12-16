@@ -4,9 +4,13 @@ import { Card, Button } from 'react-native-elements'
 import { View, Text, StyleSheet } from "react-native";
 import { useTheme } from '@react-navigation/native';
 import apiLink from "../shared/apiLink";
+import { useBackHandler } from "@react-native-community/hooks"
+
 const OneEvent = (props) => {
 
+
     const navigation = props.navigation;
+        
 
     const _user = navigation.getParam('user');
     const _email = navigation.getParam('email');
@@ -16,7 +20,9 @@ const OneEvent = (props) => {
     const _eventId = navigation.getParam('eventId');
     const _eventAdmin = navigation.getParam('eventAdmin');
 
-    console.log(_eventId)
+    const backActionHandler = () => console.log("back Button") 
+    useBackHandler(backActionHandler);
+
     const { colors } = useTheme();
     const [data, setData] = useState({
         api: false,

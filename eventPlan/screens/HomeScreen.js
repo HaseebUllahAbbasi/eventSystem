@@ -9,7 +9,7 @@ import apiLink from "../shared/apiLink";
 const HomeScreen = (props) => {
     const navigation = props.navigation;
 
-
+    console.log("in am called")
     const _user = navigation.getParam('user');
     const _email = navigation.getParam('email');
     const _id = navigation.getParam('id');

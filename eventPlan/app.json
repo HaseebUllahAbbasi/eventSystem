@@ -17,13 +17,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dot.Event",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.dot.Event",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/adaptive-icon.png",        "backgroundColor": "#ffffff"
       }
     },
     "web": {

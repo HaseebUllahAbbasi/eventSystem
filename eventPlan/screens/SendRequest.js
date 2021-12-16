@@ -25,7 +25,7 @@ const SendRequest = (props) => {
     const navigation = props.navigation;
 
 
-    
+
     const _user = navigation.getParam('user');
     const _email = navigation.getParam('email');
     const _id = navigation.getParam('id');
@@ -35,10 +35,22 @@ const SendRequest = (props) => {
     const _eventAdmin = navigation.getParam('eventAdmin');
     const _AdminName = navigation.getParam('adminName');
 
+
     const data_1 = { eventName: "Dinner &  Party", eventPlanner: "Faisal Nisar" }
     const { colors } = useTheme();
 
+    const [nameList, setList] = useState(["haseeb",
+        "simple",
+        "qadeer",
+        "qudoos",
+        "aaqib",
+        "teammember",
+    ]);
+    const [FilteredList, setFilteredList] =
+        useState([]);
+
     const [data, setData] = useState({
+        namesList: ["ok", "simple", "new"],
         api: false,
         validData: true,
         eventName: "Dinner &  Party",
@@ -60,6 +72,20 @@ const SendRequest = (props) => {
         }
     }
     const textInputChange = (val) => {
+        if (val != "") 
+        {
+            const newList = nameList.filter(word => {
+                if (word.match(val))
+                    return word;
+            });
+            setFilteredList([...newList])
+        }
+        if(val=="")
+        {
+            setFilteredList([])
+        }
+
+
         if (val.trim().length >= 4) {
             setData({
                 ...data,
@@ -76,13 +102,25 @@ const SendRequest = (props) => {
             });
         }
     }
-    useEffect(()=>
-    {
-    console.log("in send")
+    useEffect(async () => {
+        const apiData = await fetch(`${apiLink}/getAllName`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const jsonData = await apiData.json();
+        console.log(jsonData);
+        if (jsonData.success) {
+            const list = jsonData.namesList
+            setData({ ...data, success: true, namesList: [...list] })
+            setList([...list])
+        }
+        else {
+            alert("Not getting names")
+        }
+    }, [])
 
-
-    },[])
-    
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
@@ -218,6 +256,20 @@ const SendRequest = (props) => {
                         </Animatable.View>
                     }
                 </View>
+                {
+                    FilteredList.length != 0 && FilteredList.map((items, i) => <TouchableOpacity key={i}>
+                        <View style={styles.itemContainer} >
+                            <Text onPress={() => {
+                            setFilteredList([]);
+                            setData({ ...data, username: items });
+                            console.log("on prss in text")
+                        }} style={{padding:10, fontSize:20,}}>
+                            {items}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>)
+                }
+
 
                 <View style={styles.button}>
                     <TouchableOpacity
@@ -225,8 +277,7 @@ const SendRequest = (props) => {
 
                             async () => {
 
-                                if(data.username == "")
-                                {
+                                if (data.username == "") {
                                     alert("please Enter the User Name ")
                                     return;
                                 }
@@ -249,8 +300,7 @@ const SendRequest = (props) => {
                                     ...data, api: false
                                 });
 
-                                if (jsonData.success) 
-                                {
+                                if (jsonData.success) {
                                     alert("Sent Request")
                                 }
                                 else {
@@ -267,7 +317,7 @@ const SendRequest = (props) => {
                     >
                         <Text style={[styles.textSign, {
                             color: '#009387'
-                        }]}>Send Request</Text>
+                        }]}>Send </Text>
                     </TouchableOpacity>
 
                 </View>
@@ -280,6 +330,12 @@ const SendRequest = (props) => {
 
 export default SendRequest;
 const styles = StyleSheet.create({
+    itemContainer:
+    {
+        
+        borderRadius: 5,
+        backgroundColor: "#e8dcdc"
+    },
     container: {
         flex: 1,
         backgroundColor: '#009387'
