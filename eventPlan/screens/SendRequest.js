@@ -110,7 +110,7 @@ const SendRequest = (props) => {
             }
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.success) {
             const list = jsonData.namesList
             setData({ ...data, success: true, namesList: [...list] })
@@ -262,7 +262,7 @@ const SendRequest = (props) => {
                             <Text onPress={() => {
                             setFilteredList([]);
                             setData({ ...data, username: items });
-                            console.log("on prss in text")
+                            // console.log("on prss in text")
                         }} style={{padding:10, fontSize:20,}}>
                             {items}
                             </Text>
@@ -295,7 +295,7 @@ const SendRequest = (props) => {
                                     body: JSON.stringify(apiBody),
                                 });
                                 const jsonData = await apiData.json();
-                                console.log(jsonData);
+                                // console.log(jsonData);
                                 setData({
                                     ...data, api: false
                                 });

@@ -44,7 +44,7 @@ const EventTeam = (props) => {
             }
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
 
         if (jsonData.success) {
             const members = jsonData.members;

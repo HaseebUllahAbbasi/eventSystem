@@ -47,7 +47,7 @@ const EventGuest = (props) => {
             }
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
 
         if (jsonData.success) {
             const guestList = jsonData.guestList
@@ -103,7 +103,7 @@ const EventGuest = (props) => {
                                                 body: JSON.stringify(apiBody),
                                             });
                                             const jsonData = await apiData.json();
-                                            console.log(jsonData);
+                                            // console.log(jsonData);
                                             setData({
                                                 ...data, api: false
                                             });

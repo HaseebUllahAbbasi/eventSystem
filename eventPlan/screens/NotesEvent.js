@@ -29,7 +29,7 @@ const NotesEvent = (props) => {
             body: JSON.stringify(apiBody),
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
 
         if (jsonData.success) {
             const noteListsFound = jsonData.noteListsFound
@@ -75,7 +75,7 @@ const NotesEvent = (props) => {
                                             body: JSON.stringify(apiBody),
                                         });
                                         const jsonData = await apiData.json();
-                                        console.log(jsonData);
+                                        // console.log(jsonData);
 
                                         if (jsonData.success) {
                                             const new_Notes =  data.notes.filter(noteItem=> noteItem._id != note._id )

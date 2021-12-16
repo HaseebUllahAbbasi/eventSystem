@@ -108,7 +108,7 @@ const MyRequests = (props) => {
                                 body: JSON.stringify(apiBody),
                             });
                             const jsonData = await apiData.json();
-                            console.log(jsonData);                        
+                            // console.log(jsonData);                        
                             setData({
                                 ...data,api: false 
                             });
@@ -138,7 +138,7 @@ const MyRequests = (props) => {
                                 body: JSON.stringify(apiBody),
                             });
                             const jsonData = await apiData.json();
-                            console.log(jsonData);                        
+                            // console.log(jsonData);                        
                             setData({
                                 ...data,api: false 
                             });

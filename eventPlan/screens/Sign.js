@@ -234,7 +234,7 @@ const SignInScreen = (props) => {
                             const jsonData = await apiData.json();
                             setData({ ...data, api: false })
                             if (jsonData.success) {
-                                console.log({ user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id, requests: jsonData.users.requests.length })
+                                // console.log({ user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id, requests: jsonData.users.requests.length })
                                 // navigation.navigate("Root",{
                                 //     screen: "Home",
                                 //     param: {user: jsonData.users.name, email: jsonData.users.email, number: jsonData.users.number, id: jsonData.users._id , requests : jsonData.users.requests.length  }

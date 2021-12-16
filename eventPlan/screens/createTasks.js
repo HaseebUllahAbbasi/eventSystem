@@ -1,5 +1,5 @@
 import { useTheme } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     View,
@@ -35,6 +35,13 @@ const CreateTask = (props) => {
     const _AdminName = navigation.getParam('adminName');
 
     const { colors } = useTheme();
+    const [nameList, setList] = useState(["haseeb",
+        "simple",
+        "qadeer",
+    ]);
+    const [FilteredList, setFilteredList] =
+        useState([]);
+
 
     const handleEventId = (value) => {
         if (value.trim().length > 4) {
@@ -92,6 +99,21 @@ const CreateTask = (props) => {
         }
     }
     const handleValidUser = (value) => {
+        if (value != "") 
+        {
+            const newList = nameList.filter(word => {
+                if (word.match(value))
+                    return word;
+            });
+            setFilteredList([...newList])
+        }
+        if(value=="")
+        {
+            setFilteredList([])
+        }
+
+
+
         if (value.trim().length > 4) {
             setData({
                 ...data,
@@ -122,6 +144,25 @@ const CreateTask = (props) => {
         task: "",
     });
 
+    useEffect(async () => {
+        const apiData = await fetch(`${apiLink}/getAllName`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const jsonData = await apiData.json();
+        // console.log(jsonData);
+        if (jsonData.success) {
+            const list = jsonData.namesList
+            setData({ ...data, success: true, namesList: [...list] })
+            setList([...list])
+        }
+        else {
+            alert("Not getting names")
+        }
+    }, [])
+
     return (
         <View style={styles.container}>
 
@@ -151,8 +192,8 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
-                        editable={false}
-                        value={_eventName}
+                            editable={false}
+                            value={_eventName}
                             placeholder="Event Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -196,8 +237,8 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
-                        editable={false}
-                        value={_AdminName}
+                            editable={false}
+                            value={_AdminName}
                             placeholder="Your Username"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -238,7 +279,7 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
-                        value={data.assignTo}
+                            value={data.assignTo}
                             placeholder="Name"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -266,6 +307,20 @@ const CreateTask = (props) => {
                             <Text style={styles.errorMsg}>Id Must be Valid.</Text>
                         </Animatable.View>
                     }
+                    {
+                    FilteredList.length != 0 && FilteredList.map((items, i) => <TouchableOpacity key={i}>
+                        <View style={styles.itemContainer} >
+                            <Text onPress={() => {
+                                setFilteredList([]);
+                                setData({ ...data, assignTo: items });
+                                console.log("on prss in text")
+                            }} style={{ padding: 10, fontSize: 20, }}>
+                                {items}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>)
+                }
+
                 </View>
 
                 <View style={{ marginBottom: 15 }}>
@@ -279,7 +334,7 @@ const CreateTask = (props) => {
                             size={20}
                         />
                         <TextInput
-                        value={data.task}
+                            value={data.task}
                             placeholder="Description"
                             placeholderTextColor="#666666"
                             style={[styles.textInput, {
@@ -310,15 +365,13 @@ const CreateTask = (props) => {
                 </View>
 
 
+
                 <View style={styles.button}>
                     <TouchableOpacity
                         onPress={
-                            
-
                             async () => {
-                                
-                                if(data.isValidTask == false || data.isValidPerson == false)
-                                {
+
+                                if (data.isValidTask == false || data.isValidPerson == false) {
                                     alert("please Enter Complete Details")
                                     return;
                                 }
@@ -327,7 +380,7 @@ const CreateTask = (props) => {
                                     ...data, api: true
                                 });
 
-                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, taskAssignedTo : `${data.assignTo}`, taskText: `${data.task}` };
+                                const apiBody = { eventId: `${_eventId}`, plannerId: `${_eventAdmin}`, taskAssignedTo: `${data.assignTo}`, taskText: `${data.task}` };
                                 const apiData = await fetch(`${apiLink}/assignTaskByName`, {
                                     method: 'POST', // or 'PUT'
                                     headers: {
@@ -336,7 +389,7 @@ const CreateTask = (props) => {
                                     body: JSON.stringify(apiBody),
                                 });
                                 const jsonData = await apiData.json();
-                                console.log(jsonData);
+                                // console.log(jsonData);
                                 setData({
                                     ...data, api: false
                                 });

@@ -34,7 +34,7 @@ const EventTasks = (props) => {
             body: JSON.stringify(apiBody),
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
 
         if (jsonData.success) {
             const tasks = jsonData.tasks

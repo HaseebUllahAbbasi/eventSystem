@@ -98,7 +98,7 @@ const InviteGuest = (props) => {
     }
     useEffect(()=>
     {
-    console.log("in send")
+    // console.log("in send")
 
 
     },[])
@@ -304,7 +304,7 @@ const InviteGuest = (props) => {
                                     body: JSON.stringify(apiBody),
                                 });
                                 const jsonData = await apiData.json();
-                                console.log(jsonData);
+                                // console.log(jsonData);
                                 setData({
                                     ...data, api: false
                                 });

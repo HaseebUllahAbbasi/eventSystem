@@ -9,7 +9,7 @@ import apiLink from "../shared/apiLink";
 const HomeScreen = (props) => {
     const navigation = props.navigation;
 
-    console.log("in am called")
+    // console.log("in am called")
     const _user = navigation.getParam('user');
     const _email = navigation.getParam('email');
     const _id = navigation.getParam('id');
@@ -45,7 +45,7 @@ const HomeScreen = (props) => {
             body: JSON.stringify(apiBody),
         });
         const jsonData = await apiData.json();
-        console.log(jsonData);
+        // console.log(jsonData);
         if (jsonData.success)
             setData({
                 ...data, api: false, events: [...jsonData.events]
