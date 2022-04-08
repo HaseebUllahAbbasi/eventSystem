@@ -81,7 +81,6 @@ const Profile = (props) =>
             </View>
 
             {
-             
                  data.api && <ActivityIndicator color="#0000ff"   style={{ position: "absolute", left: 0, right: 0, bottom: 0, alignItems: "center", justifyContent: "center", top: 0 }} size="large" />
             }
         </View>

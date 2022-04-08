@@ -114,7 +114,7 @@ exports.createEvent = catchAsyncErrors(async (req, res, next) => {
     const eventCreated = await EventSchema.create({
         userId: plannerId,
         eventName: eventName,
-        eventStatus: eventStatus,
+        eventStatus: false,
         eventDesc: eventDesc,
         userName: userName
         // team : []
@@ -194,7 +194,10 @@ exports.removeNote = catchAsyncErrors(async (req, res, next) => {
             const index = notesList.indexOf(noteId);
             if (index != -1) {
                 notesList.splice(index, 1);
+
                 const updatedEvent = await EventSchema.updateOne({ _id: event._id }, { notes: [...event.notes] });
+                const deleteNote = await NotesSchema.deleteOne( {_id: noteId});
+
                 res.status(200).json(
                     {
                         success: true,
@@ -457,7 +460,7 @@ exports.assignTaskByName = catchAsyncErrors(async (req, res, next) => {
     else {
         let found = false;
         for (let i = 0; i < eventById.team.length; i++) {
-            if (eventById.team[0].name == taskAssignedTo)
+            if (eventById.team[i].name == taskAssignedTo)
                 found = true;
         }
         if (found==false) 
@@ -490,6 +493,9 @@ exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
     const { eventId } = req.body;
     const notesList = await NotesSchema.find();
 
+    console.log(req.body)
+    console.log(eventId);
+    console.log(typeof(eventId))
     
     const noteListsFound = notesList.filter(note => note.eventId == eventId);
     
@@ -507,8 +513,8 @@ exports.getNotesOfEvent = catchAsyncErrors(async (req, res, next) => {
             {
                 success: false,
                 message: "No Notes",
-                noteListsFound,
-                notesList
+                // noteListsFound,
+                // notesList
             }
         )
     }
